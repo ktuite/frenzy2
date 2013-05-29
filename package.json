@@ -1,0 +1,9 @@
+{
+    "name": "Frenzy",
+    "version": "0.0.0",
+    "description": "Social taxonomizing",
+    "dependencies": {
+        "express": "latest"
+    },
+    "author": "hmslydia@gmail.com"
+}
