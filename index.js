@@ -108,7 +108,7 @@ allData["labelList"]["animal"] = label1
 allData["labelList"]["snake"] = label2
 allData["labelList"]["horse"] = label3
 
-//REPLIES
+
 
 
 
@@ -122,12 +122,14 @@ var filter = require('./controller/filter.js');
 
 allData["hierarchy"] = createHierarchy()
 
-
+//REPLIES
 var reply1 = {"type": "replyToItem", "user" : "hmslydia", "time" : 1, "itemId" : "item0", "html" : "<b>my reply</b>", "parentId": ""}
-var reply2 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" : "item0", "html" : "<b>my reply 2</b>", "parentId": "item0-reply0"}
+var reply2 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" : "item0", "html" : "<b>my reply 2 </b>", "parentId": "item0-reply0"}
+var reply3 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" : "item1", "html" : "<b>my reply 2 1</b>", "parentId": ""}
 
 handleReplyToItem(reply1)
 handleReplyToItem(reply2)
+handleReplyToItem(reply3)
 
 //when the client shares an update, find out what type of data it contains
 //and modify the data structure

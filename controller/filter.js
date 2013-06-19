@@ -28,7 +28,33 @@ filterItemIdsByLabel = function(requestedLabel){
 				"itemIdsWithLabelUNchecked": itemIdsWithLabelUNchecked}
 	return rtn
 }
+getAllItemIdsWithTextT = function(text){
+    var itemReferences = allData["items"]
+    var arrayOfItemReferences = utils.dictToArray(itemReferences)
+    var itemObjectsContainingText = utils.filterArray(arrayOfItemReferences, function(x){
+        return (doesItemContainText(x, text))
+	})
+    var itemIdsContainingText = utils.mapArray(itemObjectsContainingText, function(x){
+		return x["id"]
+	})
+    return itemIdsContainingText
+}
 
+doesItemContainText = function(itemObject, text){
+    var itemReplies = itemObject["replies"]
+    for(var i in itemReplies){
+        var itemReply = itemReplies[i]
+        console.log(itemReply)
+        var itemReplyHtml = itemReply["html"]
+        if(itemReplyHtml.search(text)> -1){
+            console.log("TRUE")
+            return true
+        }
+        
+    }
+    
+    return false
+}
 
 sortItemIdsByLastUpdated = function(allItemIds){
 	var itemReferences = allData["items"]

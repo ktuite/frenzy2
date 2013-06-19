@@ -73,3 +73,11 @@ app.get('/sortItemIdsByLeastLabels', function(request, response) {
 	var itemIdsSortedByLeastLabels = sortItemIdsByLeastLabels(allItemIds)
 	response.send(itemIdsSortedByLeastLabels)
 });
+
+app.get(/^\/findItemsWithTextT\/(.+)$/, function(request, response) { 
+	var t = request.params[0]
+    /*console.log(label)*/
+	var allItemIdsWithText = getAllItemIdsWithTextT(t)
+    
+	response.send(allItemIdsWithText)
+});
