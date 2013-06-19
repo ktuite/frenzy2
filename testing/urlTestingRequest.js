@@ -44,3 +44,32 @@ app.get('/sortItemIdsByLastUpdated', function(request, response) {
 	var itemIdsSortedByLastUpdated = sortItemIdsByLastUpdated(allItemIds)
 	response.send(itemIdsSortedByLastUpdated)
 }); 
+
+app.get(/^\/getAllItemObjectsUpdatedSinceTimeT\/(.+)$/, function(request, response) { 
+	var t = request.params[0]
+    /*console.log(label)*/
+	var allItemObjectsUpdated = getAllItemObjectsUpdatedSinceTimeT(t)
+    
+	response.send(allItemObjectsUpdated)
+});
+
+app.get('/sortItemIdsByMostReplies', function(request, response) { 
+	var allItemIds = Object.keys(allData["items"])
+	//console.log(allItemIds)
+	var itemIdsSortedByMostReplies = sortItemIdsByMostReplies(allItemIds)
+	response.send(itemIdsSortedByMostReplies)
+});
+
+app.get('/sortItemIdsByMostLabels', function(request, response) { 
+	var allItemIds = Object.keys(allData["items"])
+	//console.log(allItemIds)
+	var itemIdsSortedByMostLabels = sortItemIdsByMostLabels(allItemIds)
+	response.send(itemIdsSortedByMostLabels)
+});
+
+app.get('/sortItemIdsByLeastLabels', function(request, response) { 
+	var allItemIds = Object.keys(allData["items"])
+	//console.log(allItemIds)
+	var itemIdsSortedByLeastLabels = sortItemIdsByLeastLabels(allItemIds)
+	response.send(itemIdsSortedByLeastLabels)
+});
