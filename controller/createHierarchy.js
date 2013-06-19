@@ -3,66 +3,71 @@ var utils = require('./node-utils');
 hierarchy = []
 
 createHierarchy = function(){
-	var hashtagSummary = getOrderedArrayOfLabels()
+	var LabelSummary = getOrderedArrayOfLabels()
 	
-	var allHashtags = []
-	for( i in hashtagSummary){
-        var hashtagObject = hashtagSummary[i]
-        allHashtags.push({"label":hashtagObject, "parents":[]} )
+	var allLabels = []
+	for( i in LabelSummary){
+        var LabelObject = LabelSummary[i]
+        allLabels.push({"label":LabelObject, "parents":[]} )
     }
      
-    orderAndEnchild(allHashtags, allHashtags);
+    orderAndEnchild(allLabels, allLabels);
 
    return hierarchy;
 }
 
 function getOrderedArrayOfLabels(){
 	var arrayOfLabelObjects = utils.dictToArray(allData["labelList"])
-	var hashtagCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
+	var LabelCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
 		return {"label": x["label"], "counts":x["itemsUsedBy"].length, "memberItemIds": x["itemsUsedBy"]}
 	})
     
-    hashtagCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
+    LabelCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
 
-    return hashtagCountsArray
+    return LabelCountsArray
 }
-function orderAndEnchild(hashtagArray, allHTags){
-    var sortedHashtagArray = hashtagArray.sort(function(a,b){return b["label"]["memberItemIds"].length - a["label"]["memberItemIds"].length});
+
+function orderAndEnchild(LabelArray, allHTags){
+    var sortedLabelArray = LabelArray.sort(function(a,b){return b["label"]["memberItemIds"].length - a["label"]["memberItemIds"].length});
     
+	//push all the labelObjects on the queue
     var queue = []
-    for( i in sortedHashtagArray ){
-        var hashtagObj = sortedHashtagArray[i]
-        queue.push(hashtagObj)
+    for( i in sortedLabelArray ){
+        var LabelObj = sortedLabelArray[i]
+        queue.push(LabelObj)
     }
     
+	//while there are still items on the queue
     while( queue.length > 0 ){
-        var largestHashtag = queue[0]
-        var largestHashtagId = largestHashtag["label"]["label"]
-        hierarchy.push(largestHashtag)
-        //remove largestHashtag from the array
-        var index = queue.indexOf(largestHashtag);
+		//PUT THE LARGEST LABEL IN THE HIERARCHY
+        var largestLabel = queue[0]
+        var largestLabelId = largestLabel["label"]["label"]
+        hierarchy.push(largestLabel)
+		
+        //remove largestLabel from the array
+        var index = queue.indexOf(largestLabel);
         var eltToSplice = queue.splice(index, 1)
         
-        var lookForChildrenHashtags = []
+        var lookForChildrenLabels = []
         
-        for( i in sortedHashtagArray){
-            var elt = sortedHashtagArray[i]
-            if (elt != largestHashtag){
-                lookForChildrenHashtags.push(elt)
+        for(var i in sortedLabelArray){
+            var elt = sortedLabelArray[i]
+            if (elt != largestLabel){
+                lookForChildrenLabels.push(elt)
             }
         }
         
-        //find all the children of this hashtag
-        var childrenOflargestHashtag = utils.filterArray(lookForChildrenHashtags, function(x){return isChildOfArray(largestHashtag["label"]["memberItemIds"], x["label"]["memberItemIds"])})
+        //FIND ALL CHILDREN OF THE LABEL
+        var childrenOflargestLabel = utils.filterArray(lookForChildrenLabels, function(x){return isChildOfArray(largestLabel["label"]["memberItemIds"], x["label"]["memberItemIds"])})
         //remove them from the queue
-        for( i in childrenOflargestHashtag){
-            var elt = childrenOflargestHashtag[i]
+        for(var i in childrenOflargestLabel){
+            var elt = childrenOflargestLabel[i]
             //remove elts from queue
             var index = queue.indexOf(elt);
             if(index > -1){
                 var eltToSplice2 = queue.splice(index, 1);
                 //Note: we only want to remove it from the queue if it isn't already been removed (this happens when you have 
-                //a hashtag that is the child of two parents.  The first time it gets enchilded, it is removed, the second time
+                //a Label that is the child of two parents.  The first time it gets enchilded, it is removed, the second time
                 //it is enchilded, you can't remove it (it isn't in the queue anymore)
             }
         }
@@ -70,22 +75,34 @@ function orderAndEnchild(hashtagArray, allHTags){
         //CHANGE THEIR PARENTAGE - I NEED COPIES
         //add parents to the children AND recurse into them
         
-        var parentsParents = largestHashtag["parents"]
+        var parentsParents = largestLabel["parents"]
         var parentsForNewElts = []
-        for( i in parentsParents){
+        for(var i in parentsParents){
             var parentParent = parentsParents[i]
             parentsForNewElts.push(parentParent)
         }
-        parentsForNewElts.push(largestHashtagId)
+        parentsForNewElts.push(largestLabelId)
+		
         
-        copiesOfChildrenOflargestHashtag = []
-        for( i in childrenOflargestHashtag){
-            child = utils.clone(childrenOflargestHashtag[i])
+        copiesOfChildrenOflargestLabel = []
+        for(var i in childrenOflargestLabel){
+            child = utils.clone(childrenOflargestLabel[i])
             child["parents"] = parentsForNewElts
-            copiesOfChildrenOflargestHashtag.push(child)
+            copiesOfChildrenOflargestLabel.push(child)
         }
         
-        orderAndEnchild(copiesOfChildrenOflargestHashtag, allHTags)
+        orderAndEnchild(copiesOfChildrenOflargestLabel, allHTags)
+		
+		//createOtherCategory
+		var parentMemberItemIds = largestLabel["label"]["memberItemsIds"]
+		hierarchy.push("OTHER"+largestLabel)
+		
+		for(var i in childrenOflargestLabel){
+            child = utils.clone(childrenOflargestLabel[i])
+            child["parents"] = parentsForNewElts
+            copiesOfChildrenOflargestLabel.push(child)
+        }
+		//which items go in other?
     }
 
 }

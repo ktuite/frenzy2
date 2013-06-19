@@ -84,12 +84,31 @@ snakesRef = {
 
 }
 
+label3 = {
+	"label" : "horse",
+	"itemsUsedBy" : ["item0"],
+	"user" : "hmslydia",
+	"creationTime" : 123456789
+}
+horseRef = {
+	"label": "horse",
+	"checked": false,
+	"likes" : [],
+	"dislikes" : [],
+	"lastUpdateTime" : 123456789
+
+}
+
 allData["items"]["item0"]["labels"]["animal"] = label1Ref
 allData["items"]["item1"]["labels"]["animal"] = label2Ref
 allData["items"]["item1"]["labels"]["snake"] = snakesRef
+allData["items"]["item0"]["labels"]["horse"] = horseRef
 
 allData["labelList"]["animal"] = label1
 allData["labelList"]["snake"] = label2
+allData["labelList"]["horse"] = label3
+
+//REPLIES
 
 
 var utils = require('./controller/node-utils');
