@@ -31,6 +31,8 @@ app.get('/singletonLabels', function(request, response) {
 //TODO
 app.get(/^\/filterItemsByLabel\/(.+)$/, function(request, response) { 
 	var label = request.params[0]
+    /*console.log(label)*/
 	var filteredItemIds = filterItemIdsByLabel(label)
+    console.log(filteredItemIds)
 	response.send(filteredItemIds)
 }); 

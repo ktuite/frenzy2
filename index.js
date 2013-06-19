@@ -27,6 +27,7 @@ allData = {
 
 item0 = {
 	"id": "item0",
+    "html": "<b>item0</b>",
 	"replies" : [],
 	"replyCounter" : 0,
 	"lastUpdateTime" : 12344555,
@@ -36,6 +37,7 @@ allData["items"]["item0"] = item0
 
 item1 = {
 	"id": "item1",
+    "html": "<b>item1</b>",
 	"replies" : [],
 	"replyCounter" : 0,
 	"lastUpdateTime" : 12344555,
@@ -75,7 +77,7 @@ label2 = {
 }
 snakesRef = {
 	"label": "snake",
-	"checked": true,
+	"checked": false,
 	"likes" : [],
 	"dislikes" : [],
 	"lastUpdateTime" : 123456789
