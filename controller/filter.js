@@ -28,3 +28,16 @@ filterItemIdsByLabel = function(requestedLabel){
 				"itemIdsWithLabelUNchecked": itemIdsWithLabelUNchecked}
 	return rtn
 }
+
+
+sortItemIdsByLastUpdated = function(allItemIds){
+	var itemReferences = allData["items"]
+	var arrayOfItemReferences = utils.dictToArray(itemReferences)
+	var itemsIdsWithLastUpdatedTimes = utils.mapArray(arrayOfItemReferences, function(x){
+		return {"itemId": x["id"], "timeLastUpdated": x["lastUpdateTime"]}
+	})
+	//var itemsIdsWithLastUpdatedTimes = [{"itemId":"item0", "timeLastUpdated": 123456788}, {"itemId":"item1", "timeLastUpdated": 123456789}]
+	itemsIdsWithLastUpdatedTimes.sort(function(a,b){return b["timeLastUpdated"]-a["timeLastUpdated"]});
+	
+	return itemsIdsWithLastUpdatedTimes
+}

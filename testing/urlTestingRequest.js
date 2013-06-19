@@ -28,11 +28,19 @@ app.get('/singletonLabels', function(request, response) {
 	response.send(singleton)
 }); 
 
-//TODO
+
 app.get(/^\/filterItemsByLabel\/(.+)$/, function(request, response) { 
 	var label = request.params[0]
     /*console.log(label)*/
 	var filteredItemIds = filterItemIdsByLabel(label)
     console.log(filteredItemIds)
 	response.send(filteredItemIds)
+}); 
+
+//TODO
+app.get('/sortItemIdsByLastUpdated', function(request, response) { 
+	var allItemIds = Object.keys(allData["items"])
+	//console.log(allItemIds)
+	var itemIdsSortedByLastUpdated = sortItemIdsByLastUpdated(allItemIds)
+	response.send(itemIdsSortedByLastUpdated)
 }); 

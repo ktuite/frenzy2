@@ -40,7 +40,7 @@ item1 = {
     "html": "<b>item1</b>",
 	"replies" : [],
 	"replyCounter" : 0,
-	"lastUpdateTime" : 12344555,
+	"lastUpdateTime" : 12344556,
 	"labels": {}
 }
 allData["items"]["item1"] = item1
