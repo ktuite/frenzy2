@@ -111,6 +111,7 @@ allData["labelList"]["horse"] = label3
 //REPLIES
 
 
+
 var utils = require('./controller/node-utils');
 var checkpoint = require('./controller/checkpoint.js');
 var testingFramework = require('./testing/urlTestingRequest.js');
@@ -120,6 +121,13 @@ var hierarchyHelpers = require('./controller/createHierarchy.js');
 var filter = require('./controller/filter.js');
 
 allData["hierarchy"] = createHierarchy()
+
+
+var reply1 = {"type": "replyToItem", "user" : "hmslydia", "time" : 1, "itemId" : "item0", "html" : "<b>my reply</b>", "parentId": ""}
+var reply2 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" : "item0", "html" : "<b>my reply 2</b>", "parentId": "item0-reply0"}
+
+handleReplyToItem(reply1)
+handleReplyToItem(reply2)
 
 //when the client shares an update, find out what type of data it contains
 //and modify the data structure

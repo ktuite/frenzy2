@@ -97,10 +97,9 @@ function orderAndEnchild(LabelArray, allHTags){
 		var parentMemberItemIds = largestLabel["label"]["memberItemsIds"]
 		hierarchy.push("OTHER"+largestLabel)
 		
-		for(var i in childrenOflargestLabel){
-            child = utils.clone(childrenOflargestLabel[i])
-            child["parents"] = parentsForNewElts
-            copiesOfChildrenOflargestLabel.push(child)
+		for(var i in copiesOfChildrenOflargestLabel){
+            var child = copiesOfChildrenOflargestLabel[i]
+            var childMemberItem = child["label"]["memberItemsIds"]
         }
 		//which items go in other?
     }
