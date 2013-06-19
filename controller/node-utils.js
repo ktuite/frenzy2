@@ -150,10 +150,30 @@ module.exports = {
     
     trim: function (str) {
         return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-    }
+    },
+	
+	clone: function(obj) {
+		if (null == obj || "object" != typeof obj) return obj;
+		var copy = obj.constructor();
+		for (var attr in obj) {
+			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+		}
+		return copy;
+	}
   
 };
 
+
+getTime = function(){
+	d = new Date();
+	t = d.getTime()
+	return t
+}
+/*
+removeEltFromArray( = function (arr, index){
+
+}
+*/
 var arrayContains = function(arr, val){
 	return arr.indexOf(val) > -1;
 }
@@ -179,3 +199,4 @@ var getParent = function (child, nodes) {
 
     return parent;
 }
+

@@ -1,22 +1,22 @@
 //start server
 var express = require('express');
-var fs = require('fs');
-var app = express();
+fs = require('fs');
+app = express();
 
 app.use(express.cookieParser()); 
 app.use(express.session({ secret: "keyboard cat" }))
 app.use(express.bodyParser());
 
-var allData = {
+allData = {
     "items":{},
-    "replies":{},
+	"labelList": {},
     "users":{},
 
     "hashtagHierarchy":{},
     "completionData":{},
 
     "chat":[],
-    "currentLocations":[], 
+    "userLocations":[], 
 
     "history":{ 
         "locations":[], 
@@ -24,37 +24,117 @@ var allData = {
     }
 }
 
+
+item0 = {
+	"id": "item0",
+	"replies" : [],
+	"replyCounter" : 0,
+	"lastUpdateTime" : 12344555,
+	"labels": {}
+}
+allData["items"]["item0"] = item0
+
+item1 = {
+	"id": "item1",
+	"replies" : [],
+	"replyCounter" : 0,
+	"lastUpdateTime" : 12344555,
+	"labels": {}
+}
+allData["items"]["item1"] = item1
+
+label1 = {
+	"label" : "animal",
+	"itemsUsedBy" : ["item0", "item1"],
+	"user" : "hmslydia",
+	"creationTime" : 123456789
+}
+
+label1Ref = {
+	"label": "animal",
+	"checked": true,
+	"likes" : [],
+	"dislikes" : [],
+	"lastUpdateTime" : 123456789
+}
+
+label2Ref = {
+	"label": "animal",
+	"checked": true,
+	"likes" : [],
+	"dislikes" : [],
+	"lastUpdateTime" : 123456789
+
+}
+
+label2 = {
+	"label" : "snake",
+	"itemsUsedBy" : ["item1"],
+	"user" : "hmslydia",
+	"creationTime" : 123456789
+}
+snakesRef = {
+	"label": "snake",
+	"checked": true,
+	"likes" : [],
+	"dislikes" : [],
+	"lastUpdateTime" : 123456789
+
+}
+
+allData["items"]["item0"]["labels"]["animal"] = label1Ref
+allData["items"]["item1"]["labels"]["animal"] = label2Ref
+allData["items"]["item1"]["labels"]["snake"] = snakesRef
+
+allData["labelList"]["animal"] = label1
+allData["labelList"]["snake"] = label2
+
+
 var utils = require('./controller/node-utils');
-//var Checkpoint = require('./controller/checkpoint'), cp = new Checkpoint(app, utils, fs, allData);
-//console.log(cp.asdf())
+var checkpoint = require('./controller/checkpoint.js');
+var testingFramework = require('./testing/urlTestingRequest.js');
+var handleUpdatesFromClient = require('./controller/handleUpdatesFromClient.js');
+var calculateCompletedItems = require('./controller/calculateCompletedItems.js');
+var hierarchyHelpers = require('./controller/createHierarchy.js');
+var filter = require('./controller/filter.js');
 
-var Checkpointer = require('./controller/checkpoint.js');
-var checkpoint = new Checkpointer(app, utils, fs, allData);
-console.log(checkpoint.asdf([2,3,12])); // Ozzy is 62 years old
+allData["hierarchy"] = createHierarchy()
 
-/*
-var counting = require('./controller/checkpoint')
-console.log(counting.getCount()); // 1
-counting.increment();
-console.log(counting.getCount()); // 2
-*/
+//when the client shares an update, find out what type of data it contains
+//and modify the data structure
+//@return void
+handleClientUpdateData = function(update){
+	//get update type and respond accordingly
+	update = JSON.parse(update) 
+	var updateType = update["type"]
+
+	if(updateType == "replyToItem"){
+		handleReplyToItem(update)
+	}else if(updateType == "addLabelToItem"){
+		handleAddLabelToItem(update)
+	}else if(updateType == "removeLabelFromItem"){
+		handleRemoveLabelFromItem(update)
+	}else if(updateType == "toggleLabelFromItem"){
+		handleToggleLabelFromItem(update)
+	}
+}
+
+//when the client requires an update, find out how much data to send them and send it
+//@return update
+respondToClientUpdateRequest = function(timeOfClientLastUpdate){
+	console.log("index.js - respondToClientUpdateRequest")
+	console.log("timeOfClientLastUpdate = " + timeOfClientLastUpdate)
+	
+}
 
 
-/*
 
-
-*/
-
-// handle uncaught exceptions to keep Node from crashing
-/*
-process.on('uncaughtException', function(err) {
-  console.log(err);
-  console.log(err.stack);
-  // TODO: send email about the exception
+app.get('/', function(request, response){
+	response.send(allData)
 });
-*/
-
+/*
 app.get('/home.html', function(request, response){
+	
 	if (request.session.logged){
 		console.log('Welcome back: '+request.session.id)
     }else {
@@ -62,9 +142,10 @@ app.get('/home.html', function(request, response){
         console.log('new session: '+request.session.id);
     }
 	request.session.lastUpdateTime = 0
+	
     response.sendfile('home.html')
 });
-
+*/
 //////////////////////////////////////////
 //// start serving
 //////////////////////////////////////////
