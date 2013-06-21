@@ -16,12 +16,9 @@ filterItemIdsByLabel = function(requestedLabel){
                 }
                 else{
                     itemIdsWithLabelChecked.push(itemId)
-                }
-     
-            }
-                       
-        }
-        
+                }     
+            }                       
+        }        
     }
 
 	var rtn = {"itemIdsWithLabelChecked":itemIdsWithLabelChecked, 

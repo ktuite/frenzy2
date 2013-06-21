@@ -27,7 +27,8 @@ update = {
 	time : 1234567891,
 	itemId : "item0" , 
 	html : "<b>my reply</b>",
-	parentId : "item0"	//"" if it is a reply to the item
+	parentId : "item0",	//"" if it is a reply to the item
+    likes: []
 }
 
 {"type": "replyToItem", "user" : "hmslydia", "time" : 1, "itemId" : "item0", "html" : "<b>my reply</b>", "parentId": ""}
@@ -59,6 +60,7 @@ function createNewReplyObj(replyToItem){
 	var itemId = replyToItem["itemId"]
 	var html = replyToItem["html"]
 	var parentId = replyToItem["parentId"]
+    var likes = []
 	
 	//find the parent item
 	var itemReference = allData["items"][itemId]
@@ -71,7 +73,9 @@ function createNewReplyObj(replyToItem){
 		"time": time,
 		"html": html,
 		"id": newReplyId,
-		"parentId": parentId
+		"parentId": parentId,
+        "likes": likes
+       
 	}
 	
 	return newReplyObj
