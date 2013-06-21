@@ -1,8 +1,10 @@
 function createItemAndReplyDiv(itemObj){
     var itemAndReplyDiv = $("<div class='row'>")
     
-    var itemDiv = createItemDiv(itemObj)    
+    var itemDiv = createItemDiv(itemObj)
+    var labelsAndRepliesDiv = $("<div class='span5 replyList' style='background:white'>")
     
+    var labelsDiv = createLabelsDiv(itemObj)
     var replyDiv = $("<div class='span5 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
     var replyDivContent = createReplyDivContent(itemObj)
     replyDiv.append(replyDivContent)
@@ -20,10 +22,52 @@ function createItemAndReplyDiv(itemObj){
     replyDiv.append(baseReplyDiv)
         
     itemAndReplyDiv.append(itemDiv)
-    itemAndReplyDiv.append(replyDiv)
+    labelsAndRepliesDiv.append(labelsDiv)
+    labelsAndRepliesDiv.append(replyDiv)
+    itemAndReplyDiv.append(labelsAndRepliesDiv)
+    
+    
     return itemAndReplyDiv
 }
 
+function createLabelsDiv(itemObj){
+    var div = $('<div>')
+    var labelObjDict = itemObj["labels"]
+    for(var i in labelObjDict){
+        var labelObj = labelObjDict[i]
+        var interactiveLabelUI = makeInteractiveLabelUI(labelObj)
+        div.append(interactiveLabelUI)
+    }
+    var addLabelUI = addLabel()
+    div.append(addLabelUI)
+    
+    return div
+}
+function addLabel(){
+    var div = $('<div>')
+    var textbox = $('<input type="textbox" name="textbox1" >')
+    div.append(textbox)
+    var OkButton = $('<button id="addButton">+</button>')
+    div.append(OkButton)
+    return div
+}
+function makeInteractiveLabelUI(labelObj){
+    var labelName = labelObj["label"]
+    var labelChecked = labelObj["checked"]
+    var div = $('<div>')
+    var checkbox = $('<input type="checkbox" name="checkbox1" checked=true>')
+    div.append(checkbox)
+    if(labelChecked==true){
+        $(checkbox).attr('checked');
+    }
+    else{
+        $(checkbox).removeAttr('checked');
+    }
+    var labelSpan = $('<span>')
+    labelSpan.html(labelName+"<br>")
+    div.append(labelSpan)
+    return div
+}
 function createItemDiv(itemObj){
     var itemHTML = itemObj["html"]
     var itemId= itemObj["id"]
