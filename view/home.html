@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Frenzy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->   
+    <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/jquery.js"></script>
+<script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/utils.js"></script>
+<!--
+
+<script type = "text/javascript" src="textSearch.js"></script>
+<script type = "text/javascript" src="twitterFeed.js"></script>
+<script type = "text/javascript" src="hashtagSummary.js"></script>
+<script type = "text/javascript" src="editTweets.js"></script>
+<script type = "text/javascript" src="goals.js"></script>
+-->
+
+<!--
+<script type = "text/javascript" src="chat.js"></script>
+<script type = "text/javascript" src="signInOut.js"></script>
+-->
+<script type = "text/javascript" src="utils.js"></script>
+
+<script type = "text/javascript" src="updates.js"></script>
+<script type = "text/javascript" src="feed.js"></script>
+
+<link href="/styles.css" rel="stylesheet">
+
+<script type="text/javascript">
+//var twitterFeed = []
+var items = {}
+//var hierarchy = []
+//var completionData = {}
+//var userLocations = {}
+
+function ajax(message, callbackFunction){
+    $.post(document.location.href, { args : JSON.stringify(message) }, callbackFunction)
+}
+
+function goToHome(){
+	twitterFeedSetup();
+	$("#homeButton").attr('src','http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png');
+	$("#counter").text("");
+}
+
+$(document).ready(function(){
+/*
+    goalSetup()
+    twitterFeedSetup()
+	textSearchSetup()
+    signInOutSetup()
+    chatSetup()   
+*/
+    //pushAndPullUpdates({"type":"foo"}, 12334)    
+    getAllData()
+})
+
+function getAllData(){
+    getUpdatesSinceTimeT(-1)
+}
+
+function getUpdatesSinceTimeT(t){
+    pushAndPullUpdates(null, t)
+}
+
+function pushAndPullUpdates(myUpdate, myTimeSinceLastUpdate){
+    var message = {"update": myUpdate, "timeSinceLastUpdate": myTimeSinceLastUpdate}
+    
+    ajax(message, function(result){ handleUpdates(JSON.parse(result))})
+}
+
+
+
+</script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+              <div class="homeImage"><a href="#" onclick="goToHome()"><h2 id="counter"></h2><img class="homeButton" id='homeButton' src="http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png"></a></div>
+              </li>
+            </ul>
+            <form class="navbar-form pull-right" id="navBarForm">
+                <input type="text" id="username" placeholder="username" >
+                <input type="button" class="btn" id="signInOut" value= "Sign In" />
+              
+                <input class="span2" type="text" placeholder="search" id="search">
+                <!-<input type="button" class="btn" id="searchSubmit" value= "Search" />
+              
+                <select class="span2" id="sortBy">
+                    <option value="default">(default)</option>
+                    <option value="mostDiscussed">most discussed</option>
+                    <option value="mostDiscussedByMe">most discussed by me</option>
+                    <option value="leastDiscussed">least discussed</option>
+                    <option value="leastDiscussedByMe">least discussed by me</option>
+                    <option value="original">(original order)</option>
+                </select>
+                
+              <!-- <input class="span2" type="text" placeholder="search" id="sortBy"> -->
+              <input type="button" class="btn" id="sortSubmit" value= "Search" />
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+<div id="container" class="container">
+    <div class="row">
+        <div class="span3" >
+            <div class= "sidebar-nav-fixed">
+                <div class="row">
+                    <div class="span3" >
+                       <div id ="composeTweetContainer" style="width:100%" >
+                            <div class="column" id="composeTweet">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="span3" >
+                       <div id ="goalSummaryContainer" style="width:100%" >
+                            
+                            <b>Goal:</b><br>
+                            <div id="goalDescription">
+                           
+                            </div>
+                            <div id="goalFeedback">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                   <div class="span3" >
+                        <div id ="hashtagSummaryContainer" style="width:100%">
+                            <div class="column" id="hashtagSummary">
+                            
+                            </div>
+                            <input type="button" class="btn" id="outputButton" value= "Output" onclick="outputHierarchy(this)" />
+                       </div>
+                   
+                    </div>       
+                </div>
+            </div>
+        </div>
+        <div class="span9" > 
+            <div class="row">                
+                <div class="span9">
+                    <div id ="feedDiv">
+                        <div class="span9" id="feed">
+                            
+                        </div>        
+                    </div>                            
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+<div id="chatBox">
+  <div id="chatTitleBar">Chat<span>_</span></div>
+   <div id="chatLog">
+   </div>
+   <button id="sendChat">Send</button>   
+   <textarea type="text" id="chatEnterArea"></textarea>
+
+</div>    
+
+</body>
+</html>
