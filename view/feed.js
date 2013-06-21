@@ -33,22 +33,29 @@ function createItemAndReplyDiv(itemObj){
 function createLabelsDiv(itemObj){
     var div = $('<div>')
     var labelObjDict = itemObj["labels"]
+    var itemId = itemObj["id"]
     for(var i in labelObjDict){
         var labelObj = labelObjDict[i]
         var interactiveLabelUI = makeInteractiveLabelUI(labelObj)
         div.append(interactiveLabelUI)
     }
-    var addLabelUI = addLabel()
+    var addLabelUI = addLabel(itemId)
     div.append(addLabelUI)
-    
+        
     return div
 }
-function addLabel(){
+function addLabel(itemId){
     var div = $('<div>')
     var textbox = $('<input type="textbox" name="textbox1" >')
     div.append(textbox)
-    var OkButton = $('<button id="addButton">+</button>')
-    div.append(OkButton)
+    var addButton = $('<button id="addButton">+</button>')
+    addButton.click(function(){
+        var textboxValue = textbox.val()
+        console.log()
+        updateNewLabel(textboxValue,itemId)
+        console.log(textbox.val())
+    })
+    div.append(addButton)
     return div
 }
 function makeInteractiveLabelUI(labelObj){

@@ -105,7 +105,7 @@ app.post('/home.html', function(request, response){
 handleClientUpdateData = function(update){
 	//get update type and respond accordingly
     if(update != null){
-        update = JSON.parse(update) 
+        //update = JSON.parse(update) 
         var updateType = update["type"]
 
         if(updateType == "replyToItem"){
