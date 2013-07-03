@@ -69,7 +69,7 @@ label3 = {
 }
 horseRef = {
 	"label": "horse",
-	"checked": false,
+	"checked": true,
 	"likes" : [],
 	"dislikes" : [],
 	"lastUpdateTime" : 123456789

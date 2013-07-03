@@ -67,6 +67,19 @@ function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
     }
 }
 
+function updateNewLabel(textboxValue,itemId){
+    console.log("asdfsdfs")
+    var addNewLabelUpdate = {
+        type : "addLabelToItem",
+        user : "",
+        time : 1,
+        itemId : itemId , 
+        labelText : textboxValue
+    }
+    console.log("updateNewLabel")
+    pushAndPullUpdates(addNewLabelUpdate, -1)
+}
+
 
 
 //////////////////////////////////////////

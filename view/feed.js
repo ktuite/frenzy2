@@ -5,9 +5,12 @@ function createItemAndReplyDiv(itemObj){
     return itemAndReplyDiv
 }
 function createItemAndReplyDivInternals(itemObj){
-	var div = $("<div>")
-    var itemDiv = createItemDiv(itemObj)    
+    var itemAndReplyDiv = $("<div class='row'>")
     
+    var itemDiv = createItemDiv(itemObj)
+    var labelsAndRepliesDiv = $("<div class='span5 replyList' style='background:white'>")
+    
+    var labelsDiv = createLabelsDiv(itemObj)
     var replyDiv = $("<div class='span5 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
     var replyDivContent = createReplyDivContent(itemObj)
     replyDiv.append(replyDivContent)
@@ -25,11 +28,60 @@ function createItemAndReplyDivInternals(itemObj){
     var baseReplyDiv = createBlankReplyDiv(itemId, parentId)
     replyDiv.append(baseReplyDiv)
         
-    div.append(itemDiv)
-    div.append(replyDiv)
-	return div
+    itemAndReplyDiv.append(itemDiv)
+    labelsAndRepliesDiv.append(labelsDiv)
+    labelsAndRepliesDiv.append(replyDiv)
+    itemAndReplyDiv.append(labelsAndRepliesDiv)
+        
+    return itemAndReplyDiv
+
 }
 
+function createLabelsDiv(itemObj){
+    var div = $('<div>')
+    var labelObjDict = itemObj["labels"]
+    var itemId = itemObj["id"]
+    for(var i in labelObjDict){
+        var labelObj = labelObjDict[i]
+        var interactiveLabelUI = makeInteractiveLabelUI(labelObj)
+        div.append(interactiveLabelUI)
+    }
+    var addLabelUI = addLabel(itemId)
+    div.append(addLabelUI)
+        
+    return div
+}
+function addLabel(itemId){
+    var div = $('<div>')
+    var textbox = $('<input type="textbox" name="textbox1" >')
+    div.append(textbox)
+    var addButton = $('<button id="addButton">+</button>')
+    addButton.click(function(){
+        var textboxValue = textbox.val()
+        console.log()
+        updateNewLabel(textboxValue,itemId)
+        console.log(textbox.val())
+    })
+    div.append(addButton)
+    return div
+}
+function makeInteractiveLabelUI(labelObj){
+    var labelName = labelObj["label"]
+    var labelChecked = labelObj["checked"]
+    var div = $('<div>')
+    var checkbox = $('<input type="checkbox" name="checkbox1" checked=true>')
+    div.append(checkbox)
+    if(labelChecked==true){
+        $(checkbox).attr('checked');
+    }
+    else{
+        $(checkbox).removeAttr('checked');
+    }
+    var labelSpan = $('<span>')
+    labelSpan.html(labelName+"<br>")
+    div.append(labelSpan)
+    return div
+}
 function createItemDiv(itemObj){
     var itemHTML = itemObj["html"]
     var itemId= itemObj["id"]
