@@ -63,7 +63,7 @@ snakesRef = {
 
 label3 = {
 	"label" : "horse",
-	"itemsUsedBy" : ["item0"],
+	"itemsUsedBy" : [],
 	"user" : "hmslydia",
 	"creationTime" : 123456789
 }
@@ -79,7 +79,7 @@ horseRef = {
 allData["items"]["item0"]["labels"]["animal"] = label1Ref
 allData["items"]["item1"]["labels"]["animal"] = label2Ref
 allData["items"]["item1"]["labels"]["snake"] = snakesRef
-allData["items"]["item0"]["labels"]["horse"] = horseRef
+//allData["items"]["item0"]["labels"]["horse"] = horseRef
 
 allData["labelList"]["animal"] = label1
 allData["labelList"]["snake"] = label2
@@ -96,3 +96,31 @@ var reply3 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" :
 handleReplyToItem(reply1)
 handleReplyToItem(reply2)
 handleReplyToItem(reply3)
+
+/*
+"items": {
+    "item0": {
+      "id": "item0",
+      "html": "<b>item0 meow</b>",
+      "replies": [
+        {
+          "user": "hmslydia",
+          "time": 1,
+          "itemId": "item0",
+          "html": "<b>my reply</b>",
+          "id": "item0-reply0",
+          "parentId": "",
+          "likes": []
+        },
+        {
+          "user": "hmslydia",
+          "time": 2,
+          "itemId": "item0",
+          "html": "<b>my reply 2 </b>",
+          "id": "item0-reply1",
+          "parentId": "item0-reply0",
+          "likes": []
+        }
+      ],
+*/
+allData["items"]["item1"]["replies"][0]["likes"].push("Chrome")

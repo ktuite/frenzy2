@@ -75,4 +75,12 @@ var map = function(arr, fun )
     return res;
   }; 
 
+var getTime = function(){
+	var d = new Date();
+	var t = d.getTime()
+	return t	
+}
 
+var arrayContains = function(arr, val){
+	return arr.indexOf(val) > -1;
+}

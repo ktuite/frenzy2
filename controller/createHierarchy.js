@@ -2,29 +2,38 @@ var utils = require('./node-utils');
 
 hierarchy = []
 
+updateHierarchy = function(){
+    allData["hierarchy"] = createHierarchy()
+    allData["hierarchyLastUpdated"] = getTime()
+}
+
 createHierarchy = function(){
-	var LabelSummary = getOrderedArrayOfLabels()
-	
+    hierarchy = []
+	var labelSummary = getOrderedArrayOfLabelObjs()
+	var labelSummary = utils.filterArray(labelSummary, function(x){
+        return x["memberItemIds"].length > 0
+    })
+    
 	var allLabels = []
-	for( i in LabelSummary){
-        var LabelObject = LabelSummary[i]
-        allLabels.push({"label":LabelObject, "parents":[]} )
+	for( i in labelSummary){
+        var labelObject = labelSummary[i]
+        allLabels.push({"label":labelObject, "parents":[]} )
     }
      
     orderAndEnchild(allLabels, allLabels);
 
-   return hierarchy;
+    return hierarchy;
 }
 
-function getOrderedArrayOfLabels(){
+function getOrderedArrayOfLabelObjs(){
 	var arrayOfLabelObjects = utils.dictToArray(allData["labelList"])
-	var LabelCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
+	var labelCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
 		return {"label": x["label"], "counts":x["itemsUsedBy"].length, "memberItemIds": x["itemsUsedBy"]}
 	})
     
-    LabelCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
+    labelCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
 
-    return LabelCountsArray
+    return labelCountsArray
 }
 
 function orderAndEnchild(LabelArray, allHTags){
@@ -84,7 +93,7 @@ function orderAndEnchild(LabelArray, allHTags){
         parentsForNewElts.push(largestLabelId)
 		
         
-        copiesOfChildrenOflargestLabel = []
+        var copiesOfChildrenOflargestLabel = []
         for(var i in childrenOflargestLabel){
             child = utils.clone(childrenOflargestLabel[i])
             child["parents"] = parentsForNewElts
@@ -94,14 +103,32 @@ function orderAndEnchild(LabelArray, allHTags){
         orderAndEnchild(copiesOfChildrenOflargestLabel, allHTags)
 		
 		//createOtherCategory
-		var parentMemberItemIds = largestLabel["label"]["memberItemsIds"]
-		hierarchy.push("OTHER"+largestLabel)
 		
-		for(var i in copiesOfChildrenOflargestLabel){
-            var child = copiesOfChildrenOflargestLabel[i]
-            var childMemberItem = child["label"]["memberItemsIds"]
+		
+        if(copiesOfChildrenOflargestLabel.length > 0){     
+            var parentMemberItemIds = largestLabel["label"]["memberItemIds"]
+            for(var i in copiesOfChildrenOflargestLabel){
+                var child = copiesOfChildrenOflargestLabel[i]
+                var childMemberItems = child["label"]["memberItemIds"]
+                //hierarchy.push("childMemberItems")
+                //hierarchy.push( JSON.stringify(childMemberItems) )
+                parentMemberItemIds = utils.arrayMinus(parentMemberItemIds, childMemberItems)
+            }
+            
+            //hierarchy.push(parentMemberItemIds)
+            //utils.arrayMinus
+            //which items go in other?
+            var otherLabelObj = {
+                "label": "other ("+largestLabel["label"]["label"]+")",
+                "counts": parentMemberItemIds.length,
+                "memberItemIds": parentMemberItemIds
+            }
+            if(parentMemberItemIds.length > 0){
+                var otherObj = {"label": otherLabelObj, "parents": parentsForNewElts}
+                hierarchy.push(otherObj)
+            }
         }
-		//which items go in other?
+        
     }
 
 }

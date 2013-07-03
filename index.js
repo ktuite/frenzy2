@@ -7,6 +7,7 @@ app.use(express.cookieParser());
 app.use(express.session({ secret: "keyboard cat" }))
 app.use(express.bodyParser());
 
+var testing = true;
 ////////////////////////
 // Data structure
 ////////////////////////
@@ -15,7 +16,8 @@ allData = {
 	"labelList": {},
     "users":{},
 
-    "hashtagHierarchy":{},
+    "hierarchy":{},
+    "hierarchyLastUpdated":-1,
     "completionData":{},
 
     "chat":[],
@@ -31,6 +33,19 @@ allData = {
 // Client side includes
 ////////////////////////
 app.get('/home.html', function(request, response){
+	if(testing){
+		//set a session with a username that is random
+		if (request.session.logged){
+			console.log('Welcome back: '+request.session.id)
+		}else {
+			request.session.logged = true;
+			console.log('new session: '+request.session.id);
+			request.session.user = ""
+			request.session.timeSinceLastUpdate = -1
+		}
+		request.session.lastUpdateTime = 0
+		console.log(request.session)
+	}
 	response.sendfile('view/home.html')
 });
 
@@ -72,24 +87,40 @@ var filter = require('./controller/filter.js');
 // Instatiate Database
 ////////////////////////
 var instantiateData = require('./testing/data.js');
-allData["hierarchy"] = createHierarchy()
+updateHierarchy()
 
 
 /////////////////////////////////
 // Client Communication Handling
 /////////////////////////////////
 app.post('/home.html', function(request, response){
-    var message = JSON.parse(request.body["args"])
-	var update = message["update"]
-    var timeSinceLastUpdate = message["timeSinceLastUpdate"]
-    
-    //first handle update
-    handleClientUpdateData(update)
-    
-    //then push all new updates to the client
-    var serverUpdates = getAllServerUpdatesSinceT(timeSinceLastUpdate)
-    //console.log(serverUpdates)
-    response.send(JSON.stringify(serverUpdates))
+	var command = request.body["command"]
+	var args = JSON.parse(request.body["args"])
+	
+	if(command == "update"){
+		var message = JSON.parse(request.body["args"])
+		var update = message["update"]
+		
+		if(update){
+			update["user"] = request.session.user
+		}
+		
+		var timeSinceLastUpdate = request.session.timeSinceLastUpdate //message["timeSinceLastUpdate"]
+		console.log(timeSinceLastUpdate)
+		//first handle update
+		handleClientUpdateData(update)
+		
+		//then push all new updates to the client
+		var serverUpdates = getAllServerUpdatesSinceT(-1)//getAllServerUpdatesSinceT(timeSinceLastUpdate)
+		request.session.timeSinceLastUpdate = getTime()
+		response.send(JSON.stringify(serverUpdates))
+	}
+	if(command == "signIn"){
+		var user = args["user"]
+		request.session.user = user
+		var rtn = {"user": request.session.user}
+		response.send(JSON.stringify(rtn))
+	}
 });
 
 
@@ -99,11 +130,15 @@ app.post('/home.html', function(request, response){
 handleClientUpdateData = function(update){
 	//get update type and respond accordingly
     if(update != null){
-        update = JSON.parse(update) 
+        //update = JSON.parse(update) 
         var updateType = update["type"]
 
         if(updateType == "replyToItem"){
             handleReplyToItem(update)
+        }else if(updateType == "likeReply"){
+            handleLikeReply(update)
+        }else if(updateType == "unlikeReply"){
+            handleUnlikeReply(update)
         }else if(updateType == "addLabelToItem"){
             handleAddLabelToItem(update)
         }else if(updateType == "removeLabelFromItem"){
@@ -124,30 +159,29 @@ respondToClientUpdateRequest = function(timeOfClientLastUpdate){
 }
 */
 function getAllServerUpdatesSinceT(t){
+    var rtn = {}
+    
     //types of updates:
     //1. items
     var updatedItems = getAllItemObjectsUpdatedSinceTimeT(t)
+    if(updatedItems.length > 0){
+        rtn["updatedItems"] = updatedItems
+    }
     
     //2. hierarchy    
+    if(allData["hierarchyLastUpdated"] >= t){
+        rtn["hierarchy"] = allData["hierarchy"]
+    }
+    
     //3. completion conditions
     //4. chat
     //5. userLocations
     //6. recently edited items
     //7. order of items
     
-    var rtn = {
-        "updatedItems": updatedItems
-    
-    
-    }
+
     return rtn
 }
-
-
-
-
-
-
 
 //////////////////////////////////////////
 //// start serving

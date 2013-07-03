@@ -1,8 +1,13 @@
-
-
 function handleUpdates(result){  
-    var updatedItems = result["updatedItems"]
-    handleUpdatedItems(updatedItems)
+    if("updatedItems" in result){
+        var updatedItems = result["updatedItems"]
+        handleUpdatedItems(updatedItems)
+    }
+    if("hierarchy" in result){
+        var hierarchy = result["hierarchy"]
+        handleUpdatedHierarchy(hierarchy)
+    }
+    
 }
 
 //////////////////////////////////////////
@@ -11,11 +16,12 @@ function handleUpdates(result){
 
 function handleUpdatedItems(updatedItems){       
     var newItemDivs = []    
-    for( var i in updatedItems){    
+    for( var i in updatedItems){  
+		
         var updatedItemObj = updatedItems[i]
         var id = updatedItemObj["id"]
         var lastUpdateTime = updatedItemObj["lastUpdateTime"]
-        
+        console.log(updatedItemObj)
         if( id in items){
             updateExistingItemDiv(updatedItemObj)            
         }else{
@@ -33,8 +39,10 @@ function handleUpdatedItems(updatedItems){
 
 function updateExistingItemDiv(updatedItemObj){
     var newItemDiv = createItemAndReplyDiv(updatedItemObj)
-    var itemId = updatedItem["id"]
-    $("#"+itemId).html(newItemDiv)
+    var itemId = updatedItemObj["id"]
+	var itemAndReplyDivInternals = createItemAndReplyDivInternals(updatedItemObj)
+    //itemAndReplyDiv.append(itemAndReplyDivInternals)
+    $("#containerFor"+itemId).html(itemAndReplyDivInternals)
 }
 
 /*
@@ -61,10 +69,34 @@ function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
 
 
 
+//////////////////////////////////////////
+// hierarchy
+//////////////////////////////////////////
+function handleUpdatedHierarchy(hierarchy){
+    var labelHierarchyDiv = $("<div>")
+    for( var i in hierarchy){
+        var labelObj = hierarchy[i]
+        var newLabelDiv = createLabelDiv(labelObj)
+        labelHierarchyDiv.append(newLabelDiv)        
+    }
+	$("#labelHierarchy").empty()
+    $("#labelHierarchy").append(labelHierarchyDiv)
+}
 
-
-
-
+function createLabelDiv(labelObj){
+    var labelParents = labelObj["parents"]
+    var labelObj = labelObj["label"]
+    var label = labelObj["label"]
+    var counts = labelObj["counts"]
+    
+    var div = $("<div>")
+    div.text(label + " ("+counts+") ")
+	
+	var numParents = labelParents.length
+    div.css('margin-left',(30*numParents)+"px")
+    //TODO: onclick handler
+    return div
+}
 
 
 

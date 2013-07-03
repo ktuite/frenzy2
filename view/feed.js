@@ -1,6 +1,11 @@
 function createItemAndReplyDiv(itemObj){
-    var itemAndReplyDiv = $("<div class='row'>")
-    
+    var itemAndReplyDiv = $("<div class='row' id='containerFor"+itemObj["id"]+"'>")
+	var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj)
+    itemAndReplyDiv.append(itemAndReplyDivInternals)
+    return itemAndReplyDiv
+}
+function createItemAndReplyDivInternals(itemObj){
+	var div = $("<div>")
     var itemDiv = createItemDiv(itemObj)    
     
     var replyDiv = $("<div class='span5 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
@@ -16,12 +21,13 @@ function createItemAndReplyDiv(itemObj){
     */
     
     var itemId = itemObj["id"]
-    var baseReplyDiv = createBlankReplyDiv(itemId)
+	var parentId = ""
+    var baseReplyDiv = createBlankReplyDiv(itemId, parentId)
     replyDiv.append(baseReplyDiv)
         
-    itemAndReplyDiv.append(itemDiv)
-    itemAndReplyDiv.append(replyDiv)
-    return itemAndReplyDiv
+    div.append(itemDiv)
+    div.append(replyDiv)
+	return div
 }
 
 function createItemDiv(itemObj){
@@ -67,54 +73,37 @@ function createItemDiv(itemObj){
     return clickableDiv
 }
 
-function createBlankReplyDiv(parentTweetId){
-	
+function createBlankReplyDiv(itemId, parentReplyId){	
     var containerDiv = $("<div class='replyTextDiv'>")
-	var div = $("<textarea class='replyTextArea' id='replyTo-"+parentTweetId+"'>")
+	var div = $("<textarea class='replyTextArea' id='replyTo-"+parentReplyId+"'>")
 	var replyButton = $("<input type='button' class='replyButton' value='post'>")
 	
 
-    wrap = function(d,divCopy, twtId){
-        d.click(function(){
-        replyText = divCopy.val();
-        saveReply(replyText,twtId)  
+    wrap = function(replyButtonPrime,divPrime, itemId, parentItemIdPrime){
+        replyButtonPrime.click(function(){
+			replyText = divPrime.val();
+			saveReply(replyText, itemId, parentItemIdPrime)  
         })
     }
-    wrap(replyButton, div,parentTweetId)
+    wrap(replyButton, div, itemId, parentReplyId)
     
     containerDiv.append(div);
-	containerDiv.append(replyButton);
-    
+	containerDiv.append(replyButton);    
     return containerDiv
     
 }
 
-
-function saveReply(replyText,parentTweetId){
-    /*
-	username=getUserName();
-	if(username!="" && $("#signInOut").val()!="Sign In"){
-		
-		ajax("saveTweet", {"parentTweetId" : parentTweetId, "replyText":replyText,"username":username}, function(returnData) {	
-			
-			parsedReturnData = JSON.parse(returnData)
-			var baseTweetFeed=parsedReturnData["twitterFeed"]
-			var discussionFeed=parsedReturnData["discussionFeed"]
-			var likes =  parsedReturnData["likes"]
-			
-			var baseTweetId = discussionFeed[0]["tweetObject"]["id"]
-			
-			updateDiscussionFeed(baseTweetId,discussionFeed,likes)
-            
-			displayHashtagSummary(JSON.parse(returnData)["hashtagSummary"])
-			checkForUpdates();
-
-		});
+function saveReply(replyText, itemId, parentReplyId){
+	var myTimeSinceLastUpdate = 0
+	var myUpdate = {"type": "replyToItem", 
+				//"user" : user, 
+				"time" : getTime(), 
+				"itemId" : itemId, 
+				"html" : replyText, 
+				"parentId": parentReplyId
 	}
-	else{
-		alert("Please Sign In Before Commenting")
-	}
-    */
+
+	pushAndPullUpdates(myUpdate, myTimeSinceLastUpdate)
 }
 
 ////////////////////////////////
@@ -156,93 +145,220 @@ function createReplyDivHelper(parentReplyObj, level, allReplies){
     }
 }
 
+/*
+reply = {
+	user : "Firefox",
+	time : 1234567891,
+	itemId : "item0" , 
+	html : "<b>my reply</b>",
+	parentId : "item0",	//"" if it is a reply to the item
+    likes: ["Chrome"]
+}
+*/
 function createReplyDiv(replyObj, level){
 	var replyHTML = replyObj["html"]
     var replyId= replyObj["id"]
     var replyAuthor = replyObj["user"]
-    var replyLikesCount = replyObj["likes"].length
+    var replyLikes = replyObj["likes"]
+	var itemId = replyObj["itemId"]
     
-    div = $("<div class='tweet subReplyTextArea' id= '"+replyId+"'>")
-    barDiv = $("<div style='margin-top:25px;'>")
-    //indent the tweet based on how deeply threaded it is
+    var div = $("<div class='tweet subReplyTextArea' id= '"+replyId+"'>")
+    
+    //indent the reply on how deeply threaded it is
 	//multiply by 30 px per level
     div.css('margin-left',5+level*30+"px");
     
-    replyContentDiv = $("<div>")
+	//REPLY CONTENT
+    var replyContentDiv = $("<div>")
+	div.append(replyContentDiv)	
     replyContentDiv.html("<b>"+replyAuthor + "</b><br>" + replyHTML)
     
+	//REPLY OPTIONS
+	var replyOptionsDiv = $("<div class='reply-options'>") //style='margin-top:25px;'
+	div.append(replyOptionsDiv)
+	
+	//REPLY BUTTON
     var replyButton = $("<input type=button id='replyTo-"+replyId+"' value='reply' style='float: right;' class='unclicked'>")
-    var postPlaceholderDiv = $("<div class='postPlaceholder unclicked'>")
-    
-    /*    
-    wrap = function (button, placeholderDiv,twtId){
-	    button.click(function(){
-		    toggleReplyDiv(placeholderDiv,twtId)
-		    
+    replyOptionsDiv.append(replyButton);
+	wrap = function (replyButtonPrime, currentReplyDiv, itemIdPrime, replyIdPrime, levelPrime){
+	    replyButtonPrime.click(function(){
+		    var newReplyDiv = createDynamicReplyDiv(itemIdPrime, replyIdPrime, levelPrime)
+			currentReplyDiv.after(newReplyDiv)		    
 	    })
     }
-    wrap(replyButton, postPlaceholderDiv,replyId)
-    */
-    /*
-    var likesCount = filterArray(likes, function(x){return x["id"]==replyId}).length;
-    
+    wrap(replyButton, div, itemId, replyId, level+1)
+	
+	//LIKE
+	var likeButton = createLikesButtonForReply(replyObj)
+	replyOptionsDiv.append(likeButton);
+	
+
+	
+	//EDIT
+	/*
     var userLikesCount = filterArray(likes, function(x){return x["id"]==replyId && x["username"]==getUserName()}).length;
-    */
     
-    var editButton = $("<input type='button' id='edit-"+replyId+"' value='edit' style='float: right;' >")
-    var likeButton = $("<input type='button' id='like-"+replyId+"' value='like' style='float: right;' >")
-   
-    
-    var likeImage = $("<img id='likeImage' src='http://homes.cs.washington.edu/~felicia0/images/twitify/likeButton.png' height='40px' style='float: right; height:25px;'>")
-    
-    
-    var label = $("<span id='likesCount-"+replyId+"'>");
-    label.text("("+replyLikesCount +")");
-    label.css('height','25px');
-    label.css('float','right');
-    label.css('padding-top','4px');
-    /*
-    if(userLikesCount>0){
-	    likeButton.val("Unlike");
-    }
-    else{
-	    likeButton.val("like");
-    }
-    */
-    /*
     wrapEditButton = function (button, replyDiv, currentContent,twtId){
 	    button.click(function(){
 		    displayEditDialog(replyDiv, currentContent,twtId)
 		    
 	    })
     }
-    wrapEditButton(editButton, div, tweetHTML,tweetId)
+    wrapEditButton(editButton, div, tweetHTML,tweetId)	
+	
+	var editButton = $("<input type='button' id='edit-"+replyId+"' value='edit' style='float: right;' >")
+	replyOptionsDiv.append(editButton)
+	*/
     
     
-    wrapLikeButton = function (button,twtId,usrLikesCount){
-    button.click(function(){
-    	if(usrLikesCount==0){
-		    ajax("updateLikes", {"tweetId" : twtId}, function(returnData) {
-			    refreshDiscussion(twtId); 
-		    });
-	    }
-	    
-    })
-    }
     
-    wrapLikeButton(likeButton,tweetId,userLikesCount)
-    */
-    div.append(replyContentDiv)
-    barDiv.append(replyButton);
-    barDiv.append(editButton)
-    barDiv.append(likeButton);
-    /*
-    if(likesCount >0){
-        barDiv.append(likeImage);
-	    barDiv.append(label);
-    }
-    */
-    barDiv.append(postPlaceholderDiv);
-    div.append(barDiv)
     return div;
 }
+
+function createDynamicReplyDiv(itemId, parentReplyId, level){
+	//create a new replyDiv, and append it to it's parent, and indent it some more.
+	var replyDiv = createBlankReplyDiv(itemId, parentReplyId)
+	replyDiv.css('margin-left',5+level*30+"px");
+	return replyDiv
+}
+
+/////////////////////
+// LIKES
+/////////////////////
+/*
+var likeImage = $("<img id='likeImage' src='http://homes.cs.washington.edu/~felicia0/images/twitify/likeButton.png' height='40px' style='float: right; height:25px;'>")
+var label = $("<span id='likesCount-"+replyId+"'>");
+label.text("("+replyLikesCount +")");
+label.css('height','25px');
+label.css('float','right');
+label.css('padding-top','4px');
+*/
+
+function createLikesButtonForReply(replyObj){
+	var replyHTML = replyObj["html"]
+    var replyId= replyObj["id"]
+    var replyAuthor = replyObj["user"]
+    var replyLikes = replyObj["likes"]
+	var itemId = replyObj["itemId"]
+
+	var myUsername = getUsername()
+	var likeButtonContainer =  $("<span style='float: right;' >")
+	var numberOfLikes = replyLikes.length
+	
+	
+	
+	//I can't like my own reply, so if this is my reply, don't let me like it
+	if(myUsername == replyAuthor){
+		//I can't like my own work.
+		//Just say how many other people like it.
+		if( numberOfLikes > 0){
+			var likesFeedback = $("<span>")
+			likeButtonContainer.append(likesFeedback)
+			var likesFeedback = $("<span>")
+			likesFeedback.text(numberOfLikes+" people like this")
+		}		
+		//No like Button
+		
+		
+	}else if( arrayContains(replyLikes, myUsername) ){
+		//I've already liked it, allow me to unlike it
+		
+		var likesFeedback = $("<span>")
+		likeButtonContainer.append(likesFeedback)
+		//otherwise show that you and n others like this.
+		if( numberOfLikes == 1){
+			//only you like it
+			likesFeedback.text("You like this")
+		}else{
+			var numOfOtherLikes = numberOfLikes - 1
+			likesFeedback.text("You and "+numOfOtherLikes+" people like this")
+		}
+		//add a like button
+		var unlikeButton = makeUnlikeButton(replyObj)
+		likeButtonContainer.append(unlikeButton)
+	}else{	
+		//show how many people like it and give me the option to like it
+		if(numberOfLikes > 0){
+			var likesFeedback = $("<span>")
+			likeButtonContainer.append(likesFeedback)
+			likesFeedback.text(numberOfLikes+" people like this")
+		}
+		//add a like button
+		var likeButton = makeLikeButton(replyObj)
+		likeButtonContainer.append(likeButton)		
+	}
+	
+    return likeButtonContainer
+}
+/*
+update = {
+	type : "likeReply", //  "unlikeReply", 
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	replyId : item0-reply0"
+}
+*/
+//LIKE
+function makeLikeButton(replyObj){
+	var replyHTML = replyObj["html"]
+    var replyId = replyObj["id"]
+    var replyAuthor = replyObj["user"]
+    var replyLikes = replyObj["likes"]
+	var itemId = replyObj["itemId"]
+
+	var likeButton = $("<input type='button' id='like-"+replyId+"' value='like'>")
+	wraplikeButton = function (likeButtonPrime, replyObjPrime){
+		likeButtonPrime.click(function(){
+			var replyId = replyObj["id"]
+			var itemId = replyObj["itemId"]
+			likeReply(itemId, replyId)
+		})
+	}
+	   
+	wraplikeButton(likeButton, replyObj)
+	return likeButton
+}
+
+function likeReply(itemId, replyId){
+	var myUpdate = {"type": "likeReply", 
+				"time" : getTime(), 
+				"itemId" : itemId, 
+				"replyId" : replyId
+	}
+
+	pushAndPullUpdates(myUpdate)
+}
+
+//UNLIKE
+function makeUnlikeButton(replyObj){
+	var replyHTML = replyObj["html"]
+    var replyId = replyObj["id"]
+    var replyAuthor = replyObj["user"]
+    var replyLikes = replyObj["likes"]
+	var itemId = replyObj["itemId"]
+
+	var unlikeButton = $("<input type='button' id='unlike-"+replyId+"' value='unlike'>")
+	wrapUnlikeButton = function (unlikeButtonPrime, replyObjPrime){
+		unlikeButtonPrime.click(function(){
+			var replyId = replyObj["id"]
+			var itemId = replyObj["itemId"]
+			unlikeReply(itemId, replyId)
+		})
+	}
+	   
+	wrapUnlikeButton(unlikeButton, replyObj)
+	return unlikeButton
+}
+
+function unlikeReply(itemId, replyId){
+	var myUpdate = {"type": "unlikeReply", 
+				"time" : getTime(), 
+				"itemId" : itemId, 
+				"replyId" : replyId
+	}
+
+	pushAndPullUpdates(myUpdate)
+}
+
+

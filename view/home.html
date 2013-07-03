@@ -45,10 +45,22 @@ var items = {}
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
+var username = false
 
-function ajax(message, callbackFunction){
-    $.post(document.location.href, { args : JSON.stringify(message) }, callbackFunction)
+function ajax(command, message, callbackFunction) {    
+	$.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
 }
+
+
+function getUsername(){
+	var browser = "Chrome"
+	var userAgent = $.browser
+	if(userAgent.mozilla){
+		browser = "Firefox"
+	}
+	return browser
+}
+
 
 function goToHome(){
 	twitterFeedSetup();
@@ -65,21 +77,29 @@ $(document).ready(function(){
     chatSetup()   
 */
     //pushAndPullUpdates({"type":"foo"}, 12334)    
-    getAllData()
+    testSignIn()
+	getAllData()
+	console.log( getUsername() )
 })
 
+function testSignIn(){
+	ajax("signIn", {"user": getUsername()}, function(result){ 
+		var res = JSON.parse(result)
+		username = res["user"]
+	})
+}
 function getAllData(){
     getUpdatesSinceTimeT(-1)
+	//console.log(username)
 }
 
 function getUpdatesSinceTimeT(t){
     pushAndPullUpdates(null, t)
 }
 
-function pushAndPullUpdates(myUpdate, myTimeSinceLastUpdate){
-    var message = {"update": myUpdate, "timeSinceLastUpdate": myTimeSinceLastUpdate}
-    
-    ajax(message, function(result){ handleUpdates(JSON.parse(result))})
+function pushAndPullUpdates(myUpdate){
+    var message = {"update": myUpdate}    
+    ajax("update", message, function(result){ handleUpdates(JSON.parse(result))})
 }
 
 
@@ -159,7 +179,7 @@ function pushAndPullUpdates(myUpdate, myTimeSinceLastUpdate){
                 <div class="row">
                    <div class="span3" >
                         <div id ="hashtagSummaryContainer" style="width:100%">
-                            <div class="column" id="hashtagSummary">
+                            <div class="column" id="labelHierarchy">
                             
                             </div>
                             <input type="button" class="btn" id="outputButton" value= "Output" onclick="outputHierarchy(this)" />

@@ -5,7 +5,7 @@ var utils = require('./node-utils');
 //		edit reply
 //		delete reply		
 // 		like an reply to an item (dislike?)
-// 		
+// 		unlike an reply to an item
 //
 // Label CRUD
 // DONE add label to item
@@ -71,6 +71,7 @@ function createNewReplyObj(replyToItem){
 	var newReplyObj = {
 		"user": user,
 		"time": time,
+		"itemId": itemId,
 		"html": html,
 		"id": newReplyId,
 		"parentId": parentId,
@@ -80,7 +81,77 @@ function createNewReplyObj(replyToItem){
 	
 	return newReplyObj
 }
+/*
+update = {
+	type : "likeReply",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	replyId : item0-reply0"
+}
+*/
+handleLikeReply = function(likeReply){
+	var user = likeReply["user"]
+	var time = likeReply["time"]
+	var itemId = likeReply["itemId"]
+	var replyId = likeReply["replyId"]	
+	var itemReference = allData["items"][itemId]
 
+	var replies = itemReference["replies"]
+	var matchingReplies = utils.filterArray(replies, function(x){
+		return x["id"] == replyId
+	})
+	console.log(replyId)
+	console.log(replies)
+	if(matchingReplies.length == 1){
+		var matchingReply = matchingReplies[0]
+		var matchingReplyLikes = matchingReply["likes"] 
+		if(utils.arrayContains(matchingReplyLikes, user)){
+			//do nothing, they already like this
+			console.log("error - handleLikeReply 1")
+		}else{
+			matchingReplyLikes.push(user)
+			console.log(matchingReplyLikes)
+		}
+	}
+	itemReference["lastUpdateTime"] = time
+}
+
+/*
+update = {
+	type : "likeReply",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	replyId : item0-reply0"
+}
+*/
+handleUnlikeReply = function(unlikeReply){
+	var user = unlikeReply["user"]
+	var time = unlikeReply["time"]
+	var itemId = unlikeReply["itemId"]
+	var replyId = unlikeReply["replyId"]	
+	var itemReference = allData["items"][itemId]
+
+	var replies = itemReference["replies"]
+	var matchingReplies = utils.filterArray(replies, function(x){
+		return x["id"] == replyId
+	})
+
+	if(matchingReplies.length == 1){
+		var matchingReply = matchingReplies[0]
+		var matchingReplyLikes = matchingReply["likes"] 
+		if(utils.arrayContains(matchingReplyLikes, user)){
+			//do nothing, they already like this
+			var indexOfUsernameToRemove = matchingReplyLikes.indexOf(user)
+			matchingReplyLikes.splice(indexOfUsernameToRemove,1)
+		}else{
+			console.log("error - handleUnlikeReply 1")
+		}
+	}
+	itemReference["lastUpdateTime"] = time
+	//console.log(itemReference)
+}
 
 /////////////////////////////////////
 // ADD LABEL TO ITEM
