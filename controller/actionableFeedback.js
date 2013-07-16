@@ -1,0 +1,5 @@
+updateActionableFeedback = function(){
+	updateHierarchy()
+	updateCompletedItems()	
+}
+

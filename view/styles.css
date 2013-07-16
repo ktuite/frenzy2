@@ -176,6 +176,18 @@ label{
 	padding-top: 20px;
 }
 
+#searchFeedbackContainer{
+	height: 30px
+}
+#searchFeedbackDiv{
+	background-color: white;
+	margin: 5px;
+	padding: 5px;
+	font-size:medium;
+		font-style: bold;
+}
+
+
 h2 { 
    position: absolute; 
    top: -12px; 

@@ -194,6 +194,8 @@ handleAddLabelToItem = function(addLabelToItem){
 	//update the labelList to say that this label is on this item
 	updateLabelListItemCounts(labelText, itemId, time)
 	
+	//updateActionableFeedback()
+	//updateHierarchy()
 	itemReference["lastUpdateTime"] = time
 }
 
@@ -258,6 +260,8 @@ handleRemoveLabelFromItem = function(removeLabelFromItem){
 	var indexOfItem = listOfItemsWithThisLabel.indexOf(itemId)
 	listOfItemsWithThisLabel.splice(indexOfItem, 1) 
 	
+	//updateActionableFeedback()
+	//updateHierarchy()
 	itemReference["lastUpdateTime"] = time
 }
 
@@ -283,11 +287,25 @@ handleToggleLabelFromItem = function(toggleLabelFromItem){
 	var itemId = toggleLabelFromItem["itemId"]
 	var labelText = toggleLabelFromItem["labelText"]	
 	var checked = toggleLabelFromItem["checked"]	
+	console.log(toggleLabelFromItem)
 	
 	var itemReference = allData["items"][itemId]
 	
+	//update item labels
 	itemReference["labels"][labelText]["lastUpdateTime"] = time
 	itemReference["lastUpdateTime"] = time
 	itemReference["labels"][labelText]["checked"] = checked
+	
+	//update itemsUsedBy
+	var itemsUsedBy = allData["labelList"][labelText]["itemsUsedBy"]
+	if(checked && itemsUsedBy.indexOf(itemId) == -1){
+		itemsUsedBy.push(itemId)
+	}
+	if(!checked && itemsUsedBy.indexOf(itemId) > -1){
+		itemsUsedBy.splice(itemsUsedBy.indexOf(itemId), 1)
+	}
+	
+	//updateActionableFeedback()
+	//updateHierarchy()
 	
 }

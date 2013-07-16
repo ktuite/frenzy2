@@ -1,19 +1,121 @@
 function handleUpdates(result){  
+/*
     if("updatedItems" in result){
         var updatedItems = result["updatedItems"]
         handleUpdatedItems(updatedItems)
     }
+	*/
+	console.log(result)
+	if("allItems" in result){
+		items = result["allItems"]
+	}
+	if("itemIdOrder" in result){
+		itemIdOrder = result["itemIdOrder"]
+		console.log("itemIdOrder")
+		console.log(itemIdOrder)
+		displayFeed(itemIdOrder)		
+	}
+	if("query" in result){
+		query = result["query"]
+		updateSearchFeedback(query)
+	}
+	
     if("hierarchy" in result){
         var hierarchy = result["hierarchy"]
         handleUpdatedHierarchy(hierarchy)
     }
+	
+	if("completion" in result){
+		var completion = result["completion"]
+		handleUpdatedCompletion(completion)
+	}
     
 }
 
 //////////////////////////////////////////
 // update items in feed
 //////////////////////////////////////////
+/*
+function handleUpdatedItems(updatedItems){  
+	var updatedItemObjs = []    
+    for( var i in updatedItems){  
+		
+        var updatedItemObj = updatedItems[i]
+        var id = updatedItemObj["id"]
+        var lastUpdateTime = updatedItemObj["lastUpdateTime"]
+        
+		//push the item to the top of the stack in the order it is given to you
+		//var newItemDiv = createItemAndReplyDiv(updatedItemObj)
+		//newItemDivs.push(newItemDiv)	
+        updatedItemObjs.push(updatedItemObj)
+		
+        //update the local data structure
+        items[id] = updatedItemObj        
+    }    
+    displayFeed()
+}
+*/
+function displayFeed(itemIds){
+	//items is the recent items
+	$("#feed").empty()     
+	
+    for( var i in itemIds){
+		var itemId = itemIds[i]
+		var itemObj = items[itemId]
+		console.log(items)
+		var newItemDiv = createItemAndReplyDiv(itemObj)        
+        $("#feed").append(newItemDiv)
+    }
 
+	//from the query type, get which items to show.
+	//get the order to display them in
+}
+/*
+function pushNewItemDivsOnFeed(newItemDivs){
+    $("#feed").empty()     
+	
+    for( var i in newItemDivs){
+        var newItemDiv = newItemDivs[i]    
+        $("#feed").append(newItemDiv)
+    }
+	updateSearchFeedback()	
+}
+*/
+
+function updateSearchFeedback(query){
+	console.log("updateSearchFeedback")
+	var searchFeedbackText = ""
+	var queryType = query["type"]
+	
+	if(queryType == "all"){
+		var numberOfItems = itemIdOrder.length
+		searchFeedbackText = "Showing all items ("+numberOfItems+")"
+	}
+	if(queryType == "label"){
+		var numberOfItems = itemIdOrder.length
+		var label = query["label"]
+		console.log(numberOfItems)
+		searchFeedbackText = "Showing items labeled '"+label+"' ("+numberOfItems+")"
+	}
+	if(queryType == "completed"){
+		var numberOfItems = itemIdOrder.length
+		console.log(numberOfItems)
+		searchFeedbackText = "Showing all items with at least one label ("+numberOfItems+")"
+	}
+	if(queryType == "incompleted"){
+		var numberOfItems = itemIdOrder.length
+		console.log(numberOfItems)
+		searchFeedbackText = "Showing all items with no labels ("+numberOfItems+")"
+	}
+	
+	$("#searchFeedbackDiv").text(searchFeedbackText)
+}
+
+/*
+//DEPRICATED
+//this was a way to only update new items rather than repost everything.
+//the problem was that if you pressed refresh, all the items would go away :(
+//Also
 function handleUpdatedItems(updatedItems){       
     var newItemDivs = []    
     for( var i in updatedItems){  
@@ -21,7 +123,6 @@ function handleUpdatedItems(updatedItems){
         var updatedItemObj = updatedItems[i]
         var id = updatedItemObj["id"]
         var lastUpdateTime = updatedItemObj["lastUpdateTime"]
-        console.log(updatedItemObj)
         if( id in items){
             updateExistingItemDiv(updatedItemObj)            
         }else{
@@ -45,20 +146,6 @@ function updateExistingItemDiv(updatedItemObj){
     $("#containerFor"+itemId).html(itemAndReplyDivInternals)
 }
 
-/*
-function createItemDiv(updatedItem){
-        var id = updatedItem["id"]
-        var html = updatedItem["html"]
-        var replies = updatedItem["replies"]
-        var replyCounter = updatedItem["replyCounter"]
-        var lastUpdateTime = updatedItem["lastUpdateTime"]
-        var labels = updatedItem["labels"]    
-        
-        var div = $("<div id='"+id+"'>")
-        div.html(html)
-        return div
-}
-*/
 function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
     newItemDivs.sort(function(a,b){return a["lastUpdateTime"] - b["lastUpdateTime"]})
     for( var i in newItemDivs){
@@ -66,21 +153,19 @@ function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
         $("#feed").prepend(newItemDiv)
     }
 }
+*/
+
+
 
 function updateNewLabel(textboxValue,itemId){
-    console.log("asdfsdfs")
     var addNewLabelUpdate = {
         type : "addLabelToItem",
-        user : "",
-        time : 1,
+        time : getTime(),
         itemId : itemId , 
         labelText : textboxValue
     }
-    console.log("updateNewLabel")
-    pushAndPullUpdates(addNewLabelUpdate, -1)
+    pushAndPullUpdates(addNewLabelUpdate)
 }
-
-
 
 //////////////////////////////////////////
 // hierarchy
@@ -95,23 +180,6 @@ function handleUpdatedHierarchy(hierarchy){
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
 }
-
-function createLabelDiv(labelObj){
-    var labelParents = labelObj["parents"]
-    var labelObj = labelObj["label"]
-    var label = labelObj["label"]
-    var counts = labelObj["counts"]
-    
-    var div = $("<div>")
-    div.text(label + " ("+counts+") ")
-	
-	var numParents = labelParents.length
-    div.css('margin-left',(30*numParents)+"px")
-    //TODO: onclick handler
-    return div
-}
-
-
 
 
 

@@ -1,0 +1,34 @@
+V1 Features to replicate
+
+X	Each item shows up in the feed
+X	can reply to each item
+X	hierarchy is automatically created (actionable feedback)
+X	all updates automatically propigated
+X	search by label
+	search by text string
+	search by username
+	sort items by most active
+	sort items by least active
+	
+	show all items
+	feedback about completed goals
+	Sign in
+	locations of users shown to other users
+	chat
+		
+*New Features for V2*
+	place chat better and make the item stream one column
+X 	labels appear as checkboxes
+	Place users in different locations
+	Edit, move, delete labels in hierarchy
+	let users sort by TFIDF for text items
+	
+	
+Datasets:
+	images - nature,  Goal: hierarchy/album, find trends
+	crowdcamp ideas. Goal: find named clusters, pick a group to work in
+	CSCW/UIST papers. Goal: form named sessions
+	jokes. Goal: classify/code
+	math problems. Goal: find multiple examples/inspiration for writing your own problems
+	business/industries. match lawyers with cases based on important features.
+	

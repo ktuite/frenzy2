@@ -1,12 +1,23 @@
 var utils = require('./node-utils');
 
+updateCompletedItems = function(){
+    allData["completion"] = calculateCompletedItems()
+    allData["completionLastUpdated"] = getTime()
+	console.log(allData["completion"])
+}
+
 calculateCompletedItems = function(){
+	console.log("calculateCompletedItems")
 	var items = allData["items"]
 	var arrayOfItemObjs =  utils.dictToArray(items)
 	
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
 		var labelsDict = x["labels"]
-		var numberOfLabels = Object.keys(labelsDict).length
+		var labelsArray = utils.dictToArray(labelsDict)
+		var checkedLabels = utils.filterArray(labelsArray, function(x){
+			return x["checked"]
+		})
+		var numberOfLabels = checkedLabels.length
 		return numberOfLabels > 0		
 	})
 	var completedItemIds = utils.mapArray(completedItemObj, function (x){
@@ -15,15 +26,18 @@ calculateCompletedItems = function(){
 	
 	var incompletedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
 		var labelsDict = x["labels"]
-		var numberOfLabels = Object.keys(labelsDict).length
+		var labelsArray = utils.dictToArray(labelsDict)
+		var checkedLabels = utils.filterArray(labelsArray, function(x){
+			return x["checked"]
+		})
+		var numberOfLabels = checkedLabels.length
 		return numberOfLabels == 0		
 	})
 	var incompletedItemIds = utils.mapArray(incompletedItemObj, function (x){
 		return x["id"]
 	})
 	
-	return {"completedItemIds":completedItemIds, "incompletedItemIds": incompletedItemIds}
-	var completedItemIds = []
+	return {"completedItemIds":completedItemIds, "incompletedItemIds": incompletedItemIds}	
 	
 }
 

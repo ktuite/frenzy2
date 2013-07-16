@@ -31,22 +31,39 @@
 <!--
 <script type = "text/javascript" src="chat.js"></script>
 <script type = "text/javascript" src="signInOut.js"></script>
+
+<script type = "text/javascript" src="filter.js"></script>
 -->
-<script type = "text/javascript" src="utils.js"></script>
-
-<script type = "text/javascript" src="updates.js"></script>
-<script type = "text/javascript" src="feed.js"></script>
-
-<link href="/styles.css" rel="stylesheet">
-
 <script type="text/javascript">
 //var twitterFeed = []
 var items = {}
+var itemIdOrder = []
+var query = {}
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
 var username = false
+</script>
+<script type = "text/javascript" src="utils.js"></script>
+<script type = "text/javascript" src="hierarchy.js"></script>
+<script type = "text/javascript" src="completionFeedback.js"></script>
+<script type = "text/javascript" src="updates.js"></script>
+<script type = "text/javascript" src="feed.js"></script>
 
+
+<link href="/styles.css" rel="stylesheet">
+
+<script type="text/javascript">
+/*
+//var twitterFeed = []
+var items = {}
+var itemIdOrder = []
+var query = {}
+//var hierarchy = []
+//var completionData = {}
+//var userLocations = {}
+var username = false
+*/
 function ajax(command, message, callbackFunction) {    
 	$.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
 }
@@ -63,9 +80,11 @@ function getUsername(){
 
 
 function goToHome(){
+	/*
 	twitterFeedSetup();
 	$("#homeButton").attr('src','http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png');
 	$("#counter").text("");
+	*/
 }
 
 $(document).ready(function(){
@@ -77,7 +96,9 @@ $(document).ready(function(){
     chatSetup()   
 */
     //pushAndPullUpdates({"type":"foo"}, 12334)    
-    testSignIn()
+    goalSetup()
+	testSignIn()
+	setDefaultQuery()
 	getAllData()
 	console.log( getUsername() )
 })
@@ -88,17 +109,23 @@ function testSignIn(){
 		username = res["user"]
 	})
 }
+
+function setDefaultQuery(){
+	query["type"] = "all"
+	query["sortOrder"] = "creationTime"
+}
+
 function getAllData(){
     getUpdatesSinceTimeT(-1)
 	//console.log(username)
 }
 
 function getUpdatesSinceTimeT(t){
-    pushAndPullUpdates(null, t)
+    pushAndPullUpdates(null)
 }
 
 function pushAndPullUpdates(myUpdate){
-    var message = {"update": myUpdate}    
+    var message = {"update": myUpdate, "query": query}   
     ajax("update", message, function(result){ handleUpdates(JSON.parse(result))})
 }
 
@@ -192,6 +219,11 @@ function pushAndPullUpdates(myUpdate){
         <div class="span9" > 
             <div class="row">                
                 <div class="span9">
+					<div id ="searchFeedbackContainer">
+						<div id ="searchFeedbackDiv">
+					
+						</div>
+					</div>
                     <div id ="feedDiv">
                         <div class="span9" id="feed">
                             

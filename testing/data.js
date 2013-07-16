@@ -8,6 +8,7 @@ item0 = {
 	"replies" : [],
 	"replyCounter" : 0,
 	"lastUpdateTime" : 12344555,
+	"creationTime": 0, 
 	"labels": {}
 }
 allData["items"]["item0"] = item0
@@ -18,6 +19,7 @@ item1 = {
 	"replies" : [],
 	"replyCounter" : 0,
 	"lastUpdateTime" : 12344556,
+	"creationTime": 1, 
 	"labels": {}
 }
 allData["items"]["item1"] = item1
@@ -48,7 +50,7 @@ label2Ref = {
 
 label2 = {
 	"label" : "snake",
-	"itemsUsedBy" : ["item1"],
+	"itemsUsedBy" : [],
 	"user" : "hmslydia",
 	"creationTime" : 123456789
 }

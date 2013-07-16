@@ -1,5 +1,64 @@
 var utils = require('./node-utils');
 
+
+getFeedItemsAndOrder = function(query){
+	console.log("getFeedItemsAndOrder")
+	var queryType = query["type"]
+	var itemIds = []
+	
+	//////////////////////////////
+	// SEARCH 
+	//////////////////////////////
+	if(queryType == "all"){
+		for( var itemId in allData["items"]){
+			itemIds.push(itemId)
+		}
+	}
+	if(queryType == "label"){
+		var label = query["label"]
+		var checked = query["label"]
+		var labelInHierarchy = utils.filterArray(allData["hierarchy"], function(x){
+			return x["label"]["label"] == label
+		})
+		if(labelInHierarchy.length == 1){
+			var labelObj = labelInHierarchy[0]["label"]
+			console.log(labelObj)
+			itemIds = labelObj["memberItemIds"]			
+		
+		}else{
+			console.log("error getFeedItemsAndOrder - 1")
+		}
+	}
+	if(queryType == "completed"){
+		itemIds = allData["completion"]["completedItemIds"]
+	}
+	if(queryType == "incompleted"){
+		itemIds = allData["completion"]["incompletedItemIds"]
+	}
+	
+	//////////////////////////////
+	// SORT 
+	//////////////////////////////
+	var sortOrder = query["sortOrder"]
+	if(sortOrder == "creationTime"){
+		itemIds = sortItemIdsByCreationTime(itemIds)
+	}
+	console.log(itemIds)
+	return itemIds
+}
+
+///////////////////////////
+getMemberItemObjsForIds = function(memberItemIds){
+	var itemObjs = []
+	
+	var itemsReferences = allData["items"]
+	for(itemId in memberItemIds){
+		var itemObject = itemsReferences[itemId]
+		itemObjs.push(itemObject)
+	}
+	return itemObjs
+}
+
 filterItemIdsByLabel = function(requestedLabel){
 	var itemsReferences = allData["items"]
     var itemIdsWithLabelChecked = []
@@ -63,6 +122,12 @@ sortItemIdsByLastUpdated = function(allItemIds){
 	itemsIdsWithLastUpdatedTimes.sort(function(a,b){return b["timeLastUpdated"]-a["timeLastUpdated"]});
 	
 	return itemsIdsWithLastUpdatedTimes
+}
+
+sortItemIdsByCreationTime = function(itemIds){
+	var itemReferences = allData["items"]
+	itemIds.sort(function(a,b){return itemReferences[b]["creationTime"] - itemReferences[b]["creationTime"]});
+	return itemIds
 }
 
 getAllItemObjectsUpdatedSinceTimeT = function(t){

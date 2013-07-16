@@ -1,0 +1,8 @@
+var game1 = {
+    "answer": "death star",
+    "imageArray": ["images/word51.jpg", "images/word52.jpg","images/word53.jpg","images/word54.jpg"],
+    "passed":false,
+    "letterArray": ["a","i","e","n","l","s","p","o","m","h","d","b","t","t","r","a"],
+    "numOfGuesses": 0,
+    "hint": "name of the ship, two words"
+}

@@ -1,3 +1,7 @@
+///////////////////////////
+// Item and Reply Div
+///////////////////////////
+
 function createItemAndReplyDiv(itemObj){
     var itemAndReplyDiv = $("<div class='row' id='containerFor"+itemObj["id"]+"'>")
 	var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj)
@@ -37,51 +41,6 @@ function createItemAndReplyDivInternals(itemObj){
 
 }
 
-function createLabelsDiv(itemObj){
-    var div = $('<div>')
-    var labelObjDict = itemObj["labels"]
-    var itemId = itemObj["id"]
-    for(var i in labelObjDict){
-        var labelObj = labelObjDict[i]
-        var interactiveLabelUI = makeInteractiveLabelUI(labelObj)
-        div.append(interactiveLabelUI)
-    }
-    var addLabelUI = addLabel(itemId)
-    div.append(addLabelUI)
-        
-    return div
-}
-function addLabel(itemId){
-    var div = $('<div>')
-    var textbox = $('<input type="textbox" name="textbox1" >')
-    div.append(textbox)
-    var addButton = $('<button id="addButton">+</button>')
-    addButton.click(function(){
-        var textboxValue = textbox.val()
-        console.log()
-        updateNewLabel(textboxValue,itemId)
-        console.log(textbox.val())
-    })
-    div.append(addButton)
-    return div
-}
-function makeInteractiveLabelUI(labelObj){
-    var labelName = labelObj["label"]
-    var labelChecked = labelObj["checked"]
-    var div = $('<div>')
-    var checkbox = $('<input type="checkbox" name="checkbox1" checked=true>')
-    div.append(checkbox)
-    if(labelChecked==true){
-        $(checkbox).attr('checked');
-    }
-    else{
-        $(checkbox).removeAttr('checked');
-    }
-    var labelSpan = $('<span>')
-    labelSpan.html(labelName+"<br>")
-    div.append(labelSpan)
-    return div
-}
 function createItemDiv(itemObj){
     var itemHTML = itemObj["html"]
     var itemId= itemObj["id"]
@@ -125,38 +84,90 @@ function createItemDiv(itemObj){
     return clickableDiv
 }
 
-function createBlankReplyDiv(itemId, parentReplyId){	
-    var containerDiv = $("<div class='replyTextDiv'>")
-	var div = $("<textarea class='replyTextArea' id='replyTo-"+parentReplyId+"'>")
-	var replyButton = $("<input type='button' class='replyButton' value='post'>")
-	
 
-    wrap = function(replyButtonPrime,divPrime, itemId, parentItemIdPrime){
-        replyButtonPrime.click(function(){
-			replyText = divPrime.val();
-			saveReply(replyText, itemId, parentItemIdPrime)  
-        })
+/////////////////////////
+// LABELS
+/////////////////////////
+function createLabelsDiv(itemObj){
+    var div = $('<div>')
+    var labelObjDict = itemObj["labels"]
+    var itemId = itemObj["id"]
+    for(var i in labelObjDict){
+        var labelObj = labelObjDict[i]
+        var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)
+        div.append(interactiveLabelUI)
     }
-    wrap(replyButton, div, itemId, parentReplyId)
-    
-    containerDiv.append(div);
-	containerDiv.append(replyButton);    
-    return containerDiv
-    
+    var addLabelUI = addLabel(itemId)
+    div.append(addLabelUI)
+        
+    return div
+}
+function addLabel(itemId){
+    var div = $('<div>')
+    var textbox = $('<input type="textbox">')
+    div.append(textbox)
+    var addButton = $('<button id="addButton">+</button>')
+    addButton.click(function(){
+        var textboxValue = textbox.val()
+        updateNewLabel(textboxValue,itemId)
+    })
+    div.append(addButton)
+    return div
+}
+function makeInteractiveLabelUI(labelObj, itemId){
+    var labelText = labelObj["label"]
+    var labelChecked = labelObj["checked"]
+    var div = $('<div>')
+    var checkbox = $('<input type="checkbox" checked=true>')
+    div.append(checkbox)
+    if(labelChecked==true){
+        $(checkbox).attr('checked');
+    }
+    else{
+        $(checkbox).removeAttr('checked');
+    }
+	
+	checkbox.click(function() {
+		var $this = $(this);
+		// $this will contain a reference to the checkbox   
+		if ($this.is(':checked')) {
+			// the checkbox is now checked 
+			//toggle checked in the database and refresh everything
+			toggleLabelUpdate(labelText, itemId, true)
+		} else {
+			// the checkbox is now unchecked
+			toggleLabelUpdate(labelText, itemId, false)
+		}
+	});
+	
+    var labelSpan = $('<span>')
+    labelSpan.html(labelText+"<br>")
+    div.append(labelSpan)
+    return div
 }
 
-function saveReply(replyText, itemId, parentReplyId){
-	var myTimeSinceLastUpdate = 0
-	var myUpdate = {"type": "replyToItem", 
-				//"user" : user, 
+/*
+update = {
+	type : "toggleLabelFromItem",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	labelText : "animal",
+	checked: true,
+}
+*/
+function toggleLabelUpdate(labelText, itemId, checked){
+	var myUpdate = {"type": "toggleLabelFromItem", 
 				"time" : getTime(), 
 				"itemId" : itemId, 
-				"html" : replyText, 
-				"parentId": parentReplyId
+				"labelText" : labelText, 
+				"checked": checked
 	}
 
-	pushAndPullUpdates(myUpdate, myTimeSinceLastUpdate)
+	pushAndPullUpdates(myUpdate)
 }
+
+
 
 ////////////////////////////////
 // Replies
@@ -273,6 +284,8 @@ function createDynamicReplyDiv(itemId, parentReplyId, level){
 	replyDiv.css('margin-left',5+level*30+"px");
 	return replyDiv
 }
+
+
 
 /////////////////////
 // LIKES
@@ -414,3 +427,36 @@ function unlikeReply(itemId, replyId){
 }
 
 
+/////////////////////////
+// Blank replies
+/////////////////////////
+function createBlankReplyDiv(itemId, parentReplyId){	
+    var containerDiv = $("<div class='replyTextDiv'>")
+	var div = $("<textarea class='replyTextArea' id='replyTo-"+parentReplyId+"'>")
+	var replyButton = $("<input type='button' class='replyButton' value='post'>")
+	
+
+    wrap = function(replyButtonPrime,divPrime, itemId, parentItemIdPrime){
+        replyButtonPrime.click(function(){
+			replyText = divPrime.val();
+			saveReply(replyText, itemId, parentItemIdPrime)  
+        })
+    }
+    wrap(replyButton, div, itemId, parentReplyId)
+    
+    containerDiv.append(div);
+	containerDiv.append(replyButton);    
+    return containerDiv
+    
+}
+
+function saveReply(replyText, itemId, parentReplyId){
+	var myUpdate = {"type": "replyToItem", 
+				"time" : getTime(), 
+				"itemId" : itemId, 
+				"html" : replyText, 
+				"parentId": parentReplyId
+	}
+
+	pushAndPullUpdates(myUpdate)
+}

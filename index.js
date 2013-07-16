@@ -11,6 +11,7 @@ var testing = true;
 ////////////////////////
 // Data structure
 ////////////////////////
+
 allData = {
     "items":{},
 	"labelList": {},
@@ -18,7 +19,9 @@ allData = {
 
     "hierarchy":{},
     "hierarchyLastUpdated":-1,
-    "completionData":{},
+	
+    "completion":{},
+	"completionLastUpdated":-1,
 
     "chat":[],
     "userLocations":[], 
@@ -28,6 +31,9 @@ allData = {
         "events":[]
     }
 }
+
+
+
 
 ////////////////////////
 // Client side includes
@@ -44,7 +50,6 @@ app.get('/home.html', function(request, response){
 			request.session.timeSinceLastUpdate = -1
 		}
 		request.session.lastUpdateTime = 0
-		console.log(request.session)
 	}
 	response.sendfile('view/home.html')
 });
@@ -68,7 +73,18 @@ app.get('/updates.js', function(request, response){
 app.get('/feed.js', function(request, response){
 	response.sendfile('view/feed.js')
 });
+/*
+app.get('/filter.js', function(request, response){
+	response.sendfile('view/filter.js')
+});
+*/
+app.get('/hierarchy.js', function(request, response){
+	response.sendfile('view/hierarchy.js')
+});
 
+app.get('/completionFeedback.js', function(request, response){
+	response.sendfile('view/completionFeedback.js')
+});
 
 ////////////////////////
 // Server side includes
@@ -80,21 +96,15 @@ var handleUpdatesFromClient = require('./controller/handleUpdatesFromClient.js')
 var calculateCompletedItems = require('./controller/calculateCompletedItems.js');
 var hierarchyHelpers = require('./controller/createHierarchy.js');
 var filter = require('./controller/filter.js');
+var actionableFeedback = require('./controller/actionableFeedback.js');
 
 
 
 ////////////////////////
 // Instatiate Database
 ////////////////////////
-var instantiateData = require('./testing/data.js');
-updateHierarchy()
-
-//REPLIES
-var reply1 = {"type": "replyToItem", "user" : "hmslydia", "time" : 1, "itemId" : "item0", "html" : "<b>my reply</b>", "parentId": ""}
-var reply2 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" : "item0", "html" : "<b>my reply 2</b>", "parentId": "item0-reply0"}
-var reply3 = {"type": "replyToItem", "user" : "hmslydia", "time" : 2, "itemId" : "item1", "html" : "<b>my reply 2 1</b>", "parentId": ""}
-
-
+var instantiateData = require('./testing/cscwData.js');
+updateActionableFeedback()
 
 /////////////////////////////////
 // Client Communication Handling
@@ -106,27 +116,37 @@ app.post('/home.html', function(request, response){
 	if(command == "update"){
 		var message = JSON.parse(request.body["args"])
 		var update = message["update"]
+		var query = message["query"]
 		
 		if(update){
 			update["user"] = request.session.user
 		}
 		
 		var timeSinceLastUpdate = request.session.timeSinceLastUpdate //message["timeSinceLastUpdate"]
-		console.log(timeSinceLastUpdate)
+		
 		//first handle update
 		handleClientUpdateData(update)
 		
 		//then push all new updates to the client
-		var serverUpdates = getAllServerUpdatesSinceT(-1)//getAllServerUpdatesSinceT(timeSinceLastUpdate)
+		//var serverUpdates = getAllServerUpdatesSinceT(-1)//getAllServerUpdatesSinceT(timeSinceLastUpdate)
+		var getServerData = getAllServerData(query)
+		
 		request.session.timeSinceLastUpdate = getTime()
-		response.send(JSON.stringify(serverUpdates))
-	}
-	if(command == "signIn"){
+		response.send(JSON.stringify(getServerData))
+	}else if(command == "signIn"){
 		var user = args["user"]
 		request.session.user = user
 		var rtn = {"user": request.session.user}
+		
 		response.send(JSON.stringify(rtn))
 	}
+	/*
+	else if(command == "filter"){
+		var memberItemIds = JSON.parse(request.body["args"])
+		var memberItemObjs = getMemberItemObjsForIds(memberItemIds)
+		response.send(JSON.stringify(memberItemObjs))
+	}
+	*/
 });
 
 
@@ -153,6 +173,8 @@ handleClientUpdateData = function(update){
             handleToggleLabelFromItem(update)
         }
     }
+	
+	updateActionableFeedback()
 }
 
 //when the client requires an update, find out how much data to send them and send it
@@ -164,6 +186,8 @@ respondToClientUpdateRequest = function(timeOfClientLastUpdate){
 	
 }
 */
+
+/*
 function getAllServerUpdatesSinceT(t){
     var rtn = {}
     
@@ -184,10 +208,41 @@ function getAllServerUpdatesSinceT(t){
     //5. userLocations
     //6. recently edited items
     //7. order of items
+	if(true){
+		rtn["itemOrder"] = []
+	}
     
 
     return rtn
 }
+*/
+
+function getAllServerData(query){
+    var rtn = {}
+    
+    //types of updates:
+    //1. items
+    rtn["allItems"] = allData["items"]
+    
+    //2. hierarchy 
+	rtn["hierarchy"] = allData["hierarchy"]	
+    
+    //3. completion conditions
+	rtn["completion"] = allData["completion"]	
+	
+    //4. chat
+    //5. userLocations
+    //6. recently edited items
+    //7. order of items
+	rtn["itemIdOrder"] = getFeedItemsAndOrder(query)
+	rtn["query"] = query
+	
+    
+
+    return rtn
+}
+
+
 
 //////////////////////////////////////////
 //// start serving
