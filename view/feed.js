@@ -9,7 +9,7 @@ function createItemAndReplyDiv(itemObj){
     return itemAndReplyDiv
 }
 function createItemAndReplyDivInternals(itemObj){
-    var itemAndReplyDiv = $("<div class='row'>")
+    var itemAndReplyDiv = $("<div >")
     
     var itemDiv = createItemDiv(itemObj)
     var labelsAndRepliesDiv = $("<div class='span5 replyList' style='background:white'>")
