@@ -97,17 +97,12 @@ label{
 	position: relative;
 }
 
-#goalSummaryContainer{
+.summaryContainer{
     padding:5px;
     margin: 5px;
     background-color: white;
     border-radius: 6px;
-}
-#hashtagSummaryContainer{
-    padding:5px;
-    margin: 5px;
-    background-color: white;
-    border-radius: 6px;
+	width: 100%
 }
 /*
 #completenessEvaluation{

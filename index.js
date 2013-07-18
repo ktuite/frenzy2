@@ -29,7 +29,8 @@ allData = {
     "history":{ 
         "locations":[], 
         "events":[]
-    }
+    },
+	"sessions": {}
 }
 
 
@@ -95,6 +96,7 @@ var testingFramework = require('./testing/urlTestingRequest.js');
 var handleUpdatesFromClient = require('./controller/handleUpdatesFromClient.js');
 var calculateCompletedItems = require('./controller/calculateCompletedItems.js');
 var hierarchyHelpers = require('./controller/createHierarchy.js');
+var hierarchyHelpers = require('./controller/sessions.js');
 var filter = require('./controller/filter.js');
 var actionableFeedback = require('./controller/actionableFeedback.js');
 
@@ -103,7 +105,9 @@ var actionableFeedback = require('./controller/actionableFeedback.js');
 ////////////////////////
 // Instatiate Database
 ////////////////////////
-var instantiateData = require('./testing/cscwData.js');
+//var instantiateData = require('./testing/cscwData.js');
+//var instantiateData = require('./testing/cscwDataSubset.js');
+var instantiateData = require('./testing/data.js');
 updateActionableFeedback()
 
 /////////////////////////////////
@@ -171,6 +175,8 @@ handleClientUpdateData = function(update){
             handleRemoveLabelFromItem(update)
         }else if(updateType == "toggleLabelFromItem"){
             handleToggleLabelFromItem(update)
+        }else if(updateType == "session"){
+            handleSessionUpdate(update)
         }
     }
 	
@@ -226,6 +232,9 @@ function getAllServerData(query){
     
     //2. hierarchy 
 	rtn["hierarchy"] = allData["hierarchy"]	
+
+    //2. hierarchy 
+	rtn["sessions"] = allData["sessions"]
     
     //3. completion conditions
 	rtn["completion"] = allData["completion"]	
@@ -241,6 +250,8 @@ function getAllServerData(query){
 
     return rtn
 }
+
+
 
 
 

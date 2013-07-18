@@ -101,8 +101,6 @@ handleLikeReply = function(likeReply){
 	var matchingReplies = utils.filterArray(replies, function(x){
 		return x["id"] == replyId
 	})
-	console.log(replyId)
-	console.log(replies)
 	if(matchingReplies.length == 1){
 		var matchingReply = matchingReplies[0]
 		var matchingReplyLikes = matchingReply["likes"] 
@@ -111,7 +109,6 @@ handleLikeReply = function(likeReply){
 			console.log("error - handleLikeReply 1")
 		}else{
 			matchingReplyLikes.push(user)
-			console.log(matchingReplyLikes)
 		}
 	}
 	itemReference["lastUpdateTime"] = time
@@ -308,4 +305,28 @@ handleToggleLabelFromItem = function(toggleLabelFromItem){
 	//updateActionableFeedback()
 	//updateHierarchy()
 	
+}
+
+/////////////////////////////////////
+// MARK SESSION ON ITEM
+/////////////////////////////////////
+/*
+update = {
+	type : "session",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	sessionLabel : "animal"
+}
+*/
+handleSessionUpdate = function(markSessionOnItem){
+console.log("handleSessionUpdate")
+	var user = markSessionOnItem["user"]
+	var time = markSessionOnItem["time"]
+	var itemId = markSessionOnItem["itemId"]
+	var sessionLabel = markSessionOnItem["sessionLabel"]	
+	
+	var itemReference = allData["items"][itemId]
+
+	itemReference["session"] = sessionLabel
 }

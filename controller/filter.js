@@ -20,14 +20,20 @@ getFeedItemsAndOrder = function(query){
 		var labelInHierarchy = utils.filterArray(allData["hierarchy"], function(x){
 			return x["label"]["label"] == label
 		})
-		if(labelInHierarchy.length == 1){
+		if(labelInHierarchy.length > 0){
 			var labelObj = labelInHierarchy[0]["label"]
 			console.log(labelObj)
 			itemIds = labelObj["memberItemIds"]			
 		
 		}else{
 			console.log("error getFeedItemsAndOrder - 1")
+		
 		}
+	}
+	if(queryType == "session"){
+		var label = query["label"]
+		
+		itemIds = allData["sessions"][label]
 	}
 	if(queryType == "completed"){
 		itemIds = allData["completion"]["completedItemIds"]

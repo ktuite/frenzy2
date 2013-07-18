@@ -92,14 +92,39 @@ function createLabelsDiv(itemObj){
     var div = $('<div>')
     var labelObjDict = itemObj["labels"]
     var itemId = itemObj["id"]
+	var session = itemObj["session"]
     for(var i in labelObjDict){
         var labelObj = labelObjDict[i]
-        var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)
-        div.append(interactiveLabelUI)
+		
+		var label = labelObj["label"]
+		var isSession = false
+		if(label == session){
+			isSession = true
+		}
+		var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId, isSession)
+        
+		div.append(interactiveLabelUI)
     }
+	
+	var noSessionDiv = $("<div>")
+	var checked = ""
+	if(session=="none"){
+		checked = 'checked="checked"'
+	}
+	var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="none" '+checked+'>')
+	var sessionNoneSpan = $("<span>")
+	sessionNoneSpan.html("(none)")
+	noSessionDiv.append(sessionRadioButton)	
+	noSessionDiv.append(sessionNoneSpan)
+	
+	div.append(noSessionDiv)
+	
+
+
     var addLabelUI = addLabel(itemId)
     div.append(addLabelUI)
         
+
     return div
 }
 function addLabel(itemId){
@@ -114,11 +139,28 @@ function addLabel(itemId){
     div.append(addButton)
     return div
 }
-function makeInteractiveLabelUI(labelObj, itemId){
+function makeInteractiveLabelUI(labelObj, itemId, isSession){
     var labelText = labelObj["label"]
     var labelChecked = labelObj["checked"]
+	
     var div = $('<div>')
-    var checkbox = $('<input type="checkbox" checked=true>')
+    
+	//make radio button
+	var checked = ""	
+	if(isSession){
+		checked = 'checked="checked"'
+	}	
+	var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="'+labelText+'" '+checked+'>')
+	sessionRadioButton.click(function(e){
+		var sessionLabel = e.target.value
+		var name = e.target.name
+		var itemId = name.substring(0, name.indexOf("-"))
+		updateSession(itemId, sessionLabel)
+	})
+	div.append(sessionRadioButton)
+	
+	//make label checkbox
+	var checkbox = $('<input type="checkbox" checked=true>')
     div.append(checkbox)
     if(labelChecked==true){
         $(checkbox).attr('checked');
@@ -141,10 +183,34 @@ function makeInteractiveLabelUI(labelObj, itemId){
 	});
 	
     var labelSpan = $('<span>')
+	if(isSession){
+		labelSpan.css("color", "red")
+	}
     labelSpan.html(labelText+"<br>")
     div.append(labelSpan)
     return div
 }
+
+/*
+update = {
+	type : "session",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	sessionLabel : "animal"
+}
+*/
+function updateSession(itemId, sessionLabel){
+	var myUpdate = {"type": "session", 
+				"time" : getTime(), 
+				"itemId" : itemId, 
+				"sessionLabel" : sessionLabel
+	}
+
+	pushAndPullUpdates(myUpdate)
+}
+
+
 
 /*
 update = {

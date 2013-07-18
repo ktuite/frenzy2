@@ -23,6 +23,23 @@ function createLabelDiv(labelObj){
 	})
     return div
 }
+
+function createSessionDiv(label, counts){
+    var div = $("<div>")
+    div.text(label + " ("+counts+") ")
+	
+	div.click(function(){
+		query = {
+			"type" : "session",
+			"label" : label
+		}
+		getAllData()
+		//filterItemsByLabel(memberItemIds)
+	})
+	
+    return div
+}
+
 /*
 function filterItemsByLabel(memberItemIds){
 	

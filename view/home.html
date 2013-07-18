@@ -190,7 +190,7 @@ function pushAndPullUpdates(myUpdate){
                 
                 <div class="row">
                     <div class="span3" >
-                       <div id ="goalSummaryContainer" style="width:100%" >
+                       <div id ="goalSummaryContainer" class="summaryContainer">
                             
                             <b>Goal:</b><br>
                             <div id="goalDescription">
@@ -201,11 +201,20 @@ function pushAndPullUpdates(myUpdate){
                         </div>
                     </div>
                 </div>
+				
+				<div class="row">
+                    <div class="span3" >
+                       <div id ="sessionSummaryContainer" class="summaryContainer">     
+							<b>Sessions:</b><br>
+							<div id="sessionSummary"></div>
+                        </div>
+                    </div>
+                </div>
                 
                 
                 <div class="row">
                    <div class="span3" >
-                        <div id ="hashtagSummaryContainer" style="width:100%">
+                        <div id ="hashtagSummaryContainer" class="summaryContainer">
                             <div class="column" id="labelHierarchy">
                             
                             </div>
@@ -219,7 +228,7 @@ function pushAndPullUpdates(myUpdate){
         <div class="span9" > 
             <div class="row">                
                 <div class="span9">
-					<div id ="searchFeedbackContainer">
+					<div id ="searchFeedbackContainer" >
 						<div id ="searchFeedbackDiv">
 					
 						</div>
@@ -234,6 +243,7 @@ function pushAndPullUpdates(myUpdate){
         </div>
     </div>
 </div>    
+<!--
 <div id="chatBox">
   <div id="chatTitleBar">Chat<span>_</span></div>
    <div id="chatLog">
@@ -242,6 +252,6 @@ function pushAndPullUpdates(myUpdate){
    <textarea type="text" id="chatEnterArea"></textarea>
 
 </div>    
-
+-->
 </body>
 </html>

@@ -86,7 +86,8 @@ def createItem(id, html, creationTime, keywords):
 		"replyCounter" : 0,
 		"lastUpdateTime" : 0,
 		"creationTime": creationTime, 
-		"labels": {}
+		"labels": {},
+		"session": ""
 	}
 	for k in keywords:
 		labelRef = createLabelRef(k)
@@ -99,7 +100,7 @@ def createHTML(id, title):
 #populate allData["items"]
 allKeywords = {}
 counter = 0
-for line in lines[8:] :
+for line in lines[8:30] :
 	if len(line) > 100 :
 		id = line[0]
 		decision = line[1]
@@ -137,6 +138,7 @@ for k in allKeywords:
 
 print "JSON parsed!"  
 # Save the JSON  
-f = open( 'listOfSubmissions.json', 'w')  
-f.write(json.dumps(allData))  
+f = open( 'C:/Users/Lydia/Documents/GitHub/frenzy2/testing/cscwDataSubset.js', 'w')  
+allData = json.dumps(allData) 
+f.write("allData = "+allData)  
 print "JSON saved!"  

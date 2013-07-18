@@ -9,7 +9,8 @@ item0 = {
 	"replyCounter" : 0,
 	"lastUpdateTime" : 12344555,
 	"creationTime": 0, 
-	"labels": {}
+	"labels": {},
+	"session": "horse"
 }
 allData["items"]["item0"] = item0
 
@@ -20,7 +21,8 @@ item1 = {
 	"replyCounter" : 0,
 	"lastUpdateTime" : 12344556,
 	"creationTime": 1, 
-	"labels": {}
+	"labels": {},
+	"session": "snake"
 }
 allData["items"]["item1"] = item1
 
@@ -34,6 +36,7 @@ label1 = {
 label1Ref = {
 	"label": "animal",
 	"checked": true,
+	"session": false,
 	"likes" : [],
 	"dislikes" : [],
 	"lastUpdateTime" : 123456789
@@ -41,7 +44,8 @@ label1Ref = {
 
 label2Ref = {
 	"label": "animal",
-	"checked": true,
+	"checked": true,	
+	"session": false,
 	"likes" : [],
 	"dislikes" : [],
 	"lastUpdateTime" : 123456789
@@ -50,13 +54,13 @@ label2Ref = {
 
 label2 = {
 	"label" : "snake",
-	"itemsUsedBy" : [],
+	"itemsUsedBy" : ["item1"],
 	"user" : "hmslydia",
 	"creationTime" : 123456789
 }
 snakesRef = {
 	"label": "snake",
-	"checked": false,
+	"checked": true,	
 	"likes" : [],
 	"dislikes" : [],
 	"lastUpdateTime" : 123456789
@@ -65,7 +69,7 @@ snakesRef = {
 
 label3 = {
 	"label" : "horse",
-	"itemsUsedBy" : [],
+	"itemsUsedBy" : ["item0"],
 	"user" : "hmslydia",
 	"creationTime" : 123456789
 }
@@ -81,7 +85,7 @@ horseRef = {
 allData["items"]["item0"]["labels"]["animal"] = label1Ref
 allData["items"]["item1"]["labels"]["animal"] = label2Ref
 allData["items"]["item1"]["labels"]["snake"] = snakesRef
-//allData["items"]["item0"]["labels"]["horse"] = horseRef
+allData["items"]["item0"]["labels"]["horse"] = horseRef
 
 allData["labelList"]["animal"] = label1
 allData["labelList"]["snake"] = label2
