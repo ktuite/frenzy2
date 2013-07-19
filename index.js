@@ -97,6 +97,7 @@ var handleUpdatesFromClient = require('./controller/handleUpdatesFromClient.js')
 var calculateCompletedItems = require('./controller/calculateCompletedItems.js');
 var hierarchyHelpers = require('./controller/createHierarchy.js');
 var hierarchyHelpers = require('./controller/sessions.js');
+var hierarchyHelpers = require('./controller/tfidf.js');
 var filter = require('./controller/filter.js');
 var actionableFeedback = require('./controller/actionableFeedback.js');
 
@@ -106,9 +107,12 @@ var actionableFeedback = require('./controller/actionableFeedback.js');
 // Instatiate Database
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
-//var instantiateData = require('./testing/cscwDataSubset.js');
-var instantiateData = require('./testing/data.js');
+var instantiateData = require('./testing/cscwDataSubset.js');
+//var instantiateData = require('./testing/data.js');
 updateActionableFeedback()
+
+
+console.log(rankLabelsForTargetLabel("Workflow management"))
 
 /////////////////////////////////
 // Client Communication Handling

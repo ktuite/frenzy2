@@ -27,7 +27,11 @@ allData = {
     "history":{ 
         "locations":[], 
         "events":[]
-    }
+    },
+	
+	"tfidf":{},
+	"tfidfLastUpdated":-1,
+	
 }
 
 import csv
@@ -122,10 +126,11 @@ for line in lines[8:30] :
 			else:
 				allKeywords[s] = [id]
 			
-print allData
+#print allData
 
 
 #put all the keywords in the allData["labelList"]
+#initialize TFIDF
 for k in allKeywords:
 	keyWordObj = {	
 		"label" : k,
@@ -134,8 +139,23 @@ for k in allKeywords:
 		"creationTime" : 0
 	}
 	allData["labelList"][k] = keyWordObj
+	
+	
+	
+	allData["tfidf"][k] = {}
+	allItems = allData["items"]
+	for itemId in allItems:
+		allData["tfidf"][k][itemId] = {
+			"frequency" :  0,
+			"idf" : 0,
+			"tfidf" : 0
+		}
+	
+print allData["tfidf"]
 
-
+	
+	
+	
 print "JSON parsed!"  
 # Save the JSON  
 f = open( 'C:/Users/Lydia/Documents/GitHub/frenzy2/testing/cscwDataSubset.js', 'w')  
