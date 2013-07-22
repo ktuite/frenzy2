@@ -12,10 +12,10 @@ function createItemAndReplyDivInternals(itemObj){
     var itemAndReplyDiv = $("<div >")
     
     var itemDiv = createItemDiv(itemObj)
-    var labelsAndRepliesDiv = $("<div class='span5 replyList' style='background:white'>")
+    var labelsAndRepliesDiv = $("<div class='span4 replyList' style='background:white'>")
     
     var labelsDiv = createLabelsDiv(itemObj)
-    var replyDiv = $("<div class='span5 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
+    var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
     var replyDivContent = createReplyDivContent(itemObj)
     replyDiv.append(replyDivContent)
     /*
