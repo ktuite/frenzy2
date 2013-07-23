@@ -17,7 +17,12 @@
     </style>
     <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" >
+<script type = "text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>  
+<!-- Le styles 
 <script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/jquery.js"></script>
+-->  
+<script type = "text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/utils.js"></script>
 <!--
 
@@ -40,6 +45,9 @@ var items = {}
 var itemIdOrder = []
 var query = {}
 var queryResultObj = {}
+var labelList = []
+var autocompleteLabels = []
+var autocompleteSessions = []
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
@@ -71,12 +79,15 @@ function ajax(command, message, callbackFunction) {
 
 
 function getUsername(){
+/*
 	var browser = "Chrome"
 	var userAgent = $.browser
 	if(userAgent.mozilla){
 		browser = "Firefox"
 	}
 	return browser
+	*/
+	return getTime()
 }
 
 

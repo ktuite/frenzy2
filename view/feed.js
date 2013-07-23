@@ -129,8 +129,15 @@ function createLabelsDiv(itemObj){
 }
 function addLabel(itemId){
     var div = $('<div>')
-    var textbox = $('<input type="textbox">')
-    div.append(textbox)
+
+	var uiwidgetDiv = $('<span class="ui-widget">')
+	var textbox = $('<input type="textbox">')
+	textbox.autocomplete({
+      source: autocompleteLabels
+    });
+	uiwidgetDiv.append(textbox)
+	div.append(uiwidgetDiv)
+	
     var addButton = $('<button id="addButton">+</button>')
     addButton.click(function(){
         var textboxValue = textbox.val()

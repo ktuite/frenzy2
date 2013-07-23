@@ -11,6 +11,18 @@ function handleUpdates(result){
 	if("allItems" in result){
 		items = result["allItems"]
 	}
+	
+	if("labelList" in result){
+		labelList = result["labelList"]
+		autocompleteLabels = makeAutocompleteListFromKeys(labelList)
+		//handleUpdatedSessions(sessions)
+	}
+	if("sessions" in result){
+		var sessions = result["sessions"]
+		autocompleteSessions = makeAutocompleteListFromKeys(sessions)
+		handleUpdatedSessions(sessions)
+	}
+	
 	if("itemIdOrder" in result){
 		itemIdOrder = result["itemIdOrder"]
 		displayFeed(itemIdOrder)		
@@ -31,11 +43,18 @@ function handleUpdates(result){
 		handleUpdatedCompletion(completion)
 	}
 
-	if("sessions" in result){
-		var sessions = result["sessions"]
-		handleUpdatedSessions(sessions)
+
+	
+}
+
+function makeAutocompleteListFromKeys(lst){
+	var allLabels = []
+
+	for(var i in lst){
+		allLabels.push(i)
 	}
-    
+
+	return allLabels
 }
 
 //////////////////////////////////////////
@@ -153,6 +172,7 @@ function createNumResultsDiv(num){
     return numResultsDiv
 }
 
+	
 function createAddLabelUI(queryResultObj){
 
     var div = $('<div>')
@@ -160,10 +180,17 @@ function createAddLabelUI(queryResultObj){
     var addLabelText = $("<span>")
     addLabelText.text("add label: ")
     div.append(addLabelText)
-    
+  
+	var uiwidgetDiv = $('<span class="ui-widget">')
+ 
     
     var textbox = $('<input type="textbox">')
-    div.append(textbox)
+	textbox.autocomplete({
+      source: autocompleteLabels
+    });
+	uiwidgetDiv.append(textbox)
+	
+    div.append(uiwidgetDiv)
     var addButton = $('<button id="addButton">go</button>')
     addButton.click(function(){
         var textboxValue = textbox.val()
@@ -181,8 +208,16 @@ function createAddSessionUI(queryResultObj){
     div.append(addLabelText)
     
     
+    var uiwidgetDiv = $('<span class="ui-widget">')
+ 
+    
     var textbox = $('<input type="textbox">')
-    div.append(textbox)
+	textbox.autocomplete({
+      source: autocompleteSessions
+    });
+	uiwidgetDiv.append(textbox)
+	div.append(uiwidgetDiv)
+	
     var addButton = $('<button id="addButton">go</button>')
     addButton.click(function(){
         var textboxValue = textbox.val()
