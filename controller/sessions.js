@@ -39,14 +39,16 @@ createSessions = function(){
 		var itemObj = allItems[i]
 		var id = itemObj["id"]
 		var session = itemObj["session"]
-		//console.log(itemObj)
-		if(id in sessions){
+		console.log(session)
+		if(session in sessions){
 			sessions[session].push(id)
 		}else{
 			sessions[session] = [id]
 		}
 	}
-	//console.log(sessions)
+    console.log("")
+    console.log("sessions")
+	console.log(sessions)
 	return sessions
 }
 

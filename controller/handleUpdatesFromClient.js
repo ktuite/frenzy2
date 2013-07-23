@@ -185,6 +185,41 @@ handleAddLabelToItemsInQuery = function(addLabelToItems){
 
 }
 
+handleAddSessionToItemsInQuery = function(addSessionToItems){
+	var user = addSessionToItems["user"]
+	var time = addSessionToItems["time"]
+	var itemIds = addSessionToItems["itemIds"]
+	var labelText = addSessionToItems["labelText"]
+    
+    //add each 
+    for(var i in itemIds){
+        var itemId = itemIds[i]
+        var addLabelToItem = {
+            "user" : user,
+            "time" : time,
+            "itemId" : itemId, 
+            "labelText": labelText
+        }
+        handleAddLabelToItem(addLabelToItem)
+    }
+    
+    //mark those items as the session
+    for(var i in itemIds){
+        var itemId = itemIds[i]
+        var sessionUpdate = {
+            "user" : user,
+            "time" : time,
+            "itemId" : itemId, 
+            "sessionLabel": labelText
+        }
+        handleSessionUpdate(sessionUpdate)
+    }
+    
+    
+
+}
+
+
 /*
 update = {
 	type : "addLabelToItem",
@@ -357,6 +392,7 @@ handleSessionUpdate = function(markSessionOnItem){
 	var sessionLabel = markSessionOnItem["sessionLabel"]	
 	
 	var itemReference = allData["items"][itemId]
-
+    console.log("markSessionOnItem")
+    console.log(markSessionOnItem)
 	itemReference["session"] = sessionLabel
 }

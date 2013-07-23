@@ -177,7 +177,11 @@ handleClientUpdateData = function(update){
             handleAddLabelToItem(update)
         }else if(updateType == "addLabelToItemsInQuery"){
             handleAddLabelToItemsInQuery(update)
-        }else if(updateType == "removeLabelFromItem"){
+        }else if(updateType == "addSessionToItemsInQuery"){
+            handleAddSessionToItemsInQuery(update)
+        }
+        
+        else if(updateType == "removeLabelFromItem"){
             handleRemoveLabelFromItem(update)
         }else if(updateType == "toggleLabelFromItem"){
             handleToggleLabelFromItem(update)
@@ -253,8 +257,8 @@ function getAllServerData(query){
     
     var numberOfResults = rtn["itemIdOrder"].length
 	rtn["queryResultObj"] = getQueryResultObj(query, numberOfResults)
-	console.log("rtn")
-    console.log(rtn)
+	//console.log("rtn")
+    //console.log(rtn)
 
     return rtn
 }

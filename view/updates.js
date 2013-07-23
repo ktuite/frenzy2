@@ -104,6 +104,9 @@ function updateSearchFeedback(queryResultObj){
     var addLabelUI = createAddLabelUI(queryResultObj)
     searchFeedbackContainer.append(addLabelUI)
     
+    var addSessionUI = createAddSessionUI(queryResultObj)
+    searchFeedbackContainer.append(addSessionUI)
+    
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
     
     /*
@@ -170,6 +173,24 @@ function createAddLabelUI(queryResultObj){
     return div    
 }
 
+function createAddSessionUI(queryResultObj){
+    var div = $('<div>')
+    
+    var addLabelText = $("<span>")
+    addLabelText.text("add to session: ")
+    div.append(addLabelText)
+    
+    
+    var textbox = $('<input type="textbox">')
+    div.append(textbox)
+    var addButton = $('<button id="addButton">go</button>')
+    addButton.click(function(){
+        var textboxValue = textbox.val()
+        updateNewSessionForQuery(textboxValue,itemIdOrder)
+    })
+    div.append(addButton)
+    return div    
+}
 
 function updateNewLabelForQuery(textboxValue,itemIds){
     var addNewLabelUpdateForQuery = {
@@ -179,6 +200,16 @@ function updateNewLabelForQuery(textboxValue,itemIds){
         labelText : textboxValue
     }
     pushAndPullUpdates(addNewLabelUpdateForQuery)
+}
+
+function updateNewSessionForQuery(textboxValue,itemIds){
+    var addNewSessionUpdateForQuery = {
+        type : "addSessionToItemsInQuery",
+        time : getTime(),
+        itemIds : itemIds , 
+        labelText : textboxValue
+    }
+    pushAndPullUpdates(addNewSessionUpdateForQuery)
 }
 
 function handleUpdatedSessions(sessions){
