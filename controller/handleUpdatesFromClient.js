@@ -151,8 +151,40 @@ handleUnlikeReply = function(unlikeReply){
 }
 
 /////////////////////////////////////
-// ADD LABEL TO ITEM
+// ADD LABEL(S) TO ITEM
 /////////////////////////////////////
+/*
+update = {
+	type : "addLabelToItem",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	labelText : "animal"
+}
+
+{"type" : "addLabelToItem", "user" : "hmslydia",	"time" : 1234567891, "itemId" : "item0" , "labelText" : "animal2"}
+
+*/
+
+handleAddLabelToItemsInQuery = function(addLabelToItems){
+	var user = addLabelToItems["user"]
+	var time = addLabelToItems["time"]
+	var itemIds = addLabelToItems["itemIds"]
+	var labelText = addLabelToItems["labelText"]
+    
+    for(var i in itemIds){
+        var itemId = itemIds[i]
+        var addLabelToItem = {
+            "user" : user,
+            "time" : time,
+            "itemId" : itemId, 
+            "labelText": labelText
+        }
+        handleAddLabelToItem(addLabelToItem)
+    }
+
+}
+
 /*
 update = {
 	type : "addLabelToItem",
@@ -283,8 +315,7 @@ handleToggleLabelFromItem = function(toggleLabelFromItem){
 	var time = toggleLabelFromItem["time"]
 	var itemId = toggleLabelFromItem["itemId"]
 	var labelText = toggleLabelFromItem["labelText"]	
-	var checked = toggleLabelFromItem["checked"]	
-	console.log(toggleLabelFromItem)
+	var checked = toggleLabelFromItem["checked"]
 	
 	var itemReference = allData["items"][itemId]
 	
@@ -320,7 +351,6 @@ update = {
 }
 */
 handleSessionUpdate = function(markSessionOnItem){
-console.log("handleSessionUpdate")
 	var user = markSessionOnItem["user"]
 	var time = markSessionOnItem["time"]
 	var itemId = markSessionOnItem["itemId"]

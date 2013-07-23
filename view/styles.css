@@ -172,14 +172,17 @@ label{
 }
 
 #searchFeedbackContainer{
-	height: 30px
+	/* height: 30px */
+    
+    
 }
 #searchFeedbackDiv{
 	background-color: white;
 	margin: 5px;
 	padding: 5px;
 	font-size:medium;
-		font-style: bold;
+	font-style: bold;
+    border-radius: 6px;
 }
 
 
@@ -282,4 +285,12 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     
 #signOut{
     margin-left: 10px;
+}
+
+
+
+
+.numResults{
+    font-weight: bold;
+    font-size: 20px;
 }

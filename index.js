@@ -96,11 +96,10 @@ var testingFramework = require('./testing/urlTestingRequest.js');
 var handleUpdatesFromClient = require('./controller/handleUpdatesFromClient.js');
 var calculateCompletedItems = require('./controller/calculateCompletedItems.js');
 var hierarchyHelpers = require('./controller/createHierarchy.js');
-var hierarchyHelpers = require('./controller/sessions.js');
-var hierarchyHelpers = require('./controller/tfidf.js');
+var sessionsHelpers = require('./controller/sessions.js');
+var tfidfHelpers = require('./controller/tfidf.js');
 var filter = require('./controller/filter.js');
 var actionableFeedback = require('./controller/actionableFeedback.js');
-
 
 
 ////////////////////////
@@ -176,6 +175,8 @@ handleClientUpdateData = function(update){
             handleUnlikeReply(update)
         }else if(updateType == "addLabelToItem"){
             handleAddLabelToItem(update)
+        }else if(updateType == "addLabelToItemsInQuery"){
+            handleAddLabelToItemsInQuery(update)
         }else if(updateType == "removeLabelFromItem"){
             handleRemoveLabelFromItem(update)
         }else if(updateType == "toggleLabelFromItem"){
@@ -249,14 +250,22 @@ function getAllServerData(query){
     //6. recently edited items
     //7. order of items
 	rtn["itemIdOrder"] = getFeedItemsAndOrder(query)
-	rtn["query"] = query
-	
     
+    var numberOfResults = rtn["itemIdOrder"].length
+	rtn["queryResultObj"] = getQueryResultObj(query, numberOfResults)
+	console.log("rtn")
+    console.log(rtn)
 
     return rtn
 }
 
-
+function getQueryResultObj(query, numResults){
+    var rtn = {}
+    rtn["query"] = query
+    rtn["numResults"] = numResults
+    
+    return rtn
+}
 
 
 

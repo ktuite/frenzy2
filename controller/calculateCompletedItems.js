@@ -3,11 +3,11 @@ var utils = require('./node-utils');
 updateCompletedItems = function(){
     allData["completion"] = calculateCompletedItems()
     allData["completionLastUpdated"] = getTime()
-	console.log(allData["completion"])
+	//console.log(allData["completion"])
 }
 
 calculateCompletedItems = function(){
-	console.log("calculateCompletedItems")
+	//console.log("calculateCompletedItems")
 	var items = allData["items"]
 	var arrayOfItemObjs =  utils.dictToArray(items)
 	

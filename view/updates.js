@@ -5,19 +5,20 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
+    console.log("result")
 	console.log(result)
+    
 	if("allItems" in result){
 		items = result["allItems"]
 	}
 	if("itemIdOrder" in result){
 		itemIdOrder = result["itemIdOrder"]
-		console.log("itemIdOrder")
-		console.log(itemIdOrder)
 		displayFeed(itemIdOrder)		
 	}
-	if("query" in result){
-		query = result["query"]
-		updateSearchFeedback(query)
+	if("queryResultObj" in result){
+        queryResultObj = result["queryResultObj"]
+        query = queryResultObj["query"]
+		updateSearchFeedback(queryResultObj)
 	}
 	
     if("hierarchy" in result){
@@ -67,7 +68,6 @@ function displayFeed(itemIds){
     for( var i in itemIds){
 		var itemId = itemIds[i]
 		var itemObj = items[itemId]
-		console.log(items)
 		var newItemDiv = createItemAndReplyDiv(itemObj)        
         $("#feed").append(newItemDiv)
     }
@@ -87,11 +87,27 @@ function pushNewItemDivsOnFeed(newItemDivs){
 }
 */
 
-function updateSearchFeedback(query){
-	console.log("updateSearchFeedback")
-	var searchFeedbackText = ""
-	var queryType = query["type"]
+function updateSearchFeedback(queryResultObj){
+	console.log("queryResultObj")
+    console.log(queryResultObj)
+    var query = queryResultObj["query"]
+    var queryType = query["type"]
+    var numResults = queryResultObj["numResults"]
+
+    $("#searchFeedbackDiv").empty()
 	
+    var searchFeedbackContainer = $("<div>")
+    
+    var numResultsDiv = createNumResultsDiv(numResults)
+    searchFeedbackContainer.append(numResultsDiv)
+    
+    var addLabelUI = createAddLabelUI(queryResultObj)
+    searchFeedbackContainer.append(addLabelUI)
+    
+    $("#searchFeedbackDiv").append(searchFeedbackContainer)
+    
+    /*
+    
 	if(queryType == "all"){
 		var numberOfItems = itemIdOrder.length
 		searchFeedbackText = "Showing all items ("+numberOfItems+")"
@@ -119,7 +135,50 @@ function updateSearchFeedback(query){
 		searchFeedbackText = "Showing all items with no labels ("+numberOfItems+")"
 	}
 	
-	$("#searchFeedbackDiv").text(searchFeedbackText)
+    var searchFeedbackUI = makeSearchFeedbackUI(query)
+    
+	//$("#searchFeedbackDiv").text(searchFeedbackText)
+    */
+    
+    
+}
+
+function createNumResultsDiv(num){
+    var numResultsDiv = $("<div class='numResults'>")
+    var numResultsText = num+" Results"
+    numResultsDiv.text(numResultsText)
+    return numResultsDiv
+}
+
+function createAddLabelUI(queryResultObj){
+
+    var div = $('<div>')
+    
+    var addLabelText = $("<span>")
+    addLabelText.text("add label: ")
+    div.append(addLabelText)
+    
+    
+    var textbox = $('<input type="textbox">')
+    div.append(textbox)
+    var addButton = $('<button id="addButton">go</button>')
+    addButton.click(function(){
+        var textboxValue = textbox.val()
+        updateNewLabelForQuery(textboxValue,itemIdOrder)
+    })
+    div.append(addButton)
+    return div    
+}
+
+
+function updateNewLabelForQuery(textboxValue,itemIds){
+    var addNewLabelUpdateForQuery = {
+        type : "addLabelToItemsInQuery",
+        time : getTime(),
+        itemIds : itemIds , 
+        labelText : textboxValue
+    }
+    pushAndPullUpdates(addNewLabelUpdateForQuery)
 }
 
 function handleUpdatedSessions(sessions){
