@@ -116,6 +116,12 @@ function createLabelsDiv(itemObj){
 	sessionNoneSpan.html("(none)")
 	noSessionDiv.append(sessionRadioButton)	
 	noSessionDiv.append(sessionNoneSpan)
+    sessionRadioButton.click(function(e){
+		var sessionLabel = e.target.value
+		var name = e.target.name
+		var itemId = name.substring(0, name.indexOf("-"))
+		updateSession(itemId, sessionLabel)
+	})
 	
 	div.append(noSessionDiv)
 	
