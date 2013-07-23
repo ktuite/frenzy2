@@ -28,7 +28,22 @@ createHierarchy = function(){
 function getOrderedArrayOfLabelObjs(){
 	var arrayOfLabelObjects = utils.dictToArray(allData["labelList"])
 	var labelCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
-		return {"label": x["label"], "counts":x["itemsUsedBy"].length, "memberItemIds": x["itemsUsedBy"]}
+        var itemsUsedBy = x["itemsUsedBy"]
+        var memberItemIds = []
+        for (var i in itemsUsedBy){
+            var memberItemId = itemsUsedBy[i]
+            console.log(memberItemId)
+            var thisItem = allData["items"][memberItemId]
+            var thisItemsSession = thisItem["session"]
+            if (thisItemsSession == "none"){
+                memberItemIds.push(memberItemId)
+            }
+        }
+    
+		return {    "label": x["label"], 
+                    "counts": memberItemIds.length, 
+                    "memberItemIds": memberItemIds
+        }
 	})
     
     labelCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
