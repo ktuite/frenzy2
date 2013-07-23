@@ -106,8 +106,8 @@ var actionableFeedback = require('./controller/actionableFeedback.js');
 // Instatiate Database
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
-//var instantiateData = require('./testing/cscwData12labels.js');
-var instantiateData = require('./testing/cscwDataSubset.js');
+var instantiateData = require('./testing/cscwData12labels.js');
+//var instantiateData = require('./testing/cscwDataSubset.js');
 //var instantiateData = require('./testing/data.js');
 updateActionableFeedback()
 
