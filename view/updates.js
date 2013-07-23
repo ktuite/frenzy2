@@ -247,9 +247,6 @@ function updateNewSessionForQuery(textboxValue,itemIds){
     pushAndPullUpdates(addNewSessionUpdateForQuery)
 }
 
-function handleUpdatedSessions(sessions){
-
-}
 /*
 //DEPRICATED
 //this was a way to only update new items rather than repost everything.
