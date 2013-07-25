@@ -15,7 +15,6 @@ function handleUpdates(result){
 	if("labelList" in result){
 		labelList = result["labelList"]
 		autocompleteLabels = makeAutocompleteListFromKeys(labelList)
-		//handleUpdatedSessions(sessions)
 	}
 	if("sessions" in result){
 		var sessions = result["sessions"]

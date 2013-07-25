@@ -5,7 +5,7 @@ function createLabelDiv(labelObj){
     var counts = labelObj["counts"]
 	var memberItemIds = labelObj["memberItemIds"]
     
-    var div = $("<div>")
+    var div = $("<div class='categoryClickable'>")
     div.text(label + " ("+counts+") ")
 	
 	var numParents = labelParents.length
@@ -16,7 +16,8 @@ function createLabelDiv(labelObj){
 		query = {
 			"type" : "label",
 			"label" : label,
-			"checked" : true
+			"checked" : true,            
+            "sortOrder" : "creationTime"
 		}
 		getAllData()
 		//filterItemsByLabel(memberItemIds)
@@ -25,13 +26,14 @@ function createLabelDiv(labelObj){
 }
 
 function createSessionDiv(label, counts){
-    var div = $("<div>")
+    var div = $("<div >")
     div.text(label + " ("+counts+") ")
 	
 	div.click(function(){
 		query = {
 			"type" : "session",
-			"label" : label
+			"label" : label,
+            "sortOrder" : "creationTime"
 		}
 		getAllData()
 		//filterItemsByLabel(memberItemIds)

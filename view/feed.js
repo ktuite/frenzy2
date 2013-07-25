@@ -143,6 +143,15 @@ function addLabel(itemId){
     });
 	uiwidgetDiv.append(textbox)
 	div.append(uiwidgetDiv)
+    
+    textbox.keypress(function(event){
+        if( event.which == 13 ) {
+        
+            var textboxValue = textbox.val()
+            console.log(textboxValue)
+            updateNewLabel(textboxValue,itemId)
+       }
+    })
 	
     var addButton = $('<button id="addButton">+</button>')
     addButton.click(function(){

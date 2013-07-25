@@ -2,8 +2,9 @@ var utils = require('./node-utils');
 
 
 getFeedItemsAndOrder = function(query){
-	console.log("getFeedItemsAndOrder")
+	console.log("getFeedItemsAndOrder query type: ")
 	var queryType = query["type"]
+    console.log(query)
 	var itemIds = []
 	
 	//////////////////////////////
@@ -32,8 +33,9 @@ getFeedItemsAndOrder = function(query){
 	}
 	if(queryType == "session"){
 		var label = query["label"]
-		
-		itemIds = allData["sessions"][label]
+		if (label in allData["sessions"]) {
+            itemIds = allData["sessions"][label]
+        }
 	}
 	if(queryType == "completed"){
 		itemIds = allData["completion"]["completedItemIds"]
@@ -46,6 +48,8 @@ getFeedItemsAndOrder = function(query){
 	// SORT 
 	//////////////////////////////
 	var sortOrder = query["sortOrder"]
+    console.log(sortOrder)
+    console.log(itemIds)
 	if(sortOrder == "creationTime"){
 		itemIds = sortItemIdsByCreationTime(itemIds)
 	}

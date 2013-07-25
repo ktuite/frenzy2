@@ -294,3 +294,8 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     font-weight: bold;
     font-size: 20px;
 }
+
+.categoryClickable{
+    cursor: pointer;
+    color: blue;
+}
