@@ -332,8 +332,6 @@ function handleUpdatedSessions(sessionObjs){
     $("#sessionSummary").append(sessionsDiv)
 }
 
-function updateSession(session, itemId){
 
-}
 
 
