@@ -14,6 +14,7 @@ function createItemAndReplyDivInternals(itemObj){
     var itemDiv = createItemDiv(itemObj)
     var labelsAndRepliesDiv = $("<div class='span4 replyList' style='background:white'>")
     
+    var sessionDiv = createAddSessionDiv(itemObj)
     var labelsDiv = createLabelsDiv(itemObj)
     var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
     var replyDivContent = createReplyDivContent(itemObj)
@@ -33,6 +34,7 @@ function createItemAndReplyDivInternals(itemObj){
     replyDiv.append(baseReplyDiv)
         
     itemAndReplyDiv.append(itemDiv)
+    labelsAndRepliesDiv.append(sessionDiv)
     labelsAndRepliesDiv.append(labelsDiv)
     labelsAndRepliesDiv.append(replyDiv)
     itemAndReplyDiv.append(labelsAndRepliesDiv)
@@ -88,11 +90,84 @@ function createItemDiv(itemObj){
 /////////////////////////
 // LABELS
 /////////////////////////
+function createAddSessionDiv(itemObj){
+	var session = itemObj["session"]
+    var itemId = itemObj["id"]
+
+    var div = $('<div>')
+    if(session == "none"){
+        initialText = ""
+        createWithoutSession(div, itemId, initialText)
+    }
+    else{
+        createWithSession(div, itemId, session)
+    }
+    var lineBreakDiv = $('<div>')
+    var lineBreak = " <br> "
+    $(lineBreakDiv).html(lineBreak)
+    div.append(lineBreakDiv)
+    return div
+}
+function createWithoutSession(div, itemId, initialText){
+    var sessionText = "Session: "
+    $(div).html(sessionText)
+    var sessionNameTextbox = $('<input type="textbox" class="sessionTextbox" >')
+    div.append(sessionNameTextbox)
+    sessionNameTextbox.val(initialText)
+    if(initialText != ""){
+        //sessionNameTextbox.select()
+        console.log(sessionNameTextbox[0])
+        sessionNameTextbox[0].select()
+    }
+    sessionNameTextbox.autocomplete({
+    source: autocompleteSessions
+    });
+    
+    var addButton = $('<button id="addButton">+</button>')
+    addButton.click(function(){
+        var textboxValue = sessionNameTextbox.val()
+        if(textboxValue!=""){
+            sessionLabel = textboxValue
+            updateSession(itemId, sessionLabel)
+        }
+    })
+    sessionNameTextbox.keypress(function(event){
+        if( event.which == 13 ) {
+            var textboxValue = sessionNameTextbox.val()
+            if(textboxValue!=""){
+                sessionLabel = textboxValue
+                updateSession(itemId, sessionLabel)
+            }    
+       }
+        
+    })
+    div.append(addButton)
+}
+function createWithSession(div, itemId, session){
+
+    var sessionText = "In Session: " + session
+    $(div).html(sessionText)
+    /*var sessionNameTextbox = $('<input type="textbox" id="sessionTextbox" >')
+    var textboxText = session
+    $('#sessionTextbox').val(textboxText)
+    console.log(textboxText)
+    div.append(sessionNameTextbox)
+    */
+    var changeButton = $('<button id="changeButton">change</button>')
+    changeButton.click(function(){
+        createWithoutSession(div, itemId, session)
+    })
+    div.append(changeButton)
+}
+
 function createLabelsDiv(itemObj){
     var div = $('<div>')
     var labelObjDict = itemObj["labels"]
     var itemId = itemObj["id"]
 	var session = itemObj["session"]
+    
+    var categoryTitle = "In Categories"
+    div.append(categoryTitle)
     for(var i in labelObjDict){
         var labelObj = labelObjDict[i]
 		
@@ -111,17 +186,18 @@ function createLabelsDiv(itemObj){
 	if(session=="none"){
 		checked = 'checked="checked"'
 	}
-	var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="none" '+checked+'>')
-	var sessionNoneSpan = $("<span>")
-	sessionNoneSpan.html("(none)")
-	noSessionDiv.append(sessionRadioButton)	
-	noSessionDiv.append(sessionNoneSpan)
-    sessionRadioButton.click(function(e){
+	//var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="none" '+checked+'>')
+	//var sessionNoneSpan = $("<span>")
+	//sessionNoneSpan.html("(none)")
+	//noSessionDiv.append(sessionRadioButton)	
+	//noSessionDiv.append(sessionNoneSpan)
+    /*sessionRadioButton.click(function(e){
 		var sessionLabel = e.target.value
 		var name = e.target.name
 		var itemId = name.substring(0, name.indexOf("-"))
 		updateSession(itemId, sessionLabel)
 	})
+    */
 	
 	div.append(noSessionDiv)
 	
@@ -172,14 +248,15 @@ function makeInteractiveLabelUI(labelObj, itemId, isSession){
 	if(isSession){
 		checked = 'checked="checked"'
 	}	
-	var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="'+labelText+'" '+checked+'>')
-	sessionRadioButton.click(function(e){
+	//var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="'+labelText+'" '+checked+'>')
+	/*sessionRadioButton.click(function(e){
 		var sessionLabel = e.target.value
 		var name = e.target.name
 		var itemId = name.substring(0, name.indexOf("-"))
 		updateSession(itemId, sessionLabel)
 	})
-	div.append(sessionRadioButton)
+    */
+	//div.append(sessionRadioButton)
 	
 	//make label checkbox
 	var checkbox = $('<input type="checkbox" checked=true>')
