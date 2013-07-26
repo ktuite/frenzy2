@@ -360,14 +360,17 @@ handleToggleLabelFromItem = function(toggleLabelFromItem){
 	itemReference["labels"][labelText]["checked"] = checked
 	
 	//update itemsUsedBy
-	var itemsUsedBy = allData["labelList"][labelText]["itemsUsedBy"]
-	if(checked && itemsUsedBy.indexOf(itemId) == -1){
-		itemsUsedBy.push(itemId)
-	}
-	if(!checked && itemsUsedBy.indexOf(itemId) > -1){
-		itemsUsedBy.splice(itemsUsedBy.indexOf(itemId), 1)
-	}
-	
+    if(labelText in allData["labelList"]){
+        var itemsUsedBy = allData["labelList"][labelText]["itemsUsedBy"]
+        if(checked && itemsUsedBy.indexOf(itemId) == -1){
+            itemsUsedBy.push(itemId)
+        }
+        if(!checked && itemsUsedBy.indexOf(itemId) > -1){
+            itemsUsedBy.splice(itemsUsedBy.indexOf(itemId), 1)
+        }
+	}else{
+        console.log("ERROR - handleUpdatesFromClient, handleToggleLabelFromItem - 1")
+    }
 	//updateActionableFeedback()
 	//updateHierarchy()
 	
@@ -392,7 +395,6 @@ handleSessionUpdate = function(markSessionOnItem){
 	var sessionLabel = markSessionOnItem["sessionLabel"]	
 	
 	var itemReference = allData["items"][itemId]
-    console.log("markSessionOnItem")
-    console.log(markSessionOnItem)
+
 	itemReference["session"] = sessionLabel
 }

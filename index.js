@@ -125,6 +125,7 @@ app.post('/home.html', function(request, response){
 		var message = JSON.parse(request.body["args"])
 		var update = message["update"]
 		var query = message["query"]
+        var type = message["type"]
 		
 		if(update){
 			update["user"] = request.session.user
@@ -137,10 +138,11 @@ app.post('/home.html', function(request, response){
 		
 		//then push all new updates to the client
 		//var serverUpdates = getAllServerUpdatesSinceT(-1)//getAllServerUpdatesSinceT(timeSinceLastUpdate)
-		var getServerData = getAllServerData(query)
+		var getServerData = getAllServerData(query, type)
 		
 		request.session.timeSinceLastUpdate = getTime()
 		response.send(JSON.stringify(getServerData))
+        
 	}else if(command == "signIn"){
 		var user = args["user"]
 		request.session.user = user
@@ -233,9 +235,10 @@ function getAllServerUpdatesSinceT(t){
 }
 */
 
-function getAllServerData(query){
+function getAllServerData(query, type){
     var rtn = {}
     
+    rtn["type"] = type
     //types of updates:
     //1. items
     rtn["allItems"] = allData["items"]

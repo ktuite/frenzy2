@@ -19,7 +19,7 @@ function createLabelDiv(labelObj){
 			"checked" : true,            
             "sortOrder" : "creationTime"
 		}
-		getAllData()
+		getAllData("synchronous")
 		//filterItemsByLabel(memberItemIds)
 	})
     return div
@@ -35,7 +35,7 @@ function createSessionDiv(label, counts){
 			"label" : label,
             "sortOrder" : "creationTime"
 		}
-		getAllData()
+		getAllData("synchronous")
 		//filterItemsByLabel(memberItemIds)
 	})
 	

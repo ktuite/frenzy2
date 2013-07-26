@@ -3,20 +3,25 @@
 ///////////////////////////
 
 function createItemAndReplyDiv(itemObj){
-    var itemAndReplyDiv = $("<div class='row' id='containerFor"+itemObj["id"]+"'>")
+    var itemAndReplyDiv = $("<div class='row' id='containerFor-"+itemObj["id"]+"'>")
 	var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj)
     itemAndReplyDiv.append(itemAndReplyDivInternals)
     return itemAndReplyDiv
 }
 function createItemAndReplyDivInternals(itemObj){
-    var itemAndReplyDiv = $("<div >")
+    var itemAndReplyDiv = $("<div class='itemAndReplyDiv'>")
     
     var itemDiv = createItemDiv(itemObj)
+    
     var labelsAndRepliesDiv = $("<div class='span4 replyList' style='background:white'>")
+    //var labelsAndRepliesDiv = $("<div class='replyList' style='background:white'>")
+    //labelsAndRepliesDivContainer.append(labelsAndRepliesDiv)
     
     var sessionDiv = createAddSessionDiv(itemObj)
     var labelsDiv = createLabelsDiv(itemObj)
     var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
+    
+    
     var replyDivContent = createReplyDivContent(itemObj)
     replyDiv.append(replyDivContent)
     /*
@@ -47,7 +52,7 @@ function createItemDiv(itemObj){
     var itemHTML = itemObj["html"]
     var itemId= itemObj["id"]
     
-    var clickableDiv = $("<span id='clickable-"+itemId+"'>");
+    //var clickableDiv = $("<span id='clickable-"+itemId+"'>");
     var div = $("<div class='span4 item' id= '"+itemId+"'>")
     
     /*
@@ -82,8 +87,9 @@ function createItemDiv(itemObj){
     }
     wrap2(itemCreatorSpan, itemCreator)
     */
-    clickableDiv.append(div);
-    return clickableDiv
+    //clickableDiv.append(div);
+    //return clickableDiv
+    return div
 }
 
 
@@ -306,7 +312,7 @@ function updateSession(itemId, sessionLabel){
 				"sessionLabel" : sessionLabel
 	}
 
-	pushAndPullUpdates(myUpdate)
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
 
@@ -329,7 +335,7 @@ function toggleLabelUpdate(labelText, itemId, checked){
 				"checked": checked
 	}
 
-	pushAndPullUpdates(myUpdate)
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
 
@@ -557,7 +563,7 @@ function likeReply(itemId, replyId){
 				"replyId" : replyId
 	}
 
-	pushAndPullUpdates(myUpdate)
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
 //UNLIKE
@@ -588,7 +594,7 @@ function unlikeReply(itemId, replyId){
 				"replyId" : replyId
 	}
 
-	pushAndPullUpdates(myUpdate)
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
 
@@ -623,5 +629,5 @@ function saveReply(replyText, itemId, parentReplyId){
 				"parentId": parentReplyId
 	}
 
-	pushAndPullUpdates(myUpdate)
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }

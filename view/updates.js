@@ -8,6 +8,8 @@ function handleUpdates(result){
     console.log("result")
 	console.log(result)
     
+    var type = result["type"]
+    
 	if("allItems" in result){
 		items = result["allItems"]
 	}
@@ -24,12 +26,14 @@ function handleUpdates(result){
 	
 	if("itemIdOrder" in result){
 		itemIdOrder = result["itemIdOrder"]
-		displayFeed(itemIdOrder)		
+        
+
+				
 	}
 	if("queryResultObj" in result){
         queryResultObj = result["queryResultObj"]
         query = queryResultObj["query"]
-		updateSearchFeedback(queryResultObj)
+		
 	}
 	
     if("hierarchy" in result){
@@ -42,7 +46,19 @@ function handleUpdates(result){
 		handleUpdatedCompletion(completion)
 	}
 
+    
+    //depending on the query type, either redisplay the all the Feed
+    //or just update some items with yellow backgrounds.
 
+    if(type == "synchronous"){
+        displayFeed(itemIdOrder)
+        updateSearchFeedback(queryResultObj)
+    }
+    if(type == "asynchronous"){
+        //displayFeed(itemIdOrder)
+        updateItemsInFeed()        
+        //updateSearchFeedback(queryResultObj)
+    }
 	
 }
 
@@ -79,6 +95,42 @@ function handleUpdatedItems(updatedItems){
     displayFeed()
 }
 */
+
+function updateItemsInFeed(){
+    //console.log("updateItemsInFeed")
+    //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
+    //have been updated is.
+    //if it was recently, then go to that individual UI elt and color it yellow.
+    for(var i in itemIdOrder){
+        var itemId = itemIdOrder[i]
+        var itemObj = items[itemId]
+        var itemUpdateTime = itemObj["lastUpdateTime"]
+        console.log("itemUpdateTime: "+itemUpdateTime)
+        console.log("lastUpdateTime: "+lastUpdateTime)
+        if(itemUpdateTime > lastUpdateTime){
+            markItemAsUpdated(itemId)
+        }
+    }
+    
+    //go through the items on the screen and if any of them aren't updated, 
+    //color it.
+    var itemsInFeed = $(".item")
+    $(".item").each(function(t){
+        var itemId = $(this).attr("id")
+        if( !arrayContains(itemIdOrder, itemId)){
+            $("#containerFor-"+itemId).css("background-color", "yellow")
+        }
+    })
+}
+
+function markItemAsUpdated(itemId){
+    var itemUI = $("#containerFor-"+itemId)
+    if(itemUI){
+        itemUI.css("background-color", "yellow")
+    }
+}
+
+
 function displayFeed(itemIds){
 	//items is the recent items
 	$("#feed").empty()     
@@ -93,6 +145,7 @@ function displayFeed(itemIds){
 	//from the query type, get which items to show.
 	//get the order to display them in
 }
+
 /*
 function pushNewItemDivsOnFeed(newItemDivs){
     $("#feed").empty()     
@@ -106,8 +159,6 @@ function pushNewItemDivsOnFeed(newItemDivs){
 */
 
 function updateSearchFeedback(queryResultObj){
-	console.log("queryResultObj")
-    console.log(queryResultObj)
     var query = queryResultObj["query"]
     var queryType = query["type"]
     var numResults = queryResultObj["numResults"]
@@ -117,6 +168,12 @@ function updateSearchFeedback(queryResultObj){
     var searchFeedbackContainer = $("<div>")
     
     var numResultsDiv = createNumResultsDiv(numResults)
+    
+    var refreshButton = $("<input type='button' value='refresh'>")
+    refreshButton.click(function(){
+        getAllData("synchronous")
+    })
+    numResultsDiv.append(refreshButton)
     searchFeedbackContainer.append(numResultsDiv)
     
     var addLabelUI = createAddLabelUI(queryResultObj)

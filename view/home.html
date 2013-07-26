@@ -48,6 +48,7 @@ var queryResultObj = {}
 var labelList = []
 var autocompleteLabels = []
 var autocompleteSessions = []
+var lastUpdateTime = 0
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
@@ -111,10 +112,10 @@ $(document).ready(function(){
     goalSetup()
 	testSignIn()
 	setDefaultQuery()
-	getAllData()
+	getAllData("synchronous")
 	console.log( getUsername() )
     
-    setInterval(function(){ console.log("update"); getAllData() },5000);
+    setInterval(function(){ console.log("update"); getAllData("asynchronous") },5000);
 })
 
 function testSignIn(){
@@ -129,17 +130,26 @@ function setDefaultQuery(){
 	query["sortOrder"] = "creationTime"
 }
 
-function getAllData(){
-    getUpdatesSinceTimeT(-1)
+function getAllData(typeOfRequest){
+    getUpdatesSinceTimeT(-1, typeOfRequest)
 	//console.log(username)
 }
 
-function getUpdatesSinceTimeT(t){
-    pushAndPullUpdates(null)
+function getUpdatesSinceTimeT(t, typeOfRequest){
+    pushAndPullUpdates(null, typeOfRequest)
 }
 
-function pushAndPullUpdates(myUpdate){
-    var message = {"update": myUpdate, "query": query}   
+function pushAndPullUpdates(myUpdate, typeOfRequest){
+    console.log("pushAndPullUpdates")
+    var type = "synchronous"
+    if(typeOfRequest != undefined){
+        type = typeOfRequest
+    }
+    if(type == "synchronous"){
+        lastUpdateTime = getTime()
+    }
+    console.log("type: "+type)
+    var message = {"update": myUpdate, "query": query, "type": type}   
     ajax("update", message, function(result){ handleUpdates(JSON.parse(result))})
 }
 
@@ -202,7 +212,7 @@ function pushAndPullUpdates(myUpdate){
                         </div>
                     </div>
                 </div>
-                -->
+                
                 <div class="row">
                     <div class="span4" >
                        <div id ="goalSummaryContainer" class="summaryContainer">
@@ -216,7 +226,7 @@ function pushAndPullUpdates(myUpdate){
                         </div>
                     </div>
                 </div>
-				
+				-->
 				<div class="row">
                     <div class="span4" >
                        <div id ="sessionSummaryContainer" class="summaryContainer">     

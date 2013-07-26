@@ -2,9 +2,7 @@ var utils = require('./node-utils');
 
 
 getFeedItemsAndOrder = function(query){
-	console.log("getFeedItemsAndOrder query type: ")
 	var queryType = query["type"]
-    console.log(query)
 	var itemIds = []
 	
 	//////////////////////////////
@@ -23,7 +21,6 @@ getFeedItemsAndOrder = function(query){
 		})
 		if(labelInHierarchy.length > 0){
 			var labelObj = labelInHierarchy[0]["label"]
-			console.log(labelObj)
 			itemIds = labelObj["memberItemIds"]			
 		
 		}else{
@@ -48,12 +45,9 @@ getFeedItemsAndOrder = function(query){
 	// SORT 
 	//////////////////////////////
 	var sortOrder = query["sortOrder"]
-    console.log(sortOrder)
-    console.log(itemIds)
 	if(sortOrder == "creationTime"){
 		itemIds = sortItemIdsByCreationTime(itemIds)
 	}
-	console.log(itemIds)
 	return itemIds
 }
 
@@ -110,10 +104,8 @@ doesItemContainText = function(itemObject, text){
     var itemReplies = itemObject["replies"]
     for(var i in itemReplies){
         var itemReply = itemReplies[i]
-        console.log(itemReply)
         var itemReplyHtml = itemReply["html"]
         if(itemReplyHtml.search(text)> -1){
-            console.log("TRUE")
             return true
         }
         

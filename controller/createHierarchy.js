@@ -32,7 +32,6 @@ function getOrderedArrayOfLabelObjs(){
         var memberItemIds = []
         for (var i in itemsUsedBy){
             var memberItemId = itemsUsedBy[i]
-            console.log(memberItemId)
             var thisItem = allData["items"][memberItemId]
             var thisItemsSession = thisItem["session"]
             if (thisItemsSession == "none"){
