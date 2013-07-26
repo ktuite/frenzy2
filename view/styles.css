@@ -299,3 +299,8 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     cursor: pointer;
     color: blue;
 }
+
+.sessionClickable{
+    cursor: pointer;
+    color: blue;
+}

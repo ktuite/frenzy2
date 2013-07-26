@@ -17,6 +17,8 @@ function createItemAndReplyDivInternals(itemObj){
     //var labelsAndRepliesDiv = $("<div class='replyList' style='background:white'>")
     //labelsAndRepliesDivContainer.append(labelsAndRepliesDiv)
     
+    var itemId = itemObj["id"]
+    var itemCheckboxDiv = $("<input type='checkbox' class='itemCheckbox' id='"+itemId+"' style='position:relative;float:right;'>")
     var sessionDiv = createAddSessionDiv(itemObj)
     var labelsDiv = createLabelsDiv(itemObj)
     var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
@@ -39,6 +41,7 @@ function createItemAndReplyDivInternals(itemObj){
     replyDiv.append(baseReplyDiv)
         
     itemAndReplyDiv.append(itemDiv)
+    labelsAndRepliesDiv.append(itemCheckboxDiv)
     labelsAndRepliesDiv.append(sessionDiv)
     labelsAndRepliesDiv.append(labelsDiv)
     labelsAndRepliesDiv.append(replyDiv)

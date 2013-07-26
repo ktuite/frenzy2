@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    console.log("result")
-	console.log(result)
+    //console.log("result")
+	//console.log(result)
     
     var type = result["type"]
     
@@ -26,9 +26,6 @@ function handleUpdates(result){
 	
 	if("itemIdOrder" in result){
 		itemIdOrder = result["itemIdOrder"]
-        
-
-				
 	}
 	if("queryResultObj" in result){
         queryResultObj = result["queryResultObj"]
@@ -105,8 +102,6 @@ function updateItemsInFeed(){
         var itemId = itemIdOrder[i]
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
-        console.log("itemUpdateTime: "+itemUpdateTime)
-        console.log("lastUpdateTime: "+lastUpdateTime)
         if(itemUpdateTime > lastUpdateTime){
             markItemAsUpdated(itemId)
         }
@@ -182,7 +177,28 @@ function updateSearchFeedback(queryResultObj){
     var addSessionUI = createAddSessionUI(queryResultObj)
     searchFeedbackContainer.append(addSessionUI)
     
+    var selectAllButton = $("<input type='button' value='select all results'>")
+    
+    searchFeedbackContainer.append(selectAllButton)
+    selectAllButton.click(function(){
+        $(".itemCheckbox").each(function(){
+            $(this).prop('checked', true);
+            //$(this).attr("checked","checked")
+        })
+    })
+    
+    var unselectAllButton = $("<input type='button' value='remove all selections'>")
+    searchFeedbackContainer.append(unselectAllButton)
+    unselectAllButton.click(function(){
+        $(".itemCheckbox").each(function(){
+            $(this).prop('checked', false);
+            //$(this).removeAttr("checked")
+        })
+    })
+    
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
+    
+    
     
     /*
     
@@ -245,8 +261,13 @@ function createAddLabelUI(queryResultObj){
       source: autocompleteLabels
     });
 	uiwidgetDiv.append(textbox)
-	
     div.append(uiwidgetDiv)
+    
+     var addLabelText2 = $("<span>")
+    addLabelText2.text("to all selected items ")
+    div.append(addLabelText2)
+	
+    
     var addButton = $('<button id="addButton">go</button>')
     addButton.click(function(){
         var textboxValue = textbox.val()
@@ -272,7 +293,14 @@ function createAddSessionUI(queryResultObj){
       source: autocompleteSessions
     });
 	uiwidgetDiv.append(textbox)
-	div.append(uiwidgetDiv)
+    
+    div.append(uiwidgetDiv)
+    
+     var addLabelText2 = $("<span>")
+    addLabelText2.text("to all selected items ")
+    div.append(addLabelText2)
+    
+	
 	
     var addButton = $('<button id="addButton">go</button>')
     addButton.click(function(){
@@ -283,24 +311,39 @@ function createAddSessionUI(queryResultObj){
     return div    
 }
 
+function getSelectedItemIds(){
+    var selectedItemIds = []
+    $('.itemCheckbox:checked').each(function() {
+        selectedItemIds.push($(this).attr("id"));
+    });
+    console.log(selectedItemIds.length)
+    console.log(selectedItemIds)
+    return selectedItemIds 
+}
+
 function updateNewLabelForQuery(textboxValue,itemIds){
+    //actually, just get the selected itemIds.
+    var selectedItemIds = getSelectedItemIds()
+    
     var addNewLabelUpdateForQuery = {
         type : "addLabelToItemsInQuery",
         time : getTime(),
-        itemIds : itemIds , 
+        itemIds : selectedItemIds , 
         labelText : textboxValue
     }
-    pushAndPullUpdates(addNewLabelUpdateForQuery)
+    pushAndPullUpdates(addNewLabelUpdateForQuery, "synchronous")
 }
 
 function updateNewSessionForQuery(textboxValue,itemIds){
+    var selectedItemIds = getSelectedItemIds()
+
     var addNewSessionUpdateForQuery = {
         type : "addSessionToItemsInQuery",
         time : getTime(),
-        itemIds : itemIds , 
+        itemIds : selectedItemIds , 
         labelText : textboxValue
     }
-    pushAndPullUpdates(addNewSessionUpdateForQuery)
+    pushAndPullUpdates(addNewSessionUpdateForQuery, "synchronous")
 }
 
 /*
@@ -388,6 +431,21 @@ function handleUpdatedSessions(sessionObjs){
     $("#sessionSummary").append(sessionsDiv)
 }
 
-
+function createSessionDiv(label, counts){
+    var div = $("<div class='sessionClickable'>")
+    div.text(label + " ("+counts+") ")
+	
+	div.click(function(){
+		query = {
+			"type" : "session",
+			"label" : label,
+            "sortOrder" : "creationTime"
+		}
+		getAllData("synchronous")
+		//filterItemsByLabel(memberItemIds)
+	})
+	
+    return div
+}
 
 

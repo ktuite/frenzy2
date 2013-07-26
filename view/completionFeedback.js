@@ -1,5 +1,4 @@
 function handleUpdatedCompletion(completion){
-console.log(completion)
 	var completedItemIds = completion["completedItemIds"]
 	var incompletedItemIds = completion["incompletedItemIds"]
 	

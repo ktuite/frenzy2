@@ -192,6 +192,7 @@ handleAddSessionToItemsInQuery = function(addSessionToItems){
 	var labelText = addSessionToItems["labelText"]
     
     //add each 
+    /*
     for(var i in itemIds){
         var itemId = itemIds[i]
         var addLabelToItem = {
@@ -202,7 +203,7 @@ handleAddSessionToItemsInQuery = function(addSessionToItems){
         }
         handleAddLabelToItem(addLabelToItem)
     }
-    
+    */
     //mark those items as the session
     for(var i in itemIds){
         var itemId = itemIds[i]
@@ -237,7 +238,7 @@ handleAddLabelToItem = function(addLabelToItem){
 	var time = addLabelToItem["time"]
 	var itemId = addLabelToItem["itemId"]
 	var labelText = addLabelToItem["labelText"]
-	
+	console.log(addLabelToItem)
 	var itemReference = allData["items"][itemId]
 	//does the label already exist in allData?
 	//if not, create a new label object
