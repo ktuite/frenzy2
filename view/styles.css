@@ -304,3 +304,28 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     cursor: pointer;
     color: blue;
 }
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color:grey;
+    opacity: .9;
+    text-align:center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.refreshDiv{
+    position:relative;
+    top: 140px;
+}
+
+.refreshText{
+    color: blue;
+    text-decoration:underline;
+    cursor: pointer;
+}

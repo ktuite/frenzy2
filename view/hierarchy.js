@@ -25,22 +25,7 @@ function createLabelDiv(labelObj){
     return div
 }
 
-function createSessionDiv(label, counts){
-    var div = $("<div >")
-    div.text(label + " ("+counts+") ")
-	
-	div.click(function(){
-		query = {
-			"type" : "session",
-			"label" : label,
-            "sortOrder" : "creationTime"
-		}
-		getAllData("synchronous")
-		//filterItemsByLabel(memberItemIds)
-	})
-	
-    return div
-}
+
 
 /*
 function filterItemsByLabel(memberItemIds){

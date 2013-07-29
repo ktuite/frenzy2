@@ -113,16 +113,53 @@ function updateItemsInFeed(){
     $(".item").each(function(t){
         var itemId = $(this).attr("id")
         if( !arrayContains(itemIdOrder, itemId)){
-            $("#containerFor-"+itemId).css("background-color", "yellow")
+            var container = $("#containerFor-"+itemId)
+            if( ! $("#overlayFor-"+itemId).length){
+                var cover = $("<div class='overlay' id='overlayFor-"+itemId+"' >")
+            
+                var itemUI = $("#containerFor-"+itemId)
+                var currentHeight = itemUI.height() 
+            
+                var refreshMethodContainer = $("<div class='refreshDiv'>")
+                var refreshMessage = $("<span>")
+                refreshMessage.html("This item has been updated.")
+                
+                
+                var refreshClick = $("<span class='refreshText'>")
+                refreshClick.html("Refresh results.")
+                refreshClick.click(function(){
+                    getAllData("synchronous")
+                })
+                
+                refreshMethodContainer.append(refreshMessage)
+                refreshMethodContainer.append("<br>")
+                refreshMethodContainer.append(refreshClick)
+                cover.append(refreshMethodContainer)
+                
+                container.append(cover)
+            }
         }
     })
 }
 
 function markItemAsUpdated(itemId){
     var itemUI = $("#containerFor-"+itemId)
+    var currentHeight = itemUI.height() 
+    console.log(itemUI)
+    console.log("currentHeight")
+    console.log(currentHeight)
+    itemUI.height(currentHeight)
+    itemUI.css('overflowY', 'auto');
+    var itemObj = items[itemId]
+    
+    var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
+    itemUI.empty()
+    itemUI.append(itemAndReplyDivInternals)
+    /*
     if(itemUI){
         itemUI.css("background-color", "yellow")
     }
+    */
 }
 
 

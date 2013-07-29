@@ -4,6 +4,7 @@
 
 function createItemAndReplyDiv(itemObj){
     var itemAndReplyDiv = $("<div class='row' id='containerFor-"+itemObj["id"]+"'>")
+    itemAndReplyDiv.css("position","relative")
 	var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj)
     itemAndReplyDiv.append(itemAndReplyDivInternals)
     return itemAndReplyDiv
