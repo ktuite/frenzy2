@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    //console.log("result")
-	//console.log(result)
+    console.log("result")
+	console.log(result)
     
     var type = result["type"]
     
@@ -42,6 +42,7 @@ function handleUpdates(result){
 		var completion = result["completion"]
 		handleUpdatedCompletion(completion)
 	}
+    
 
     
     //depending on the query type, either redisplay the all the Feed
