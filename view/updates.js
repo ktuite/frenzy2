@@ -167,7 +167,11 @@ function markItemAsUpdated(itemId){
 function displayFeed(itemIds){
 	//items is the recent items
 	$("#feed").empty()     
-	
+    
+    var resultsUnderlay = $("<div id='resultsUnderlay'>")
+    //resultsUnderlay.height(200)
+	$("#feed").append(resultsUnderlay)
+    
     for( var i in itemIds){
 		var itemId = itemIds[i]
 		var itemObj = items[itemId]
@@ -247,6 +251,11 @@ function updateSearchFeedback(queryResultObj){
     })
     
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
+    
+    //adjust the underlay height
+    var searchFeedbackHeight = $("#searchFeedbackDiv").height()
+    console.log("searchFeedbackHeight: " + searchFeedbackHeight )
+    $("#resultsUnderlay").height(searchFeedbackHeight + 20)
     
     
     

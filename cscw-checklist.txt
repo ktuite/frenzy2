@@ -14,11 +14,12 @@
 
 - when I do a text search, the search term should highlight.
 - way to see all the items
+
+Medium prioity:
+
 - delete category (or just leave as unchecked)
     - resort category list in the items (unchecked at bottom)
-
--feedback indicating that the session has been removed from the item.
-
+- feedback indicating that the session has been removed from the item.
 - errors with toggling categories (probably having to do with having a list that's populated funky, "Studies Of Wikipedia" is checked but not on the list because of the way I scraped.)
 - should I only show currently applicable categories for when the subset of the data is done.
 
