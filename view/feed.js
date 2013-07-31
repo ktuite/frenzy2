@@ -54,7 +54,7 @@ function createItemAndReplyDivInternals(itemObj){
 
 function createItemDiv(itemObj){
     var itemHTML = itemObj["html"]
-    var itemId= itemObj["id"]
+    var itemId = itemObj["id"]
     
     //var clickableDiv = $("<span id='clickable-"+itemId+"'>");
     var div = $("<div class='span4 item' id= '"+itemId+"'>")

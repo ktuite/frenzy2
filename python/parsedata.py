@@ -117,40 +117,32 @@ for line in lines[8:30] :
 		splitKeywords = map( lambda x: x.strip() , keywords.split(";"))
 		
 		newItem = createItem(id, itemHtml, counter, splitKeywords)
-		counter += 1		
-		allData["items"][id] = newItem
-		
-		for s in splitKeywords:
-			if s in allKeywords:
-				allKeywords[s].append(id)
-			else:
-				allKeywords[s] = [id]
-			
-#print allData
-
-
+		counter += 1	
+        allData["items"][id] = newItem
+		print allData["items"][id]
+        for s in splitKeywords:
+            if s in allKeywords:
+                allKeywords[s].append(id)
+            else:
+                allKeywords[s] = [id]
 #put all the keywords in the allData["labelList"]
 #initialize TFIDF
 for k in allKeywords:
-	keyWordObj = {	
-		"label" : k,
-		"itemsUsedBy" : allKeywords[k],
-		"user" : "cscw",
-		"creationTime" : 0
-	}
-	allData["labelList"][k] = keyWordObj
-	
-	
-	
-	allData["tfidf"][k] = {}
-	allItems = allData["items"]
-	for itemId in allItems:
-		allData["tfidf"][k][itemId] = {
-			"frequency" :  0,
-			"idf" : 0,
-			"tfidf" : 0
-		}
-	
+    keyWordObj = {	
+        "label" : k,
+        "itemsUsedBy" : allKeywords[k],
+        "user" : "cscw",
+        "creationTime" : 0
+    }
+    allData["labelList"][k] = keyWordObj
+    allData["tfidf"][k] = {}
+    allItems = allData["items"]
+    for itemId in allItems:
+        allData["tfidf"][k][itemId] = {
+            "frequency" :  0,
+            "idf" : 0,
+            "tfidf" : 0
+        }
 print allData["tfidf"]
 
 	

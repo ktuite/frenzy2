@@ -34,6 +34,15 @@ getFeedItemsAndOrder = function(query){
             itemIds = allData["sessions"][label]
         }
 	}
+    if(queryType == "text"){
+        var text = query["text"]
+        var itemIds = getAllItemIdsWithTextT(text)
+        /*
+		if (label in allData["sessions"]) {
+            itemIds = allData["sessions"][label]
+        }
+        */
+	}
 	if(queryType == "completed"){
 		itemIds = allData["completion"]["completedItemIds"]
 	}
@@ -101,16 +110,19 @@ getAllItemIdsWithTextT = function(text){
 }
 
 doesItemContainText = function(itemObject, text){
+    var text = text.toLowerCase()
     var itemReplies = itemObject["replies"]
     for(var i in itemReplies){
         var itemReply = itemReplies[i]
         var itemReplyHtml = itemReply["html"]
         if(itemReplyHtml.search(text)> -1){
             return true
-        }
-        
+        }        
     }
-    
+    var itemHtml = itemObject["html"].toLowerCase()
+    if(itemHtml.search(text)> -1){
+        return true
+    }  
     return false
 }
 

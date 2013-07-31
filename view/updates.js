@@ -170,8 +170,20 @@ function displayFeed(itemIds){
     for( var i in itemIds){
 		var itemId = itemIds[i]
 		var itemObj = items[itemId]
-		var newItemDiv = createItemAndReplyDiv(itemObj)        
+		var newItemDiv = createItemAndReplyDiv(itemObj)     
         $("#feed").append(newItemDiv)
+        $("#full-abstract-"+itemId).hide()
+        wrap = function(id){
+            $("#more-abstract-"+id).click(function(){
+                $("#short-abstract-"+id).hide()
+                $("#full-abstract-"+id).show()
+            })
+            $("#less-abstract-"+id).click(function(){
+                $("#short-abstract-"+id).show()
+                $("#full-abstract-"+id).hide()
+            })
+        }
+        wrap(itemId)
     }
 
 	//from the query type, get which items to show.

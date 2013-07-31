@@ -112,8 +112,10 @@ $(document).ready(function(){
     goalSetup()
 	testSignIn()
 	setDefaultQuery()
+    setUpTextSearch()
+   
+
 	getAllData("synchronous")
-	console.log( getUsername() )
     
     setInterval(function(){ console.log("update"); getAllData("asynchronous") },5000);
 })
@@ -128,6 +130,43 @@ function testSignIn(){
 function setDefaultQuery(){
 	query["type"] = "all"
 	query["sortOrder"] = "creationTime"
+}
+
+function setUpTextSearch(){
+
+    $("#sortSubmit").click(function(){
+        var searchText = $("#search").val().trim()
+        if(searchText != ""){
+            query = {
+                "type" : "text",
+                "text" : searchText,        
+                "sortOrder" : "creationTime"
+            }
+            getAllData("synchronous")
+            $("#search").val("")
+        }
+    })    
+    
+    
+    $("#search").keypress(function(event){
+        
+        console.log(event.which )
+        
+        if( event.which == 13 ) {
+            event.preventDefault();
+            var searchText = $("#search").val()
+            console.log(searchText)
+            query = {
+                "type" : "text",
+                "text" : searchText,        
+                "sortOrder" : "creationTime"
+            }
+            getAllData("synchronous") 
+            $("#search").val("")
+        } 
+              
+    })
+    event.preventDefault();
 }
 
 function getAllData(typeOfRequest){
@@ -168,19 +207,23 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
             <span class="icon-bar"></span>
           </button>
           
-          <!--
+          
           <div class="nav-collapse collapse">
+            <!--
             <ul class="nav">
               <li class="active">
               <div class="homeImage"><a href="#" onclick="goToHome()"><h2 id="counter"></h2><img class="homeButton" id='homeButton' src="http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png"></a></div>
               </li>
             </ul>
+            -->
             <form class="navbar-form pull-right" id="navBarForm">
+                <!--
                 <input type="text" id="username" placeholder="username" >
                 <input type="button" class="btn" id="signInOut" value= "Sign In" />
-              
                 <input class="span2" type="text" placeholder="search" id="search">
-              
+                -->
+                <input class="span2" type="text" placeholder="search" id="search">
+                <!--
                 <select class="span2" id="sortBy">
                     <option value="default">(default)</option>
                     <option value="mostDiscussed">most discussed</option>
@@ -189,11 +232,11 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                     <option value="leastDiscussedByMe">least discussed by me</option>
                     <option value="original">(original order)</option>
                 </select>
-                
+                -->
               <input type="button" class="btn" id="sortSubmit" value= "Search" />
             </form>
           </div>
-          -->
+          
         </div>
       </div>
     </div>

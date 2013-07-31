@@ -329,3 +329,9 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     text-decoration:underline;
     cursor: pointer;
 }
+.more-abstract, .less-abstract{
+    color: blue;
+    text-decoration:underline;
+    cursor: pointer;
+    float: right;
+}
