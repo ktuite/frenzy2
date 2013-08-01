@@ -9,7 +9,6 @@
 - watchlist to focus users on the data they care about, so as not to overwhelm them.
 
 - sorting search results but most/least active items
-- when I do a text search, the search term should highlight.
 - way to see all the items
 
 Medium prioity:
@@ -26,7 +25,7 @@ Done:
 - show the abstracts in a show/hide thing
 - global text search
     - highlight text
-(should expand abstracts)
+    - expand abstracts
 - don't add null categories
 - when I click a category name, both abstracts shouldn't show up.
 - how do I remove an item from session?

@@ -54,8 +54,18 @@ getFeedItemsAndOrder = function(query){
 	// SORT 
 	//////////////////////////////
 	var sortOrder = query["sortOrder"]
+    console.log("sortOrder: "+sortOrder)
 	if(sortOrder == "creationTime"){
 		itemIds = sortItemIdsByCreationTime(itemIds)
+        console.log("creationTime")
+	}
+	if(sortOrder == "mostActive"){
+		itemIds = sortItemIdsByMostRecentlyUpdated(itemIds)
+        console.log("mostActive")
+	}
+    if(sortOrder == "leastActive"){
+		itemIds = sortItemIdsByLeastRecentlyUpdated(itemIds)
+        console.log("leastActive")
 	}
 	return itemIds
 }
@@ -131,21 +141,21 @@ doesItemContainText = function(itemObject, text){
     return false
 }
 
-sortItemIdsByLastUpdated = function(allItemIds){
+sortItemIdsByMostRecentlyUpdated = function(itemIds){
 	var itemReferences = allData["items"]
-	var arrayOfItemReferences = utils.dictToArray(itemReferences)
-	var itemsIdsWithLastUpdatedTimes = utils.mapArray(arrayOfItemReferences, function(x){
-		return {"itemId": x["id"], "timeLastUpdated": x["lastUpdateTime"]}
-	})
-	//var itemsIdsWithLastUpdatedTimes = [{"itemId":"item0", "timeLastUpdated": 123456788}, {"itemId":"item1", "timeLastUpdated": 123456789}]
-	itemsIdsWithLastUpdatedTimes.sort(function(a,b){return b["timeLastUpdated"]-a["timeLastUpdated"]});
-	
-	return itemsIdsWithLastUpdatedTimes
+	itemIds.sort(function(a,b){return itemReferences[b]["lastUpdateTime"] - itemReferences[a]["lastUpdateTime"]});
+	return itemIds
+}
+
+sortItemIdsByLeastRecentlyUpdated = function(itemIds){
+	var itemReferences = allData["items"]
+    itemIds.sort(function(a,b){return itemReferences[a]["lastUpdateTime"] - itemReferences[b]["lastUpdateTime"]});
+	return itemIds
 }
 
 sortItemIdsByCreationTime = function(itemIds){
 	var itemReferences = allData["items"]
-	itemIds.sort(function(a,b){return itemReferences[b]["creationTime"] - itemReferences[b]["creationTime"]});
+	itemIds.sort(function(a,b){return itemReferences[b]["creationTime"] - itemReferences[a]["creationTime"]});
 	return itemIds
 }
 

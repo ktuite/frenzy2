@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    console.log("result")
-	console.log(result)
+    //console.log("result")
+	//console.log(result)
     
     var type = result["type"]
     
@@ -215,10 +215,12 @@ function pushNewItemDivsOnFeed(newItemDivs){
 */
 
 function updateSearchFeedback(queryResultObj){
+    console.log("updateSearchFeedback*******************")
     var query = queryResultObj["query"]
     var queryType = query["type"]
     var numResults = queryResultObj["numResults"]
-
+    var querySortOrder = query["sortOrder"]
+    
     $("#searchFeedbackDiv").empty()
 	
     var searchFeedbackContainer = $("<div>")
@@ -232,7 +234,56 @@ function updateSearchFeedback(queryResultObj){
     numResultsDiv.append(refreshButton)
     searchFeedbackContainer.append(numResultsDiv)
     
+    //Sort options
+    
+    var sortOptions = $("<div id='sortOptions'>")
+    sortOptions.append("Sort items by: <br>")
+    var sortOptionStrings = [{"name":"creation time", "sortType": "creationTime"},{"name":"most active", "sortType": "mostActive"}, {"name":"least active",  "sortType": "leastActive"}]
+    
+    
+    for(var sortOptionIndex in sortOptionStrings){
+        var sortOptionString = sortOptionStrings[sortOptionIndex]["name"]
+        var sortOptionSortType = sortOptionStrings[sortOptionIndex]["sortType"]
+        //name='sortOption' value='"sortOptionString"'
+        var sortRadio = $("<input type='radio'  name='sortOption' value='"+sortOptionSortType+"'>")
+        if(sortOptionSortType == querySortOrder){
+            sortRadio.prop("checked", true)
+        }
+        wrap = function(radioButton, sortIndex){
+            radioButton.click(function(){
+                
+                var sortOrder = sortOptionStrings[sortIndex]["sortType"]
+                query["sortOrder"] = sortOrder
+                console.log(sortOrder)
+                /*
+                query = {
+                    "type" : "label",
+                    "label" : label,
+                    "checked" : true,            
+                    "sortOrder" : "creationTime"
+                }
+                */
+                getAllData("synchronous")
+            })
+        }
+        wrap(sortRadio, sortOptionIndex)
+        
+        sortOptions.append(sortRadio)
+        sortOptions.append(sortOptionString+"<br>")
+    }
+    
+
+    
+    searchFeedbackContainer.append(sortOptions)
+    
     /*
+    var querySortOrder = query["sortOrder"]
+    console.log("querySortOrder: "+querySortOrder)
+    $('input:radio[value='+querySortOrder+']').prop("checked", true)
+    */
+    /*
+    // MASS EDIT - removed for fear of the whole interface freaking out.
+    
     var addLabelUI = createAddLabelUI(queryResultObj)
     searchFeedbackContainer.append(addLabelUI)
     
