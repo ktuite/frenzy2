@@ -1,15 +1,14 @@
+- being able to dynamically control the list of papers in the system while we are in the PC meeting
+- watchlist to focus users on the data they care about, so as not to overwhelm them.
+- way to see all the items
+
 - instructions and login (with email address, just like Cascade@CHI)
 - extreme logging/instrumentation for later analysis
-
-- being able to dynamically control the list of papers in the system while we are in the PC meeting
 - being able to get a dump from PCS and only show the Frenzy activity with officially accepted papers.
-
 - prepare the interface for both phases ( tagging party with ~100 people, and session making with ~15 people)
 
-- watchlist to focus users on the data they care about, so as not to overwhelm them.
 
-- sorting search results but most/least active items
-- way to see all the items
+
 
 Medium prioity:
 - for session making, show both absolute # of items in categories AND the number not in sessions.
@@ -32,3 +31,5 @@ Done:
 - session updating when I update it.
 - make the hyperbar seem like it has fixed position.
 - better results text
+
+- sorting search results but most/least active items

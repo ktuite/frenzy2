@@ -11,7 +11,7 @@ var testing = true;
 ////////////////////////
 // Data structure
 ////////////////////////
-
+/*
 allData = {
     "items":{},
 	"labelList": {},
@@ -30,10 +30,11 @@ allData = {
         "locations":[], 
         "events":[]
     },
-	"sessions": {}
+	"sessions": {},
+    "acceptedItems": []
 }
 
-
+*/
 
 
 ////////////////////////
@@ -54,6 +55,11 @@ app.get('/home.html', function(request, response){
 	}
 	response.sendfile('view/home.html')
 });
+
+app.get('/acceptedPapers.html', function(request, response){
+	response.sendfile('view/acceptedPapers.html')
+});
+
 
 app.get('/', function(request, response){
 	response.send(allData)
@@ -112,6 +118,7 @@ var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/data.js');
 updateActionableFeedback()
 
+allData["acceptedPapers"] = ["a","b"]
 
 //console.log(rankLabelsForTargetLabel("Workflow management"))
 
@@ -158,6 +165,25 @@ app.post('/home.html', function(request, response){
 		response.send(JSON.stringify(memberItemObjs))
 	}
 	*/
+});
+
+app.post('/acceptedPapers.html', function(request, response){
+	var command = request.body["command"]
+	var args = JSON.parse(request.body["args"])
+    
+    if(command == "newItem"){
+		var newItemId = args["newItemId"]
+        console.log(Object.keys(allData))
+        allData["acceptedPapers"].push(newItemId)
+        response.send(JSON.stringify(allData["acceptedPapers"]))        
+	}else if(command == "getAcceptedPapers"){
+		response.send(JSON.stringify(allData["acceptedPapers"])) 
+	}else if(command == "editAcceptedPapers"){
+        var papers = args["papers"]
+        allData["acceptedPapers"] = papers
+        
+		response.send(JSON.stringify(allData["acceptedPapers"])) 
+	}
 });
 
 

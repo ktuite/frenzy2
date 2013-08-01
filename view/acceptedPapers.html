@@ -1,0 +1,79 @@
+<html>
+<head>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" >
+<script type = "text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>  
+
+<script type = "text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/utils.js"></script>
+</head>
+<script type="text/javascript">
+function ajax(command, message, callbackFunction) {    
+	$.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
+}
+
+function addItem(){
+    var newItem = $("#addNewItem").val().trim()
+    $("#addNewItem").val("")
+    if(newItem != ""){
+        ajax("newItem", {"newItemId":newItem}, function(result){ 
+            var acceptedPapersJSON = JSON.parse(result)
+            printAcceptedPapers(acceptedPapersJSON)
+            //console.log(acceptedPapersJSON)
+        })
+    }
+}
+
+function printAcceptedPapers(paperIds){
+    var newTextListOfPaperIds = ""
+    for(i in paperIds){
+        var paperId = paperIds[i]
+        newTextListOfPaperIds = newTextListOfPaperIds+ paperId+"\n"
+    }
+    $("#gregorianTextArea").val(newTextListOfPaperIds)
+}
+
+function getAndDisplayAcceptedPapers(){
+    ajax("getAcceptedPapers", {}, function(result){printAcceptedPapers(JSON.parse(result))})
+}
+$(document).ready(function(){
+    getAndDisplayAcceptedPapers()
+    
+    $("#submitNewItemId").click(function(){
+        addItem()
+    })
+    
+    $("#addNewItem").keypress(function(event){
+        if( event.which == 13){
+            addItem()
+        }
+    })
+    
+    $("#refreshButton").click(function(){
+        getAndDisplayAcceptedPapers()
+    })
+    
+    $("#editButton").click(function(){
+        var allPapersInTextArea = $("#gregorianTextArea").val()
+        var arr = allPapersInTextArea.split("\n");
+        ajax("editAcceptedPapers", {"papers": arr}, function(result){
+            printAcceptedPapers(JSON.parse(result))
+        })
+    })
+})
+</script>
+<body>
+<button id='refreshButton'>Refresh</button>
+
+<br>
+NewItemId: <input type="text" id="addNewItem">
+</input><button id='submitNewItemId'>Submit new item Id</button>
+<br>
+
+<textarea id="gregorianTextArea" rows="50" cols="50">
+
+</textarea>
+<button id='editButton'>Edit this text</button>
+
+</body>
+
+</html>
