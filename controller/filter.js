@@ -109,8 +109,13 @@ getAllItemIdsWithTextT = function(text){
     return itemIdsContainingText
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  //return str
+}
+
 doesItemContainText = function(itemObject, text){
-    var text = text.toLowerCase()
+    var text = escapeRegExp(text.toLowerCase())
     var itemReplies = itemObject["replies"]
     for(var i in itemReplies){
         var itemReply = itemReplies[i]

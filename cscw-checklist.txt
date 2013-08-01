@@ -8,15 +8,12 @@
 
 - watchlist to focus users on the data they care about, so as not to overwhelm them.
 
-- for session making, show both absolute # of items in categories AND the number not in sessions.
 - sorting search results but most/least active items
-- make the hyperbar seem like it has fixed position.
-
 - when I do a text search, the search term should highlight.
 - way to see all the items
 
 Medium prioity:
-
+- for session making, show both absolute # of items in categories AND the number not in sessions.
 - delete category (or just leave as unchecked)
     - resort category list in the items (unchecked at bottom)
 - feedback indicating that the session has been removed from the item.
@@ -28,9 +25,11 @@ Done:
 (should refresh only refresh that item?)
 - show the abstracts in a show/hide thing
 - global text search
-(should highlight text, and expand abstracts)
+    - highlight text
+(should expand abstracts)
 - don't add null categories
 - when I click a category name, both abstracts shouldn't show up.
 - how do I remove an item from session?
 - session updating when I update it.
-
+- make the hyperbar seem like it has fixed position.
+- better results text

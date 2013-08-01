@@ -172,12 +172,19 @@ function displayFeed(itemIds){
     //resultsUnderlay.height(200)
 	$("#feed").append(resultsUnderlay)
     
+    var isQueryTypeText = (query["type"] == "text")
+    
     for( var i in itemIds){
 		var itemId = itemIds[i]
 		var itemObj = items[itemId]
 		var newItemDiv = createItemAndReplyDiv(itemObj)     
         $("#feed").append(newItemDiv)
-        $("#full-abstract-"+itemId).hide()
+        if(isQueryTypeText){
+            $("#full-abstract-"+itemId).show()
+            $("#short-abstract-"+itemId).hide()
+        }else{
+            $("#full-abstract-"+itemId).hide()
+        }
         wrap = function(id){
             $("#more-abstract-"+id).click(function(){
                 $("#short-abstract-"+id).hide()
@@ -225,6 +232,7 @@ function updateSearchFeedback(queryResultObj){
     numResultsDiv.append(refreshButton)
     searchFeedbackContainer.append(numResultsDiv)
     
+    /*
     var addLabelUI = createAddLabelUI(queryResultObj)
     searchFeedbackContainer.append(addLabelUI)
     
@@ -249,7 +257,7 @@ function updateSearchFeedback(queryResultObj){
             //$(this).removeAttr("checked")
         })
     })
-    
+    */
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
     
     //adjust the underlay height
@@ -299,6 +307,35 @@ function updateSearchFeedback(queryResultObj){
 function createNumResultsDiv(num){
     var numResultsDiv = $("<div class='numResults'>")
     var numResultsText = num+" Results"
+    if(num == 1){
+        numResultsText = num+" Result"
+    }
+    var queryType = query["type"]
+    
+    if(queryType == "label"){
+        var label = query["label"]
+        numResultsText = numResultsText + " in '"+label+"'"
+    }
+    if(queryType == "session"){
+        var label = query["label"]
+        numResultsText = numResultsText + " in '"+label+"'"
+    } 
+    if(queryType == "text"){
+        var text = query["text"]
+        numResultsText = numResultsText + " containing '"+text+"'"
+    }     
+    
+    if(queryType == "completed"){
+		numResultsText = numResultsText + " completed"
+	}
+	if(queryType == "incompleted"){
+        var status = " need work" 
+        if(num == 1){
+            status = " needs work" 
+        }
+		numResultsText = numResultsText + status
+	}
+    
     numResultsDiv.text(numResultsText)
     return numResultsDiv
 }

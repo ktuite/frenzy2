@@ -52,6 +52,11 @@ function createItemAndReplyDivInternals(itemObj){
 
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  //return str
+}
+
 function createItemDiv(itemObj){
     var itemHTML = itemObj["html"]
     var itemId = itemObj["id"]
@@ -67,7 +72,13 @@ function createItemDiv(itemObj){
     */
     var itemHTMLSpan = $("<span class='itemHTML'>")
     
-    
+    var queryType = query["type"]
+    if(queryType == "text"){
+        var searchQuery = query["text"]
+        console.log(escapeRegExp(searchQuery))
+        var re = new RegExp(escapeRegExp(searchQuery), "gi"); 
+        itemHTML = itemHTML.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");//"\$&"
+    }
     //var re = new RegExp(/\S*#(?:\[[^\]]+\]|\S+)/gi); 
 	//itemHTML = itemHTML.replace(re, "<span class='user' onclick = 'search(\"$&\")' >$&</span>");
                 

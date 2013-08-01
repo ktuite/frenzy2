@@ -173,10 +173,9 @@ label{
 
 #searchFeedbackContainer{
 	position: fixed;
-    z-index: 10;
-    
-    
+    z-index: 10;    
 }
+
 #searchFeedbackDiv{
 	background-color: white;
 	margin: 5px;
