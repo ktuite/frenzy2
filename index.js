@@ -118,7 +118,7 @@ var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/data.js');
 updateActionableFeedback()
 
-allData["acceptedPapers"] = ["a","b"]
+allData["acceptedPapers"] = ["cscw654","cscw615"]
 
 //console.log(rankLabelsForTargetLabel("Workflow management"))
 

@@ -4,6 +4,7 @@ var utils = require('./node-utils');
 getFeedItemsAndOrder = function(query){
 	var queryType = query["type"]
 	var itemIds = []
+    
 	
 	//////////////////////////////
 	// SEARCH 
@@ -49,7 +50,15 @@ getFeedItemsAndOrder = function(query){
 	if(queryType == "incompleted"){
 		itemIds = allData["completion"]["incompletedItemIds"]
 	}
-	
+	//////////////////////////////
+	// FILTER DOWN TO ACCEPTED PAPERS
+	//////////////////////////////	
+    //console.log(itemIds)
+    
+    itemIds = utils.filterArray(itemIds, function(x){
+        return utils.arrayContains(allData["acceptedPapers"], x)
+    })
+    
 	//////////////////////////////
 	// SORT 
 	//////////////////////////////
