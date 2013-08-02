@@ -1,4 +1,5 @@
-- being able to dynamically control the list of papers in the system while we are in the PC meeting
+- CHAT
+- Visibility of other editors
 - watchlist to focus users on the data they care about, so as not to overwhelm them.
 - way to see all the items
 
@@ -7,8 +8,8 @@
 - being able to get a dump from PCS and only show the Frenzy activity with officially accepted papers.
 - prepare the interface for both phases ( tagging party with ~100 people, and session making with ~15 people)
 
-
-
+-sort by most recently added
+-more feeback for admin (paper names if correct, of paper added, total numer of items,)
 
 Medium prioity:
 - for session making, show both absolute # of items in categories AND the number not in sessions.
@@ -33,3 +34,4 @@ Done:
 - better results text
 
 - sorting search results but most/least active items
+- being able to dynamically control the list of papers in the system while we are in the PC meeting

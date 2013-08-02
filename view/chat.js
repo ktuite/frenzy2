@@ -4,7 +4,6 @@ var chatShowing = true;
 function chatSetup(){
 	$("#chatTitleBar span").click(showHideChat);
 
-
     $("#sendChat").click(function(event) {
        sendChat();
     });

@@ -61,6 +61,7 @@ var username = false
 <script type = "text/javascript" src="feed.js"></script>
 
 
+
 <link href="/styles.css" rel="stylesheet">
 
 <script type="text/javascript">
@@ -240,7 +241,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
       </div>
     </div>
     
-<div id="container" class="container">
+<div id="container" class="containerLeft">
     <div class="row">
         <div class="span4" >
             <div class= "sidebar-nav-fixed">
@@ -316,7 +317,16 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
             </div>
         </div>
     </div>
-</div>    
+</div> 
+
+<div id="chatBox">
+  <div id="chatTitleBar">Chat<span>_</span></div>
+   <div id="chatLog">
+   </div>
+   <button id="sendChat">Send</button>   
+   <textarea type="text" id="chatEnterArea"></textarea>
+
+</div>     
 <!--
 <div id="chatBox">
   <div id="chatTitleBar">Chat<span>_</span></div>

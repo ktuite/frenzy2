@@ -14,6 +14,12 @@ body {
 
 #container{
     background: rgba(105, 105, 105, 0.5);   
+    margin-left: 40px;
+}
+
+.containerLeft{
+
+    
 }
 
 label{
@@ -194,11 +200,13 @@ h2 {
    font-size:medium;
    font-style: bold;
 }
-
+/*
+CHAT
+*/
 #chatBox {
    position: fixed;
    bottom: 0px;
-   left: 10px;
+   right: 10px;
    width: 200px;
    height: 150px;
    border: 1px solid black;
@@ -254,6 +262,10 @@ h2 {
 #chatBox.hideChat {
   bottom: -130px !important;
 }
+
+/*
+
+*/
 
 .button{
 	height:40px;

@@ -113,12 +113,13 @@ var actionableFeedback = require('./controller/actionableFeedback.js');
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
 //var instantiateData = require('./testing/cscwData12labels.js');
-var instantiateData = require('./testing/cscwData12labelsAuthors.js');
+//var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');
 //var instantiateData = require('./testing/data.js');
+var instantiateData = require('./testing/movies1.js');
 updateActionableFeedback()
 
-allData["acceptedPapers"] = ["cscw654","cscw615"]
+allData["acceptedPapers"] = [] //["cscw654","cscw615"]
 
 //console.log(rankLabelsForTargetLabel("Workflow management"))
 
