@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Frenzy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->   
+    <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+
+        background-image: url('http://homes.cs.washington.edu/~felicia0/images/twitify/spring.jpg');
+        background-repeat:no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+        background-size: cover;
+        width:100%;
+        margin:0 auto;
+        min-height: 100%;
+        min-width: 1000px;
+        overflow: visible;
+    }   
+
+    .box{
+        padding:5px;
+        margin: 5px;
+        background-color: white;
+        border-radius: 6px;
+    }    
+    
+    .title{
+    	font-size: 20px;
+        font-weight: bold;
+    }
+    
+    
+    </style>
+    <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" >
+    <script type = "text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>  
+
+    <script type="text/javascript">
+
+    function ajax(command, message, callbackFunction) {    
+        $.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
+    }
+
+    function testSignIn(){
+        ajax("signIn", {"user": getUsername()}, function(result){ 
+            var res = JSON.parse(result)
+            username = res["user"]
+        })
+    }
+    function login(){
+        var email = $("#email").val().trim()
+        if(email != ""){
+            ajax("signIn", {"email": email}, function(result){ 
+                var res = JSON.parse(result)
+                if(res["success"] == "yes"){
+                    console.log("login success")
+                    //go to /home.html
+                    window.location = "../home.html"
+                }else{
+                    console.log("login failed")
+                    //do nothing?
+                }
+            })
+        }
+    }
+    
+    function checkLogin(){
+        ajax("checkLogin", {}, function(results){
+            var res = JSON.parse(results)
+            var hasEmail = res["hasEmail"]
+            if(hasEmail == "yes"){
+                var email = res["email"]
+                $("#email").val(email)
+                
+                console.log("has email")
+            }else{
+                //do nothing
+                console.log("has no email")
+            }
+        })
+    }
+    
+    $(document).ready(function(){
+        checkLogin()
+    
+        $("#email").keypress(function(event){
+            if(event.which == 13){
+                login()
+            }
+        })
+        
+        $("#loginButton").click(function(){
+            login()
+        })
+    })
+    </script>
+    
+    </head>
+    
+    <body>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          
+          <div class="nav-collapse collapse">
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div id="container" class="container">
+        <div class="row">
+            <div class="span12" >
+                 <div class="row">
+                        <div class="span5 box" >
+                            <span class="title"> Categorize Movies </span> <br>
+                        </div>
+                        <div class="span5 box" >
+                            <span class="title"> Log in </span> <br>
+                            email: <input type="text" id="email"></input>  <input type="button" class="btn" id= "loginButton" value="log in"></input>
+                            
+                        </div>
+                </div>
+            </div>            
+        </div>
+    </div>     
+    </body>   
+</html>

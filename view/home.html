@@ -101,6 +101,25 @@ function goToHome(){
 	*/
 }
 
+function checkLogin(){
+    console.log("checklogin")
+    ajax("checkLogin", {}, function(results){
+        var res = JSON.parse(results)
+        var hasEmail = res["hasEmail"]
+        if(hasEmail == "yes"){
+            var email = res["email"]
+            setUsername(email)
+        }else{
+            //do nothing
+            window.location = "../login.html"
+        }
+    })
+}
+
+function setUsername(username){
+    $("#username").text("Welcome, "+username)
+}
+
 $(document).ready(function(){
 /*
     goalSetup()
@@ -110,6 +129,8 @@ $(document).ready(function(){
     chatSetup()   
 */
     //pushAndPullUpdates({"type":"foo"}, 12334)    
+    checkLogin()
+    
     goalSetup()
 	testSignIn()
 	setDefaultQuery()
@@ -209,14 +230,19 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
           
           
           <div class="nav-collapse collapse">
-            <!--
+           
+            
             <ul class="nav">
-              <li class="active">
-              <div class="homeImage"><a href="#" onclick="goToHome()"><h2 id="counter"></h2><img class="homeButton" id='homeButton' src="http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png"></a></div>
-              </li>
+                <li class="active">
+                    <p class="navbar-text" id="username"></p> 
+                    <!--
+                    <div class="homeImage"><a href="#" onclick="goToHome()"><h2 id="counter"></h2><img class="homeButton" id='homeButton' src="http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png"></a></div>
+                    -->
+                </li>
             </ul>
-            -->
+            
             <form class="navbar-form pull-right" id="navBarForm">
+                
                 <!--
                 <input type="text" id="username" placeholder="username" >
                 <input type="button" class="btn" id="signInOut" value= "Sign In" />

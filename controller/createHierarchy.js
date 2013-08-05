@@ -27,8 +27,17 @@ createHierarchy = function(){
 
 function getOrderedArrayOfLabelObjs(){
 	var arrayOfLabelObjects = utils.dictToArray(allData["labelList"])
+
+    //only push member items that are in allData["acceptedPapers"]
 	var labelCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
         var itemsUsedBy = x["itemsUsedBy"]
+        //filter itemsUsedBy by 
+        var itemsUsedBy = utils.filterArray(itemsUsedBy, function(x){
+            //console.log(allData["acceptedPapers"])
+            //console.log(x)
+            return utils.arrayContains(allData["acceptedPapers"], x)
+        })
+        
         var memberItemIds = []
         for (var i in itemsUsedBy){
             var memberItemId = itemsUsedBy[i]
@@ -44,6 +53,11 @@ function getOrderedArrayOfLabelObjs(){
                     "memberItemIds": memberItemIds
         }
 	})
+    
+    //Filter out the labels that have 0 members
+    labelCountsArray = utils.filterArray(labelCountsArray, function(x){
+        return x["counts"] > 1
+    })
     
     labelCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
 

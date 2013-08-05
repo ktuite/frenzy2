@@ -117,20 +117,82 @@ var actionableFeedback = require('./controller/actionableFeedback.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');
 //var instantiateData = require('./testing/data.js');
 var instantiateData = require('./testing/movies1.js');
+allData["acceptedPapers"] = ["movie0", "movie1", "movie2", "movie3", "movie4", "movie5", "movie6", ] //["cscw654","cscw615"]
+allData["sessionIds"] = {} //{"email": "hmslydia@gmail.com"}
+
 updateActionableFeedback()
 
-allData["acceptedPapers"] = [] //["cscw654","cscw615"]
+
 
 //console.log(rankLabelsForTargetLabel("Workflow management"))
 
 /////////////////////////////////
 // Client Communication Handling
 /////////////////////////////////
+app.get('/login.html', function(request, response){
+	response.sendfile('view/login.html')
+});
+
+app.post('/login.html', function(request, response){
+    var command = request.body["command"]
+	var args = JSON.parse(request.body["args"])
+    
+    if( command == "checkLogin"){
+        res = {"hasEmail": "no"}
+
+        if (request.session.logged){
+            console.log('Welcome back: '+request.session.id)
+            //check if there is already an email for this session id
+            if (request.session.id in allData["sessionIds"]){
+                res["hasEmail"] = "yes"
+                var email = allData["sessionIds"][request.session.id]["email"]
+                res["email"] = email
+            }
+        }else {
+            request.session.logged = true;
+            console.log('new session: '+request.session.id);            
+        }
+        response.send(JSON.stringify(res))
+    }
+    if(command == "signIn"){
+        var email = args["email"]
+        res = {"success": "no"}
+        if( true ){
+            allData["sessionIds"][request.session.id] = {"email":email}
+            request.session.email = email
+            
+            res = {"success": "yes"}
+            
+        }
+        console.log( allData["sessionIds"] )
+        response.send(JSON.stringify(res))
+        
+    }
+});
+
 app.post('/home.html', function(request, response){
+    //if they are not logged in to a session, send them to /login
+
 	var command = request.body["command"]
 	var args = JSON.parse(request.body["args"])
 	
-	if(command == "update"){
+    if( command == "checkLogin"){
+        res = {"hasEmail": "no"}
+
+        if (request.session.logged){
+            console.log('Welcome back: '+request.session.id)
+            //check if there is already an email for this session id
+            if (request.session.id in allData["sessionIds"]){
+                res["hasEmail"] = "yes"
+                var email = allData["sessionIds"][request.session.id]["email"]
+                res["email"] = email
+            }
+        }else {
+            request.session.logged = true;
+            console.log('new session: '+request.session.id);            
+        }
+        response.send(JSON.stringify(res))
+    }else if(command == "update"){
 		var message = JSON.parse(request.body["args"])
 		var update = message["update"]
 		var query = message["query"]
