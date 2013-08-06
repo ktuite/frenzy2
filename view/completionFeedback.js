@@ -4,18 +4,9 @@ function handleUpdatedCompletion(completion){
 	
 	var numCompletedItemIds = completedItemIds.length
 	var numIncompletedItemIds = incompletedItemIds.length
-	
+	console.log(numCompletedItemIds+ " "+numIncompletedItemIds)
 	displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds)
-	/*
-	if( checkGoalsCompleted(numNonMatchingBaseTweetObjects) ){
-		goalAchievedTime = getTime()
-		displayGoalSuccess()
-	}else{
-		goalAchievedTime = -1
-	}
-	
-	updateGoalStatus()
-	*/
+
 }
 
 

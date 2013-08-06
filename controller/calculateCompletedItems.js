@@ -7,36 +7,56 @@ updateCompletedItems = function(){
 }
 
 calculateCompletedItems = function(){
-	//console.log("calculateCompletedItems")
 	var items = allData["items"]
+
 	var arrayOfItemObjs =  utils.dictToArray(items)
-	
+    
+	arrayOfItemObjs = utils.filterArray(arrayOfItemObjs, function(x){
+        return utils.arrayContains(allData["acceptedPapers"], x["id"])
+    })
+    
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
-		var labelsDict = x["labels"]
-		var labelsArray = utils.dictToArray(labelsDict)
-		var checkedLabels = utils.filterArray(labelsArray, function(x){
-			return x["checked"]
-		})
-		var numberOfLabels = checkedLabels.length
-		return numberOfLabels > 0		
+        var ans = false
+        var labelsDict = x["labels"]
+        for( var label in labelsDict){
+            var labelObj = allData["labelList"][label]
+            var labelsMembers = labelObj["itemsUsedBy"]
+            labelsMembers = utils.filterArray(labelsMembers, function(x){
+                return utils.arrayContains(allData["acceptedPapers"], x)
+            })
+            
+            if(labelsMembers.length == 5){
+                ans = true
+            }
+        }
+        return ans
+      
 	})
+    
 	var completedItemIds = utils.mapArray(completedItemObj, function (x){
 		return x["id"]
 	})
 	
 	var incompletedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
-		var labelsDict = x["labels"]
-		var labelsArray = utils.dictToArray(labelsDict)
-		var checkedLabels = utils.filterArray(labelsArray, function(x){
-			return x["checked"]
-		})
-		var numberOfLabels = checkedLabels.length
-		return numberOfLabels == 0		
+        var ans = true
+        var labelsDict = x["labels"]
+        for( var label in labelsDict){
+            var labelObj = allData["labelList"][label]
+            var labelsMembers = labelObj["itemsUsedBy"]
+            labelsMembers = utils.filterArray(labelsMembers, function(x){
+                return utils.arrayContains(allData["acceptedPapers"], x)
+            })
+            
+            if(labelsMembers.length == 5){
+                ans = false
+            }
+        }
+        return ans
 	})
 	var incompletedItemIds = utils.mapArray(incompletedItemObj, function (x){
 		return x["id"]
 	})
-	
+    	
 	return {"completedItemIds":completedItemIds, "incompletedItemIds": incompletedItemIds}	
 	
 }

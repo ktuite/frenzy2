@@ -117,7 +117,7 @@ var actionableFeedback = require('./controller/actionableFeedback.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');
 //var instantiateData = require('./testing/data.js');
 var instantiateData = require('./testing/movies1.js');
-allData["acceptedPapers"] = ["movie0", "movie1", "movie2", "movie3", "movie4", "movie5", "movie6", ] //["cscw654","cscw615"]
+allData["acceptedPapers"] = ["movie0", "movie1", "movie2", "movie3", "movie4", "movie5", "movie6"] //["cscw654","cscw615"]
 allData["sessionIds"] = {} //{"email": "hmslydia@gmail.com"}
 
 updateActionableFeedback()
