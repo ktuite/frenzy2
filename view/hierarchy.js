@@ -1,5 +1,4 @@
 function createLabelDiv(labelObj){
-    console.log(labelObj)
     var labelParents = labelObj["parents"]
     var label = labelObj["label"]["label"]
     var labelHTML = labelObj["label"]["labelHTML"]

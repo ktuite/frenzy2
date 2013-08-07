@@ -313,7 +313,9 @@ function updateSearchFeedback(queryResultObj){
     var searchFeedbackHeight = $("#searchFeedbackDiv").height()
     $("#resultsUnderlay").height(searchFeedbackHeight + 20)
     
-    
+    if(queryType == "label"){
+		
+	}
     
     /*
     

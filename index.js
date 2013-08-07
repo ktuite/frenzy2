@@ -106,7 +106,7 @@ var sessionsHelpers = require('./controller/sessions.js');
 var tfidfHelpers = require('./controller/tfidf.js');
 var filter = require('./controller/filter.js');
 var actionableFeedback = require('./controller/actionableFeedback.js');
-
+var queryFeedback = require('./controller/queryFeedback.js');
 
 ////////////////////////
 // Instatiate Database
@@ -858,13 +858,6 @@ function getAllServerData(query, type){
     return rtn
 }
 
-function getQueryResultObj(query, numResults){
-    var rtn = {}
-    rtn["query"] = query
-    rtn["numResults"] = numResults
-    
-    return rtn
-}
 
 
 
