@@ -1,13 +1,14 @@
 function createLabelDiv(labelObj){
+    console.log(labelObj)
     var labelParents = labelObj["parents"]
-    var labelObj = labelObj["label"]
-    var label = labelObj["label"]
-    var counts = labelObj["counts"]
-	var memberItemIds = labelObj["memberItemIds"]
+    var label = labelObj["label"]["label"]
+    var labelHTML = labelObj["label"]["labelHTML"]
+    var counts = labelObj["label"]["counts"]
+	var memberItemIds = labelObj["label"]["memberItemIds"]
     
     var div = $("<div class='categoryClickable'>")
     //div.text(label + " ("+counts+") ")
-	div.append(label)
+	div.append(labelHTML)
     
 	var numParents = labelParents.length
     div.css('margin-left',(30*numParents)+"px")

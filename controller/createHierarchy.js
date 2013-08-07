@@ -53,11 +53,13 @@ function getOrderedArrayOfLabelObjs(){
             userClass = 'systemLabel'
         }
         var counts = memberItemIds.length
+        var label = x["label"]
         var labelText = x["label"]+ " ("+counts+")"
-        var label = "<span class='"+userClass+"'>"+labelText+"<span>"
+        var labelHTML = "<span class='"+userClass+"'>"+labelText+"<span>"
         
         
 		return {    "label": label, 
+                    "labelHTML": labelHTML,
                     "counts": memberItemIds.length, 
                     "memberItemIds": memberItemIds
         }
