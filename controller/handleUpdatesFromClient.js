@@ -269,6 +269,7 @@ function addLabelToLabelList(labelText, user, time){
 		"label" : labelText,
 		"itemsUsedBy" : [],
 		"user" : user,
+        "creator" : user,
 		"creationTime" : time
 	}
 	allData["labelList"][labelText] = newLabelObj

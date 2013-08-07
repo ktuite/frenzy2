@@ -33,6 +33,7 @@ function printAcceptedPapers(paperIds){
 }
 
 function getAndDisplayAcceptedPapers(){
+console.log("getAndDisplayAcceptedPapers")
     ajax("getAcceptedPapers", {}, function(result){printAcceptedPapers(JSON.parse(result))})
 }
 $(document).ready(function(){

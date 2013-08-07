@@ -17,8 +17,10 @@ calculateCompletedItems = function(){
     
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
         var ans = false
+        /*
         var labelsDict = x["labels"]
         for( var label in labelsDict){
+            
             var labelObj = allData["labelList"][label]
             var labelsMembers = labelObj["itemsUsedBy"]
             labelsMembers = utils.filterArray(labelsMembers, function(x){
@@ -28,7 +30,9 @@ calculateCompletedItems = function(){
             if(labelsMembers.length == 5){
                 ans = true
             }
+            
         }
+        */
         return ans
       
 	})
@@ -39,6 +43,7 @@ calculateCompletedItems = function(){
 	
 	var incompletedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
         var ans = true
+        /*
         var labelsDict = x["labels"]
         for( var label in labelsDict){
             var labelObj = allData["labelList"][label]
@@ -51,6 +56,7 @@ calculateCompletedItems = function(){
                 ans = false
             }
         }
+        */
         return ans
 	})
 	var incompletedItemIds = utils.mapArray(incompletedItemObj, function (x){

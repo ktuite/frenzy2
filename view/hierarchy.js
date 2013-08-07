@@ -6,8 +6,9 @@ function createLabelDiv(labelObj){
 	var memberItemIds = labelObj["memberItemIds"]
     
     var div = $("<div class='categoryClickable'>")
-    div.text(label + " ("+counts+") ")
-	
+    //div.text(label + " ("+counts+") ")
+	div.append(label)
+    
 	var numParents = labelParents.length
     div.css('margin-left',(30*numParents)+"px")
 	div.click(function(){

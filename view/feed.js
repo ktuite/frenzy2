@@ -320,9 +320,10 @@ function makeInteractiveLabelUI(labelObj, itemId){
 		labelSpan.css("color", "red")
 	}
     */
-    console.log(labelObj)
-    var counts = labelList[labelText]["itemsUsedBy"].length
-    labelSpan.html(labelText+" ("+counts+")<br>")
+    
+    //var counts = labelList[labelText]["itemsUsedBy"].length
+    //labelSpan.html(labelText+" ("+counts+")<br>")
+    labelSpan.html(labelText+" <br>")
     div.append(labelSpan)
     return div
 }

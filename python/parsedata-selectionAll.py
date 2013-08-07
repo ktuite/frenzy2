@@ -1,6 +1,9 @@
 import csv  
 import json  
- 
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+
+
 ''' 
 # Open the CSV  
 f = open( 'listOfSubmissions.csv', 'rU' )  
@@ -35,7 +38,9 @@ allData = {
 }
 
 import csv
-f = open( 'listOfSubmissions.csv', 'rU' )  
+import codecs
+#f = codecs.open("listOfSubmissions.csv", "rU", "ISO-8859-1")
+f = open( 'listOfSubmissions.csv', 'r' )  
 reader = csv.reader(f, skipinitialspace=True)
 lines = list(reader)
 
@@ -91,51 +96,79 @@ def createItem(id, html, creationTime, keywords):
 		"lastUpdateTime" : 0,
 		"creationTime": creationTime, 
 		"labels": {},
-		"session": ""
+		"session": "none"
 	}
 	for k in keywords:
 		labelRef = createLabelRef(k)
 		item["labels"][k] = labelRef
 	return item
-	
-def createHTML(id, title):
-	return "<b>"+id+"</b><br>"+title
+
+#createHTML(id, title, authorList, abstract)	
+def createHTML(id, title, authorList, abstract):
+    shortAbstract = abstract[:70]
+    splitAuthorList = map( lambda x: x.strip() , authorList.split(","))
+    authorListHTML = ""
+    for author in splitAuthorList:
+        authorListHTML = authorListHTML + author + "<br>"
+    return "<b>"+id+"</b><br><b>"+title+"</b><br><span id='authors"+id+"'>"+authorListHTML+"</span><br> <span id='short-abstract-"+id+"'> <b>Abstract: </b>"+shortAbstract+"...<span id='more-abstract-"+id+"' class='more-abstract'>(more)</span></span>   <span id='full-abstract-"+id+"' > <b>Abstract: </b>"+abstract+"<span id='less-abstract-"+id+"' class='less-abstract'>(less)</span></span>"
 
 #populate allData["items"]
 allKeywords = {}
 counter = 0
 for line in lines[8:] :
-	if len(line) > 100 :
-		id = line[0]
-		decision = line[1]
-		title = line[2]
-		keywords =  line[99]
-		abstract = line[100]
-						
-		itemHtml = createHTML(id, title)
-				
-		splitKeywords = map( lambda x: x.strip() , keywords.split(";"))
-		
-		newItem = createItem(id, itemHtml, counter, splitKeywords)
-		counter += 1
+    if len(line) > 100 :
+        id = line[0]
+        decision = line[1]
+        title = line[2]
+        authorList = line[8]
+        #print "authorList",authorList
+        keywords =  line[99]
+        abstract = line[100]
+        
+        itemHtml = createHTML(id, title, authorList, abstract)
+        
+        
+        splitKeywords = map( lambda x: x.strip() , keywords.split(";"))        
+        newItem = createItem(id, itemHtml, counter, splitKeywords)
+        counter += 1	
+
+        '''
+        only use the items if they have a keyword in the list
+         
+        containsAGoodLabel = False
+        for keyword in splitKeywords:
+            print keyword
+            if keyword in goodLabels:
+                containsAGoodLabel = True
+                if keyword in allKeywords:
+                    if id not in allKeywords[keyword]:
+                        allKeywords[keyword].append(id)
+                else:
+                    allKeywords[keyword] = [id]
+        if containsAGoodLabel:    
+            allData["items"][id] = newItem  
+        '''   
         
         allData["items"][id] = newItem
-		print allData["items"][id]
+        #print allData["items"][id]
         for s in splitKeywords:
             if s in allKeywords:
                 allKeywords[s].append(id)
             else:
-                allKeywords[s] = [id]
+                allKeywords[s] = [id]            
+
 #put all the keywords in the allData["labelList"]
 #initialize TFIDF
 for k in allKeywords:
     keyWordObj = {	
         "label" : k,
+        "creator": "system",    
         "itemsUsedBy" : allKeywords[k],
         "user" : "cscw",
         "creationTime" : 0
     }
     allData["labelList"][k] = keyWordObj
+	
     allData["tfidf"][k] = {}
     allItems = allData["items"]
     for itemId in allItems:
@@ -144,14 +177,17 @@ for k in allKeywords:
             "idf" : 0,
             "tfidf" : 0
         }
-print allData["tfidf"]
-
 	
+#print allData["tfidf"]
+
+#pp.pprint(allData["labelList"])	
+
 	
 	
 print "JSON parsed!"  
 # Save the JSON  
-f = open( 'C:/Users/Lydia/Documents/GitHub/frenzy2/testing/cscwDataSubset.js', 'w')  
-allData = json.dumps(allData) 
+f = open( 'C:/Users/hmslydia/Documents/GitHub/frenzy2/testing/cscwDataAll.js', 'w')  
+
+allData = json.dumps(allData, ensure_ascii=False) 
 f.write("allData = "+allData)  
 print "JSON saved!"  
