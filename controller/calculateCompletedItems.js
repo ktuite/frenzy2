@@ -17,22 +17,14 @@ calculateCompletedItems = function(){
     
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
         var ans = false
-        /*
         var labelsDict = x["labels"]
-        for( var label in labelsDict){
-            
+        for( var label in labelsDict ){
             var labelObj = allData["labelList"][label]
-            var labelsMembers = labelObj["itemsUsedBy"]
-            labelsMembers = utils.filterArray(labelsMembers, function(x){
-                return utils.arrayContains(allData["acceptedPapers"], x)
-            })
-            
-            if(labelsMembers.length == 5){
+            var labelCreator = labelObj["creator"]
+            if (labelCreator != "system"){
                 ans = true
             }
-            
         }
-        */
         return ans
       
 	})
@@ -43,6 +35,14 @@ calculateCompletedItems = function(){
 	
 	var incompletedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
         var ans = true
+        var labelsDict = x["labels"]
+        for( var label in labelsDict ){
+            var labelObj = allData["labelList"][label]
+            var labelCreator = labelObj["creator"]
+            if (labelCreator != "system"){
+                ans = false
+            }
+        }
         /*
         var labelsDict = x["labels"]
         for( var label in labelsDict){
