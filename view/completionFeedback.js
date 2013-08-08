@@ -14,7 +14,7 @@ function handleUpdatedCompletion(completion){
 var goalAchievedTime = -1
 
 function goalSetup(){
-    $("#goalDescription").html("Each photo must have at least 1 user generated label")
+    $("#goalDescription").html("Each paper need to be in one new category (in red)")
 }
 
 function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds){

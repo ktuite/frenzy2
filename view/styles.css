@@ -355,3 +355,16 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 .nonSystemLabel{
     color: red;
 }
+
+#hashtagSummaryContainer{
+    padding:5px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 6px;
+    /*overflow-y: scroll;
+    min-height: 200px;*/
+    
+}
+#labelHierarchy{
+    overflow-y: auto;
+}

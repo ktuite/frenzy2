@@ -115,7 +115,7 @@ def createHTML(id, title, authorList, abstract):
 #populate allData["items"]
 allKeywords = {}
 counter = 0
-for line in lines[8:] :
+for line in lines[8:208] :
     if len(line) > 100 :
         id = line[0]
         decision = line[1]
@@ -178,12 +178,44 @@ for k in allKeywords:
             "tfidf" : 0
         }
 	
-#print allData["tfidf"]
+print "counter: ", counter
 
-#pp.pprint(allData["labelList"])	
 
 	
-	
+def findOutItemsIn10to30():
+    midsizeCategories = []
+    allLabels = []
+    for label in allKeywords:
+        
+        items = allKeywords[label]
+        numItems = len(items)
+        allLabels.append({"label":label, "numItems":numItems})
+        print numItems, label
+        if numItems >= 10 and numItems <= 30 :
+            midsizeCategories.append(label)
+        
+    pp.pprint(sorted(allLabels, key=lambda label: label["numItems"], reverse=True))
+    
+    itemsWith = []
+    itemsWithout = []
+    for itemId in allData["items"]:
+        #labels = itemObj["labels"]
+        labels = allData["items"][itemId]["labels"]
+        inWith = False
+        for label in labels:
+            #pp.pprint(label)
+            if label in midsizeCategories:
+                inWith = True
+        if inWith:
+            itemsWith.append(itemId)
+        else:
+            itemsWithout.append(itemId)
+
+    print "itemsWith: ", len(itemsWith)        
+    print "itemsWithout: ", len(itemsWithout)        
+findOutItemsIn10to30()
+
+'''	
 print "JSON parsed!"  
 # Save the JSON  
 f = open( 'C:/Users/hmslydia/Documents/GitHub/frenzy2/testing/cscwDataAll.js', 'w')  
@@ -191,3 +223,4 @@ f = open( 'C:/Users/hmslydia/Documents/GitHub/frenzy2/testing/cscwDataAll.js', '
 allData = json.dumps(allData, ensure_ascii=False) 
 f.write("allData = "+allData)  
 print "JSON saved!"  
+'''
