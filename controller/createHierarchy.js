@@ -48,7 +48,18 @@ function getOrderedArrayOfLabelObjs(){
             }
         }
     
-		return {    "label": x["label"], 
+        var userClass = 'nonSystemLabel'
+        if (x["creator"] == "system"){
+            userClass = 'systemLabel'
+        }
+        var counts = memberItemIds.length
+        var label = x["label"]
+        var labelText = x["label"]+ " ("+counts+")"
+        var labelHTML = "<span class='"+userClass+"'>"+labelText+"<span>"
+        
+        
+		return {    "label": label, 
+                    "labelHTML": labelHTML,
                     "counts": memberItemIds.length, 
                     "memberItemIds": memberItemIds
         }
@@ -132,7 +143,7 @@ function orderAndEnchild(LabelArray, allHTags){
 		
 		//createOtherCategory
 		
-		
+		/*
         if(copiesOfChildrenOflargestLabel.length > 0){     
             var parentMemberItemIds = largestLabel["label"]["memberItemIds"]
             for(var i in copiesOfChildrenOflargestLabel){
@@ -156,7 +167,7 @@ function orderAndEnchild(LabelArray, allHTags){
                 hierarchy.push(otherObj)
             }
         }
-        
+        */
     }
 
 }

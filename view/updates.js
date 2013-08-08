@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    //console.log("result")
-	//console.log(result)
+    console.log("result")
+	console.log(result)
     
     var type = result["type"]
     
@@ -42,6 +42,7 @@ function handleUpdates(result){
 		var completion = result["completion"]
 		handleUpdatedCompletion(completion)
 	}
+    
     
 
     
@@ -146,9 +147,7 @@ function updateItemsInFeed(){
 function markItemAsUpdated(itemId){
     var itemUI = $("#containerFor-"+itemId)
     var currentHeight = itemUI.height() 
-    console.log(itemUI)
-    console.log("currentHeight")
-    console.log(currentHeight)
+    
     itemUI.height(currentHeight)
     itemUI.css('overflowY', 'auto');
     var itemObj = items[itemId]
@@ -215,7 +214,6 @@ function pushNewItemDivsOnFeed(newItemDivs){
 */
 
 function updateSearchFeedback(queryResultObj){
-    console.log("updateSearchFeedback*******************")
     var query = queryResultObj["query"]
     var queryType = query["type"]
     var numResults = queryResultObj["numResults"]
@@ -313,10 +311,11 @@ function updateSearchFeedback(queryResultObj){
     
     //adjust the underlay height
     var searchFeedbackHeight = $("#searchFeedbackDiv").height()
-    console.log("searchFeedbackHeight: " + searchFeedbackHeight )
     $("#resultsUnderlay").height(searchFeedbackHeight + 20)
     
-    
+    if(queryType == "label"){
+		
+	}
     
     /*
     
@@ -357,9 +356,9 @@ function updateSearchFeedback(queryResultObj){
 
 function createNumResultsDiv(num){
     var numResultsDiv = $("<div class='numResults'>")
-    var numResultsText = num+" Results"
+    var numResultsText = num+" Items"
     if(num == 1){
-        numResultsText = num+" Result"
+        numResultsText = num+" Item"
     }
     var queryType = query["type"]
     

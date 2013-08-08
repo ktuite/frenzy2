@@ -4,18 +4,9 @@ function handleUpdatedCompletion(completion){
 	
 	var numCompletedItemIds = completedItemIds.length
 	var numIncompletedItemIds = incompletedItemIds.length
-	
+	console.log(numCompletedItemIds+ " "+numIncompletedItemIds)
 	displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds)
-	/*
-	if( checkGoalsCompleted(numNonMatchingBaseTweetObjects) ){
-		goalAchievedTime = getTime()
-		displayGoalSuccess()
-	}else{
-		goalAchievedTime = -1
-	}
-	
-	updateGoalStatus()
-	*/
+
 }
 
 
@@ -23,7 +14,7 @@ function handleUpdatedCompletion(completion){
 var goalAchievedTime = -1
 
 function goalSetup(){
-    $("#goalDescription").html("Each photo must have at least 1 label")
+    $("#goalDescription").html("Each photo must have at least 1 user generated label")
 }
 
 function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds){

@@ -205,7 +205,7 @@ function createLabelsDiv(itemObj){
     for(var i in labelObjDict){
         var labelObj = labelObjDict[i]
 		
-		var label = labelObj["label"]
+		//var label = labelObj["label"]
 		var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)
         
 		div.append(interactiveLabelUI)
@@ -320,7 +320,10 @@ function makeInteractiveLabelUI(labelObj, itemId){
 		labelSpan.css("color", "red")
 	}
     */
-    labelSpan.html(labelText+"<br>")
+    
+    //var counts = labelList[labelText]["itemsUsedBy"].length
+    //labelSpan.html(labelText+" ("+counts+")<br>")
+    labelSpan.html(labelText+" <br>")
     div.append(labelSpan)
     return div
 }

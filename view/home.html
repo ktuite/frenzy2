@@ -102,7 +102,6 @@ function goToHome(){
 }
 
 function checkLogin(){
-    console.log("checklogin")
     ajax("checkLogin", {}, function(results){
         var res = JSON.parse(results)
         var hasEmail = res["hasEmail"]
@@ -129,7 +128,7 @@ $(document).ready(function(){
     chatSetup()   
 */
     //pushAndPullUpdates({"type":"foo"}, 12334)    
-    checkLogin()
+    //checkLogin()
     
     goalSetup()
 	testSignIn()
@@ -171,13 +170,10 @@ function setUpTextSearch(){
     
     
     $("#search").keypress(function(event){
-        
-        console.log(event.which )
-        
+              
         if( event.which == 13 ) {
             event.preventDefault();
             var searchText = $("#search").val()
-            console.log(searchText)
             query = {
                 "type" : "text",
                 "text" : searchText,        
@@ -192,7 +188,6 @@ function setUpTextSearch(){
 
 function getAllData(typeOfRequest){
     getUpdatesSinceTimeT(-1, typeOfRequest)
-	console.log(username)
 }
 
 function getUpdatesSinceTimeT(t, typeOfRequest){
@@ -200,7 +195,7 @@ function getUpdatesSinceTimeT(t, typeOfRequest){
 }
 
 function pushAndPullUpdates(myUpdate, typeOfRequest){
-    console.log("pushAndPullUpdates")
+    //console.log("pushAndPullUpdates")
     var type = "synchronous"
     if(typeOfRequest != undefined){
         type = typeOfRequest
@@ -208,7 +203,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
     if(type == "synchronous"){
         lastUpdateTime = getTime()
     }
-    console.log("type: "+type)
+    //console.log("type: "+type)
     var message = {"update": myUpdate, "query": query, "type": type}   
     ajax("update", message, function(result){ handleUpdates(JSON.parse(result))})
 }
@@ -281,7 +276,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                         </div>
                     </div>
                 </div>
-                
+                -->
                 <div class="row">
                     <div class="span4" >
                        <div id ="goalSummaryContainer" class="summaryContainer">
@@ -295,7 +290,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                         </div>
                     </div>
                 </div>
-				-->
+				
 				<div class="row">
                     <div class="span4" >
                        <div id ="sessionSummaryContainer" class="summaryContainer">     
