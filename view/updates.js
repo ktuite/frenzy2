@@ -560,6 +560,26 @@ function handleUpdatedHierarchy(hierarchy){
     }
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
+    
+    //resizeHierarchy()
+}
+
+function resizeHierarchy(){
+/*
+    console.log('resizeHierarchy')
+    var offsetFromTop = $("#labelHierarchy").offset()
+    var offsetFromTop = offsetFromTop["top"]
+    var labelHeight = $("#labelHierarchy").height()
+    
+    var labelBottom = labelHeight + offsetFromTop
+    var windowHeight = $(window).height();
+    
+    
+    //if( labelBottom > windowHeight){
+        console.log("RESIZE: "+(windowHeight - offsetFromTop))
+        $("#labelHierarchy").height(windowHeight - offsetFromTop-30)
+    //}
+    */
 }
 
 //////////////////////////////////////////
