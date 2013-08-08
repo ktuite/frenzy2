@@ -56,7 +56,7 @@ function getOrderedArrayOfLabelObjs(){
     
     //Filter out the labels that have 0 members
     labelCountsArray = utils.filterArray(labelCountsArray, function(x){
-        return x["counts"] > 1
+        return x["counts"] > 0
     })
     
     labelCountsArray.sort(function(a,b){return b["counts"]-a["counts"]});
