@@ -63,18 +63,17 @@ getFeedItemsAndOrder = function(query){
 	// SORT 
 	//////////////////////////////
 	var sortOrder = query["sortOrder"]
-    console.log("sortOrder: "+sortOrder)
 	if(sortOrder == "creationTime"){
 		itemIds = sortItemIdsByCreationTime(itemIds)
-        console.log("creationTime")
+        //console.log("creationTime")
 	}
 	if(sortOrder == "mostActive"){
 		itemIds = sortItemIdsByMostRecentlyUpdated(itemIds)
-        console.log("mostActive")
+        //console.log("mostActive")
 	}
     if(sortOrder == "leastActive"){
 		itemIds = sortItemIdsByLeastRecentlyUpdated(itemIds)
-        console.log("leastActive")
+        //console.log("leastActive")
 	}
 	return itemIds
 }

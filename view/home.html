@@ -119,17 +119,20 @@ function setUsername(username){
     $("#username").text("Welcome, "+username)
 }
 
-window.onresize=function(event){
-	
+window.onresize=function(){
+	resizeHierarchy()
 		
-		var topLeft = $("#labelHierarchy").position().top +40;
-		var margin = 30;
-        var h = window.innerHeight - topLeft - margin;
 
         
-        $("#labelHierarchy").css("max-height",h + "px");
-        
 };
+function resizeHierarchy(){
+    var topLeft = $("#labelHierarchy").position().top +40;
+    var margin = 30;
+    var h = window.innerHeight - topLeft - margin;
+
+    
+    $("#labelHierarchy").css("max-height",h + "px");
+}
 
 $(document).ready(function(){
 
@@ -141,7 +144,7 @@ $(document).ready(function(){
     chatSetup()   
 */
     //pushAndPullUpdates({"type":"foo"}, 12334)    
-    //checkLogin()
+    checkLogin()
     
     goalSetup()
 	testSignIn()
@@ -150,8 +153,8 @@ $(document).ready(function(){
    
 
 	getAllData("synchronous")
-    
-    setInterval(function(){ console.log("update"); getAllData("asynchronous") },5000);
+    resizeHierarchy()
+    setInterval(function(){ getAllData("asynchronous") },5000);
 })
 
 function testSignIn(){
@@ -303,7 +306,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                         </div>
                     </div>
                 </div>
-				
+				<!--
 				<div class="row">
                     <div class="span4" >
                        <div id ="sessionSummaryContainer" class="summaryContainer">     
@@ -312,7 +315,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                         </div>
                     </div>
                 </div>
-                
+                -->
                 
                 <div class="row">
                    <div class="span4" >

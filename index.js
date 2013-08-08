@@ -112,12 +112,12 @@ var queryFeedback = require('./controller/queryFeedback.js');
 // Instatiate Database
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
-var instantiateData = require('./testing/cscwDataAll.js');
+//var instantiateData = require('./testing/cscwDataAll.js');
 //var instantiateData = require('./testing/cscwData12labels.js');
 //var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');
 //var instantiateData = require('./testing/data.js');
-//var instantiateData = require('./testing/movies1.js');
+var instantiateData = require('./testing/movies1.js');
 //allData["acceptedPapers"] = ["movie0", "movie1", "movie2", "movie3", "movie4", "movie5", "movie6"] //["cscw654","cscw615"]
 
 allData["acceptedPapers"] = [
@@ -618,6 +618,11 @@ allData["acceptedPapers"] = [
       "cscw628"
       */
     ]
+    
+allData["acceptedPapers"] = []
+for( var i = 0; i< 250; i++){
+    allData["acceptedPapers"].push("movie"+i)
+}    
 allData["sessionIds"] = {} //{"email": "hmslydia@gmail.com"}
 
 updateActionableFeedback()

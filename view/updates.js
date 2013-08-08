@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    console.log("result")
-	console.log(result)
+    //console.log("result")
+	//console.log(result)
     
     var type = result["type"]
     
@@ -252,7 +252,6 @@ function updateSearchFeedback(queryResultObj){
                 
                 var sortOrder = sortOptionStrings[sortIndex]["sortType"]
                 query["sortOrder"] = sortOrder
-                console.log(sortOrder)
                 /*
                 query = {
                     "type" : "label",
@@ -462,8 +461,6 @@ function getSelectedItemIds(){
     $('.itemCheckbox:checked').each(function() {
         selectedItemIds.push($(this).attr("id"));
     });
-    console.log(selectedItemIds.length)
-    console.log(selectedItemIds)
     return selectedItemIds 
 }
 

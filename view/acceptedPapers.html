@@ -18,7 +18,6 @@ function addItem(){
         ajax("newItem", {"newItemId":newItem}, function(result){ 
             var acceptedPapersJSON = JSON.parse(result)
             printAcceptedPapers(acceptedPapersJSON)
-            //console.log(acceptedPapersJSON)
         })
     }
 }

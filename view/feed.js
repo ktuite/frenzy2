@@ -43,7 +43,7 @@ function createItemAndReplyDivInternals(itemObj){
         
     itemAndReplyDiv.append(itemDiv)
     //labelsAndRepliesDiv.append(itemCheckboxDiv)
-    labelsAndRepliesDiv.append(sessionDiv)
+    //labelsAndRepliesDiv.append(sessionDiv)
     labelsAndRepliesDiv.append(labelsDiv)
     labelsAndRepliesDiv.append(replyDiv)
     itemAndReplyDiv.append(labelsAndRepliesDiv)

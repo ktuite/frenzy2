@@ -4,7 +4,6 @@ function handleUpdatedCompletion(completion){
 	
 	var numCompletedItemIds = completedItemIds.length
 	var numIncompletedItemIds = incompletedItemIds.length
-	console.log(numCompletedItemIds+ " "+numIncompletedItemIds)
 	displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds)
 
 }
@@ -14,7 +13,7 @@ function handleUpdatedCompletion(completion){
 var goalAchievedTime = -1
 
 function goalSetup(){
-    $("#goalDescription").html("Each paper need to be in one new category (in red)")
+    $("#goalDescription").html("Every paper needs to be in at least one new category (in red)")
 }
 
 function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds){
