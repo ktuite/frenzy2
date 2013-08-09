@@ -214,10 +214,12 @@ function pushNewItemDivsOnFeed(newItemDivs){
 */
 
 function updateSearchFeedback(queryResultObj){
-    var query = queryResultObj["query"]
-    var queryType = query["type"]
+    console.log("updateSearchFeedback")
+    var queryObj = queryResultObj["query"]
+    var queryType = queryObj["type"]
     var numResults = queryResultObj["numResults"]
-    var querySortOrder = query["sortOrder"]
+    var querySortOrder = queryObj["sortOrder"]
+    console.log(queryObj)
     
     $("#searchFeedbackDiv").empty()
 	
@@ -236,7 +238,7 @@ function updateSearchFeedback(queryResultObj){
     
     var sortOptions = $("<div id='sortOptions'>")
     sortOptions.append("Sort items by: <br>")
-    var sortOptionStrings = [{"name":"creation time", "sortType": "creationTime"},{"name":"most active", "sortType": "mostActive"}, {"name":"least active",  "sortType": "leastActive"}]
+    var sortOptionStrings = [{"name":"most recently added", "sortType": "creationTime"},{"name":"most recently updated", "sortType": "mostActive"}, {"name":"least recently updated",  "sortType": "leastActive"}]
     
     
     for(var sortOptionIndex in sortOptionStrings){
@@ -251,6 +253,8 @@ function updateSearchFeedback(queryResultObj){
             radioButton.click(function(){
                 
                 var sortOrder = sortOptionStrings[sortIndex]["sortType"]
+                console.log("sort order: "+sortOrder)
+               
                 query["sortOrder"] = sortOrder
                 /*
                 query = {
