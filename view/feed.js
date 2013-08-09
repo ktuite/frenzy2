@@ -22,11 +22,12 @@ function createItemAndReplyDivInternals(itemObj){
     //var itemCheckboxDiv = $("<input type='checkbox' class='itemCheckbox' id='"+itemId+"' style='position:relative;float:right;'>")
     var sessionDiv = createAddSessionDiv(itemObj)
     var labelsDiv = createLabelsDiv(itemObj)
-    var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
+    //var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
     
     
-    var replyDivContent = createReplyDivContent(itemObj)
-    replyDiv.append(replyDivContent)
+    //var replyDivContent = createReplyDivContent(itemObj)
+    //replyDiv.append(replyDivContent)
+    
     /*
     wrap = function(div, id){
         $(div).click(function(index){
@@ -36,16 +37,18 @@ function createItemAndReplyDivInternals(itemObj){
     wrap(replyDiv, itemObj["id"] )
     */
     
+    /*
     var itemId = itemObj["id"]
 	var parentId = ""
     var baseReplyDiv = createBlankReplyDiv(itemId, parentId)
     replyDiv.append(baseReplyDiv)
-        
+    */
+    
     itemAndReplyDiv.append(itemDiv)
     //labelsAndRepliesDiv.append(itemCheckboxDiv)
     //labelsAndRepliesDiv.append(sessionDiv)
     labelsAndRepliesDiv.append(labelsDiv)
-    labelsAndRepliesDiv.append(replyDiv)
+    //labelsAndRepliesDiv.append(replyDiv)
     itemAndReplyDiv.append(labelsAndRepliesDiv)
         
     return itemAndReplyDiv
@@ -57,8 +60,43 @@ function escapeRegExp(str) {
   //return str
 }
 
+function createItemHTML(itemContent, searchQuery){
+    if(searchQuery){
+        var re = new RegExp(escapeRegExp(searchQuery), "gi"); 
+        
+        for( var i in itemContent){
+            var content = itemContent[i]
+            if(typeof content === 'object'){
+                for(var j in content){
+                    
+                    var arrItem = content[j]
+                    itemContent[i][j] = arrItem.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+                    
+                }
+            }else{
+                itemContent[i] = content.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+            }
+        }
+    }
+    var id = itemContent["id"] 
+    var title = itemContent["title"]
+    var authorList = itemContent["authorList"]
+    var shortAbstract = itemContent["shortAbstract"] 
+    var fullAbstract = itemContent["fullAbstract"]    
+       
+    
+    var authorListHTML = ""
+    for (var i in authorList){
+        var author = authorList[i]
+        authorListHTML = authorListHTML + author + "<br>"
+    }
+    return ""+id+"<br><b>"+title+"</b><br><span id='authors"+id+"'>"+authorListHTML+"</span><br> <span id='short-abstract-"+id+"'> <b>Abstract: </b>"+shortAbstract+"...<span id='more-abstract-"+id+"' class='more-abstract'>(more)</span></span>   <span id='full-abstract-"+id+"' > <b>Abstract: </b>"+fullAbstract+"<span id='less-abstract-"+id+"' class='less-abstract'>(less)</span></span>"
+
+}
+
 function createItemDiv(itemObj){
-    var itemHTML = itemObj["html"]
+    //var itemHTML = itemObj["html"]
+    var itemHTML = "" //createItemHTML(itemObj["content"])
     var itemId = itemObj["id"]
     
     //var clickableDiv = $("<span id='clickable-"+itemId+"'>");
@@ -75,9 +113,15 @@ function createItemDiv(itemObj){
     var queryType = query["type"]
     if(queryType == "text"){
         var searchQuery = query["text"]
+        itemHTML = createItemHTML(itemObj["content"], searchQuery)
+        /*
+        
         console.log(escapeRegExp(searchQuery))
         var re = new RegExp(escapeRegExp(searchQuery), "gi"); 
         itemHTML = itemHTML.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");//"\$&"
+        */
+    }else{
+        itemHTML = createItemHTML(itemObj["content"])
     }
     //var re = new RegExp(/\S*#(?:\[[^\]]+\]|\S+)/gi); 
 	//itemHTML = itemHTML.replace(re, "<span class='user' onclick = 'search(\"$&\")' >$&</span>");

@@ -1,11 +1,24 @@
-Bugs
----------
+Fixed:
+----------------
 * Sort Items By radio button doesn't work (same as earlier-reported bug)
-* searching for just a space " " produces weird HTML in results (same as earlier-reported bug)
+* clicking a Sort Items By radio button sometimes doesn't take effect -- it jumps back to the previously-selected radio button
+
+Punted:
+----------------
 * Reply to a comment doesn't seem to work (but if we don't support comments, then don't need to fix this)
 * can't cancel a reply (no Cancel button after you push the reply button -- again, if we don't support commenting, no need to fix)
-* clicking a Sort Items By radio button sometimes doesn't take effect -- it jumps back to the previously-selected radio button
+* remove the post-comment box completely, or hide it behind an Add Comment button (maybe shoved down into the lower right corner of the categories panel).  Right now the size and placement of it encourages use of it, and I think we don't want that -- it's a backchannel and doesn't directly contribute to tagging.
+* want to edit/delete comments 
+
+
+
+
+Bugs
+---------
+
+* searching for just a space " " produces weird HTML in results (same as earlier-reported bug)
 * searching for "2" displays some HTML cruft as well
+
 
 High-priority usability
 -----------------
@@ -16,7 +29,6 @@ High-priority usability
 * need to display hourglass/spinner when doing something slow (searching or filtering or refreshing)
 * adding a category can very be slow to update when there are >100 movies displayed, and it hangs the UI while it's updating.  Can we update in the background?  Or at least display a spinner?
 
-* remove the post-comment box completely, or hide it behind an Add Comment button (maybe shoved down into the lower right corner of the categories panel).  Right now the size and placement of it encourages use of it, and I think we don't want that -- it's a backchannel and doesn't directly contribute to tagging.
 * didn't notice the Search bar at the top for a long time
 
 
@@ -26,7 +38,7 @@ Low-priority usability
 * don't understand how the categories are organized: why are the same red categories in several places in the hierarchy?
 * "This item has been updated" overlay appears on top of the "items containing" pane.  Also, do we really need to click OK to dismiss it?  Couldn't it just fade away?
 
-* want to edit/delete comments 
+
 * reply-to-reply-to-reply eventually pushes the comment box outside the border of its pane 
 * fast scrolling produces rendering artifacts -- UI disappears for a few seconds, but then comes back
 * move search to the center of the black bar, so that Chrome's Find box doesn't obscure it 
@@ -42,7 +54,7 @@ Juho
 - Can sort options be horizontally placed so that there's more vertical space for the main content?
 - Clicking on a category should bring me to the top of the list, but it's showing me somewhere in the middle. I guess this is an artifact of your fixed location fix? Maybe turn it off or trigger jumping to top when a category is clicked?
 
-- The like button is attached to a comment? (guess I am seeing an intermediate version...)
+
 
 
 

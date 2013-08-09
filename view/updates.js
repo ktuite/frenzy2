@@ -214,12 +214,10 @@ function pushNewItemDivsOnFeed(newItemDivs){
 */
 
 function updateSearchFeedback(queryResultObj){
-    console.log("updateSearchFeedback")
     var queryObj = queryResultObj["query"]
     var queryType = queryObj["type"]
     var numResults = queryResultObj["numResults"]
     var querySortOrder = queryObj["sortOrder"]
-    console.log(queryObj)
     
     $("#searchFeedbackDiv").empty()
 	
