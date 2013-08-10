@@ -61,28 +61,29 @@ function escapeRegExp(str) {
 }
 
 function createItemHTML(itemContent, searchQuery){
-    if(searchQuery){
-        var re = new RegExp(escapeRegExp(searchQuery), "gi"); 
-        
-        for( var i in itemContent){
-            var content = itemContent[i]
-            if(typeof content === 'object'){
-                for(var j in content){
-                    
-                    var arrItem = content[j]
-                    itemContent[i][j] = arrItem.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-                    
-                }
-            }else{
-                itemContent[i] = content.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-            }
-        }
-    }
     var id = itemContent["id"] 
+    var displayId = itemContent["id"] 
     var title = itemContent["title"]
     var authorList = itemContent["authorList"]
     var shortAbstract = itemContent["shortAbstract"] 
     var fullAbstract = itemContent["fullAbstract"]    
+
+    if(searchQuery){
+        var re = new RegExp(escapeRegExp(searchQuery), "gi"); 
+        displayId = displayId.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+        
+        title = title.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+        
+        for(var i in authorList){
+            var author = authorList[i]
+            authorList[i] = author.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+        }
+        shortAbstract = shortAbstract.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+        fullAbstract = fullAbstract.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
+                
+    }
+    
+
        
     
     var authorListHTML = ""
@@ -90,7 +91,7 @@ function createItemHTML(itemContent, searchQuery){
         var author = authorList[i]
         authorListHTML = authorListHTML + author + "<br>"
     }
-    return ""+id+"<br><b>"+title+"</b><br><span id='authors"+id+"'>"+authorListHTML+"</span><br> <span id='short-abstract-"+id+"'> <b>Abstract: </b>"+shortAbstract+"...<span id='more-abstract-"+id+"' class='more-abstract'>(more)</span></span>   <span id='full-abstract-"+id+"' > <b>Abstract: </b>"+fullAbstract+"<span id='less-abstract-"+id+"' class='less-abstract'>(less)</span></span>"
+    return ""+displayId+"<br><b>"+title+"</b><br><span id='authors"+id+"'>"+authorListHTML+"</span><br> <span id='short-abstract-"+id+"'> <b>Abstract: </b>"+shortAbstract+"...<span id='more-abstract-"+id+"' class='more-abstract'>(more)</span></span>   <span id='full-abstract-"+id+"' > <b>Abstract: </b>"+fullAbstract+"<span id='less-abstract-"+id+"' class='less-abstract'>(less)</span></span>"
 
 }
 
@@ -314,6 +315,7 @@ function addLabel(itemId){
     return div
 }
 function makeInteractiveLabelUI(labelObj, itemId){
+    //console.log(labelObj) //checked, likes, dislikes, label, (NO SYSTEM)
     var labelText = labelObj["label"]
     var labelChecked = labelObj["checked"]
 	
@@ -346,9 +348,9 @@ function makeInteractiveLabelUI(labelObj, itemId){
     }
 	
 	checkbox.click(function() {
-		var $this = $(this);
+		var t = $(this);
 		// $this will contain a reference to the checkbox   
-		if ($this.is(':checked')) {
+		if (t.is(':checked')) {
 			// the checkbox is now checked 
 			//toggle checked in the database and refresh everything
 			toggleLabelUpdate(labelText, itemId, true)

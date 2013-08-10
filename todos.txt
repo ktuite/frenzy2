@@ -2,6 +2,10 @@ Fixed:
 ----------------
 * Sort Items By radio button doesn't work (same as earlier-reported bug)
 * clicking a Sort Items By radio button sometimes doesn't take effect -- it jumps back to the previously-selected radio button
+* searching for just a space " " produces weird HTML in results (same as earlier-reported bug)
+* searching for "2" displays some HTML cruft as well
+* autocomplete for categories can become extremely long (e.g. just type "a" for a category name and then look at the autocomplete).  Give the autocomplete drop-down a max height & scrollbar, maybe a max width too.
+
 
 Punted:
 ----------------
@@ -11,20 +15,10 @@ Punted:
 * want to edit/delete comments 
 
 
-
-
-Bugs
----------
-
-* searching for just a space " " produces weird HTML in results (same as earlier-reported bug)
-* searching for "2" displays some HTML cruft as well
-
-
 High-priority usability
 -----------------
-* if you're typing a category or a comment and the page updates, you lose your partial comment
-* autocomplete for categories can become extremely long (e.g. just type "a" for a category name and then look at the autocomplete).  Give the autocomplete drop-down a max height & scrollbar, maybe a max width too.
 * color the categories on the right blue and red as well, so I can tell at a glance which papers don't have a red category yet.  (Since I can't combine the Needs Work filter with other filters and searches, I want this.)
+* if you're typing a category or a comment and the page updates, you lose your partial comment
 
 * need to display hourglass/spinner when doing something slow (searching or filtering or refreshing)
 * adding a category can very be slow to update when there are >100 movies displayed, and it hangs the UI while it's updating.  Can we update in the background?  Or at least display a spinner?
