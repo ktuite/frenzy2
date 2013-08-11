@@ -215,16 +215,23 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
     var type = "synchronous"
     if(typeOfRequest != undefined){
         type = typeOfRequest
+        
     }
     if(type == "synchronous"){
         lastUpdateTime = getTime()
+        putUpSpinner()
     }
     //console.log("type: "+type)
     var message = {"update": myUpdate, "query": query, "type": type}   
-    ajax("update", message, function(result){ handleUpdates(JSON.parse(result))})
+    ajax("update", message, function(result){ takeDownSpinner() ;handleUpdates(JSON.parse(result))})
 }
 
-
+function putUpSpinner(){
+    $("#feed").addClass("masked")
+}
+function takeDownSpinner(){
+    $("#feed").removeClass("masked")
+}
 
 </script>
 </head>

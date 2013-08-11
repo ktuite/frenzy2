@@ -375,3 +375,7 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
   }
+  
+ .masked{
+    opacity: .5
+ }

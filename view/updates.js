@@ -36,8 +36,6 @@ function handleUpdates(result){
     if("hierarchy" in result){
         var hierarchy = result["hierarchy"]
         handleUpdatedHierarchy(hierarchy)
-        console.log("hierarchy")
-        console.log(hierarchy)
     }
 	
 	if("completion" in result){
