@@ -125,7 +125,7 @@ def createItemContent(id, title, authorList, abstract):
 #populate allData["items"]
 allKeywords = {}
 counter = 0
-for line in lines[8:208] :
+for line in lines[8:] :
     if len(line) > 100 :
         id = line[0]
         decision = line[1]

@@ -28,19 +28,21 @@ High-priority usability
 
 Low-priority usability
 ----------------
-* character encoding problems -- e.g. Renée Zellweger's name is garbled 
-* don't understand how the categories are organized: why are the same red categories in several places in the hierarchy?
+
+* movie list shouldn't be overlapped by the N Items Containing header (Juho's thing)
 * "This item has been updated" overlay appears on top of the "items containing" pane.  Also, do we really need to click OK to dismiss it?  Couldn't it just fade away?
-
-
-* reply-to-reply-to-reply eventually pushes the comment box outside the border of its pane 
-* fast scrolling produces rendering artifacts -- UI disappears for a few seconds, but then comes back
 * move search to the center of the black bar, so that Chrome's Find box doesn't obscure it 
-* movie list shouldn't be overlapped by the N Items Containing header
+
+* fast scrolling produces rendering artifacts -- UI disappears for a few seconds, but then comes back
+
 * I wanted to edit a category name
 
-
+Zero-priority
+-------------
+* character encoding problems -- e.g. Renée Zellweger's name is garbled 
 * when browser window is narrow, the panes overlap in bizarre ways
+* don't understand how the categories are organized: why are the same red categories in several places in the hierarchy?
+* reply-to-reply-to-reply eventually pushes the comment box outside the border of its pane 
 
 Juho
 -------------

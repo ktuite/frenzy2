@@ -318,7 +318,13 @@ function makeInteractiveLabelUI(labelObj, itemId){
     //console.log(labelObj) //checked, likes, dislikes, label, (NO SYSTEM)
     var labelText = labelObj["label"]
     var labelChecked = labelObj["checked"]
+    
+    var labelListObj = labelList[labelText]
+    
+    var creator = labelListObj["creator"]
+    var numItems = labelListObj["itemsUsedBy"].length
 	
+    
     var div = $('<div>')
     
 	//make radio button
@@ -361,15 +367,17 @@ function makeInteractiveLabelUI(labelObj, itemId){
 	});
 	
     var labelSpan = $('<span>')
-    /*
-	if(isSession){
-		labelSpan.css("color", "red")
-	}
-    */
+    
+	if(creator == "system"){
+		labelSpan.addClass("systemLabel")//("color", "blue")
+	}else{
+        labelSpan.addClass("nonSystemLabel")
+    }
+    
     
     //var counts = labelList[labelText]["itemsUsedBy"].length
     //labelSpan.html(labelText+" ("+counts+")<br>")
-    labelSpan.html(labelText+" <br>")
+    labelSpan.html(labelText+" ("+numItems+")<br>")
     div.append(labelSpan)
     return div
 }
