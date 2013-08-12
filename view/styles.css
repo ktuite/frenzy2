@@ -334,7 +334,7 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 
 .refreshDiv{
     position:relative;
-    top: 140px;
+    /* top: 140px; */
 }
 
 .refreshText{
@@ -368,3 +368,14 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 #labelHierarchy{
     overflow-y: auto;
 }
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  
+ .masked{
+    opacity: .5
+ }

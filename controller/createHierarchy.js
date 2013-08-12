@@ -31,15 +31,19 @@ function getOrderedArrayOfLabelObjs(){
     //only push member items that are in allData["acceptedPapers"]
 	var labelCountsArray = utils.mapArray(arrayOfLabelObjects, function(x){
         var itemsUsedBy = x["itemsUsedBy"]
+        //console.log(x)
+        //console.log(itemsUsedBy.length)
         //filter itemsUsedBy by 
+        /*
         var itemsUsedBy = utils.filterArray(itemsUsedBy, function(x){
             //console.log(allData["acceptedPapers"])
             //console.log(x)
             return utils.arrayContains(allData["acceptedPapers"], x)
         })
-        
+        */
         var memberItemIds = []
         for (var i in itemsUsedBy){
+        
             var memberItemId = itemsUsedBy[i]
             var thisItem = allData["items"][memberItemId]
             var thisItemsSession = thisItem["session"]

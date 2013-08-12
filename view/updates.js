@@ -96,16 +96,16 @@ function handleUpdatedItems(updatedItems){
 */
 
 function updateItemsInFeed(){
-    //console.log("updateItemsInFeed")
     //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
     //have been updated is.
     //if it was recently, then go to that individual UI elt and color it yellow.
-    for(var i in itemIdOrder){
+    for(var i in itemIdOrder){        
         var itemId = itemIdOrder[i]
+        console.log(itemId)
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
-            markItemAsUpdated(itemId)
+            markItemAsUpdated(itemId)            
         }
     }
     
@@ -121,13 +121,16 @@ function updateItemsInFeed(){
             
                 var itemUI = $("#containerFor-"+itemId)
                 var currentHeight = itemUI.height() 
+                var refreshMethodContainerPosition = currentHeight/2 - 20
             
                 var refreshMethodContainer = $("<div class='refreshDiv'>")
+                refreshMethodContainer.css("top", refreshMethodContainerPosition)
                 var refreshMessage = $("<span>")
                 refreshMessage.html("This item has been updated.")
                 
                 
                 var refreshClick = $("<span class='refreshText'>")
+                
                 refreshClick.html("Refresh results.")
                 refreshClick.click(function(){
                     getAllData("synchronous")
@@ -152,14 +155,20 @@ function markItemAsUpdated(itemId){
     itemUI.css('overflowY', 'auto');
     var itemObj = items[itemId]
     
-    var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
-    itemUI.empty()
-    itemUI.append(itemAndReplyDivInternals)
-    /*
-    if(itemUI){
-        itemUI.css("background-color", "yellow")
-    }
-    */
+    //var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
+    var inCategoriesDiv = $("#inCategoriesDiv-"+itemId)
+    var itemObj = items[itemId]
+    var labelObjDict = itemObj["labels"]
+    inCategoriesDiv.empty()
+    
+    appendCategories(inCategoriesDiv, itemId, labelObjDict)
+    
+    //old code from when we were updating the entire div
+    //itemUI.empty()
+    //itemUI.append(itemAndReplyDivInternals)
+    //$("#short-abstract-"+itemId).show()
+    //$("#full-abstract-"+itemId).hide()
+
 }
 
 
@@ -214,10 +223,10 @@ function pushNewItemDivsOnFeed(newItemDivs){
 */
 
 function updateSearchFeedback(queryResultObj){
-    var query = queryResultObj["query"]
-    var queryType = query["type"]
+    var queryObj = queryResultObj["query"]
+    var queryType = queryObj["type"]
     var numResults = queryResultObj["numResults"]
-    var querySortOrder = query["sortOrder"]
+    var querySortOrder = queryObj["sortOrder"]
     
     $("#searchFeedbackDiv").empty()
 	
@@ -236,7 +245,7 @@ function updateSearchFeedback(queryResultObj){
     
     var sortOptions = $("<div id='sortOptions'>")
     sortOptions.append("Sort items by: <br>")
-    var sortOptionStrings = [{"name":"creation time", "sortType": "creationTime"},{"name":"most active", "sortType": "mostActive"}, {"name":"least active",  "sortType": "leastActive"}]
+    var sortOptionStrings = [{"name":"most recently added", "sortType": "creationTime"},{"name":"most recently updated", "sortType": "mostActive"}, {"name":"least recently updated",  "sortType": "leastActive"}]
     
     
     for(var sortOptionIndex in sortOptionStrings){
@@ -251,8 +260,9 @@ function updateSearchFeedback(queryResultObj){
             radioButton.click(function(){
                 
                 var sortOrder = sortOptionStrings[sortIndex]["sortType"]
+                console.log("sort order: "+sortOrder)
+               
                 query["sortOrder"] = sortOrder
-                console.log(sortOrder)
                 /*
                 query = {
                     "type" : "label",
@@ -462,8 +472,6 @@ function getSelectedItemIds(){
     $('.itemCheckbox:checked').each(function() {
         selectedItemIds.push($(this).attr("id"));
     });
-    console.log(selectedItemIds.length)
-    console.log(selectedItemIds)
     return selectedItemIds 
 }
 

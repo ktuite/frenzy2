@@ -119,17 +119,20 @@ function setUsername(username){
     $("#username").text("Welcome, "+username)
 }
 
-window.onresize=function(event){
-	
+window.onresize=function(){
+	resizeHierarchy()
 		
-		var topLeft = $("#labelHierarchy").position().top +40;
-		var margin = 30;
-        var h = window.innerHeight - topLeft - margin;
 
         
-        $("#labelHierarchy").css("max-height",h + "px");
-        
 };
+function resizeHierarchy(){
+    var topLeft = $("#labelHierarchy").position().top +40;
+    var margin = 30;
+    var h = window.innerHeight - topLeft - margin;
+
+    
+    $("#labelHierarchy").css("max-height",h + "px");
+}
 
 $(document).ready(function(){
 
@@ -150,8 +153,8 @@ $(document).ready(function(){
    
 
 	getAllData("synchronous")
-    
-    setInterval(function(){ console.log("update"); getAllData("asynchronous") },5000);
+    resizeHierarchy()
+    setInterval(function(){ getAllData("asynchronous") },5000);
 })
 
 function testSignIn(){
@@ -208,20 +211,27 @@ function getUpdatesSinceTimeT(t, typeOfRequest){
 }
 
 function pushAndPullUpdates(myUpdate, typeOfRequest){
-    //console.log("pushAndPullUpdates")
+    console.log("pushAndPullUpdates")
     var type = "synchronous"
     if(typeOfRequest != undefined){
         type = typeOfRequest
+        
     }
     if(type == "synchronous"){
         lastUpdateTime = getTime()
+        putUpSpinner()
     }
     //console.log("type: "+type)
     var message = {"update": myUpdate, "query": query, "type": type}   
-    ajax("update", message, function(result){ handleUpdates(JSON.parse(result))})
+    ajax("update", message, function(result){ takeDownSpinner() ; handleUpdates(JSON.parse(result))})
 }
 
-
+function putUpSpinner(){
+    $("#rightHandSide").addClass("masked")
+}
+function takeDownSpinner(){
+    $("#rightHandSide").removeClass("masked")
+}
 
 </script>
 </head>
@@ -303,7 +313,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                         </div>
                     </div>
                 </div>
-				
+				<!--
 				<div class="row">
                     <div class="span4" >
                        <div id ="sessionSummaryContainer" class="summaryContainer">     
@@ -312,7 +322,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                         </div>
                     </div>
                 </div>
-                
+                -->
                 
                 <div class="row">
                    <div class="span4" >
@@ -330,7 +340,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
                 </div>
             </div>
         </div>
-        <div class="span8" > 
+        <div class="span8" id="rightHandSide"> 
             <div class="row">                
                 <div class="span8">
 					<div id ="searchFeedbackContainer" >

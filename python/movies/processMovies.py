@@ -89,7 +89,7 @@ for r in results:
     
     containsAGoodLabel = False
     for keyword in labels:
-        print keyword
+        #print keyword
         #if keyword in goodLabels:
         if True:
             containsAGoodLabel = True
@@ -108,20 +108,19 @@ for k in allKeywords:
         "label" : k,
         "itemsUsedBy" : allKeywords[k],
         "user" : "cscw",
+        "creator": "system",
         "creationTime" : 0
     }
-    allData["labelList"][k] = keyWordObj
+    itemsUsedBy = allKeywords[k]
+    if len(itemsUsedBy) > 1:
+        allData["labelList"][k] = keyWordObj
+    else:
+        for itemId in itemsUsedBy:
+            del allData["items"][itemId]["labels"][k] 
 	
-    allData["tfidf"][k] = {}
-    allItems = allData["items"]
-    for itemId in allItems:
-        allData["tfidf"][k][itemId] = {
-            "frequency" :  0,
-            "idf" : 0,
-            "tfidf" : 0
-        }
 
-pp.pprint(allData["labelList"])	
+
+pp.pprint(allData["labelList"])
 
 	
 	
@@ -132,62 +131,3 @@ allData = json.dumps(allData)
 f.write("allData = "+allData)  
 print "JSON saved!"  
 
-
-'''   
-#populate allData["items"]
-allKeywords = {}
-counter = 0
-for line in lines[8:] :
-    if len(line) > 100 :
-        id = line[0]
-        decision = line[1]
-        title = line[2]
-        authorList = line[8]
-        #print "authorList",authorList
-        keywords =  line[99]
-        abstract = line[100]
-        
-        itemHtml = createHTML(id, title, authorList, abstract)
-        
-        
-        splitKeywords = map( lambda x: x.strip() , keywords.split(";"))        
-        newItem = createItem(id, itemHtml, counter, splitKeywords)
-        counter += 1	
- 
-        containsAGoodLabel = False
-        for keyword in splitKeywords:
-            print keyword
-            if keyword in goodLabels:
-                containsAGoodLabel = True
-                if keyword in allKeywords:
-                    if id not in allKeywords[keyword]:
-                        allKeywords[keyword].append(id)
-                else:
-                    allKeywords[keyword] = [id]
-        if containsAGoodLabel:    
-            allData["items"][id] = newItem                
-
-#put all the keywords in the allData["labelList"]
-#initialize TFIDF
-for k in allKeywords:
-    keyWordObj = {	
-        "label" : k,
-        "itemsUsedBy" : allKeywords[k],
-        "user" : "cscw",
-        "creationTime" : 0
-    }
-    allData["labelList"][k] = keyWordObj
-	
-    allData["tfidf"][k] = {}
-    allItems = allData["items"]
-    for itemId in allItems:
-        allData["tfidf"][k][itemId] = {
-            "frequency" :  0,
-            "idf" : 0,
-            "tfidf" : 0
-        }
-	
-#print allData["tfidf"]
-
-pp.pprint(allData["labelList"])	   
-''' 
