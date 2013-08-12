@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    //console.log("result")
-	//console.log(result)
+    console.log("result")
+	console.log(result)
     
     var type = result["type"]
     
@@ -96,16 +96,16 @@ function handleUpdatedItems(updatedItems){
 */
 
 function updateItemsInFeed(){
-    //console.log("updateItemsInFeed")
     //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
     //have been updated is.
     //if it was recently, then go to that individual UI elt and color it yellow.
-    for(var i in itemIdOrder){
+    for(var i in itemIdOrder){        
         var itemId = itemIdOrder[i]
+        console.log(itemId)
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
-            markItemAsUpdated(itemId)
+            markItemAsUpdated(itemId)            
         }
     }
     
@@ -121,13 +121,16 @@ function updateItemsInFeed(){
             
                 var itemUI = $("#containerFor-"+itemId)
                 var currentHeight = itemUI.height() 
+                var refreshMethodContainerPosition = currentHeight/2 - 20
             
                 var refreshMethodContainer = $("<div class='refreshDiv'>")
+                refreshMethodContainer.css("top", refreshMethodContainerPosition)
                 var refreshMessage = $("<span>")
                 refreshMessage.html("This item has been updated.")
                 
                 
                 var refreshClick = $("<span class='refreshText'>")
+                
                 refreshClick.html("Refresh results.")
                 refreshClick.click(function(){
                     getAllData("synchronous")
@@ -152,14 +155,20 @@ function markItemAsUpdated(itemId){
     itemUI.css('overflowY', 'auto');
     var itemObj = items[itemId]
     
-    var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
-    itemUI.empty()
-    itemUI.append(itemAndReplyDivInternals)
-    /*
-    if(itemUI){
-        itemUI.css("background-color", "yellow")
-    }
-    */
+    //var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
+    var inCategoriesDiv = $("#inCategoriesDiv-"+itemId)
+    var itemObj = items[itemId]
+    var labelObjDict = itemObj["labels"]
+    inCategoriesDiv.empty()
+    
+    appendCategories(inCategoriesDiv, itemId, labelObjDict)
+    
+    //old code from when we were updating the entire div
+    //itemUI.empty()
+    //itemUI.append(itemAndReplyDivInternals)
+    //$("#short-abstract-"+itemId).show()
+    //$("#full-abstract-"+itemId).hide()
+
 }
 
 

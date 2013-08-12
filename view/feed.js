@@ -240,22 +240,19 @@ function createWithSession(div, itemId, session){
 }
 
 function createLabelsDiv(itemObj){
-    var div = $('<div>')
     var labelObjDict = itemObj["labels"]
     var itemId = itemObj["id"]
 	var session = itemObj["session"]
     
+    var div = $('<div id="labelsUIDiv-'+itemId+'">')  
     var categoryTitle = "In Categories"
-    div.append(categoryTitle)
-    for(var i in labelObjDict){
-        var labelObj = labelObjDict[i]
-		
-		//var label = labelObj["label"]
-		var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)
-        
-		div.append(interactiveLabelUI)
-    }
-	
+    div.append(categoryTitle)    
+    
+    var categoryCheckboxesDiv = $('<div id="inCategoriesDiv-'+itemId+'">')    
+    appendCategories(categoryCheckboxesDiv, itemId, labelObjDict)
+    div.append(categoryCheckboxesDiv)
+
+	/*
 	var noSessionDiv = $("<div>")
 	var checked = ""
 	if(session=="none"){
@@ -266,16 +263,10 @@ function createLabelsDiv(itemObj){
 	//sessionNoneSpan.html("(none)")
 	//noSessionDiv.append(sessionRadioButton)	
 	//noSessionDiv.append(sessionNoneSpan)
-    /*sessionRadioButton.click(function(e){
-		var sessionLabel = e.target.value
-		var name = e.target.name
-		var itemId = name.substring(0, name.indexOf("-"))
-		updateSession(itemId, sessionLabel)
-	})
-    */
+    
 	
-	div.append(noSessionDiv)
-	
+	//div.append(noSessionDiv)
+	*/
 
 
     var addLabelUI = addLabel(itemId)
@@ -284,11 +275,24 @@ function createLabelsDiv(itemObj){
 
     return div
 }
+
+function appendCategories(div, itemId, labelObjDict){
+
+    for(var i in labelObjDict){
+        var labelObj = labelObjDict[i]
+		
+		//var label = labelObj["label"]
+		var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)
+        
+		div.append(interactiveLabelUI)
+    }
+}
+
 function addLabel(itemId){
     var div = $('<div>')
 
 	var uiwidgetDiv = $('<span class="ui-widget">')
-	var textbox = $('<input type="textbox">')
+	var textbox = $('<input type="textbox" id="addCategoryTextbox-'+itemId+'">')
 	textbox.autocomplete({
       source: autocompleteLabels
     });
@@ -421,7 +425,7 @@ function toggleLabelUpdate(labelText, itemId, checked){
 				"checked": checked
 	}
 
-	pushAndPullUpdates(myUpdate, "synchronous")
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
 

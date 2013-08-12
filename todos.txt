@@ -5,6 +5,9 @@ Fixed:
 * searching for just a space " " produces weird HTML in results (same as earlier-reported bug)
 * searching for "2" displays some HTML cruft as well
 * autocomplete for categories can become extremely long (e.g. just type "a" for a category name and then look at the autocomplete).  Give the autocomplete drop-down a max height & scrollbar, maybe a max width too.
+* color the categories on the right blue and red as well, so I can tell at a glance which papers don't have a red category yet.  (Since I can't combine the Needs Work filter with other filters and searches, I want this.)
+* need to display hourglass/spinner when doing something slow (searching or filtering or refreshing)
+* adding a category can very be slow to update when there are >100 movies displayed, and it hangs the UI while it's updating.  Can we update in the background?  Or at least display a spinner?
 
 
 Punted:
@@ -17,11 +20,8 @@ Punted:
 
 High-priority usability
 -----------------
-* color the categories on the right blue and red as well, so I can tell at a glance which papers don't have a red category yet.  (Since I can't combine the Needs Work filter with other filters and searches, I want this.)
 * if you're typing a category or a comment and the page updates, you lose your partial comment
 
-* need to display hourglass/spinner when doing something slow (searching or filtering or refreshing)
-* adding a category can very be slow to update when there are >100 movies displayed, and it hangs the UI while it's updating.  Can we update in the background?  Or at least display a spinner?
 
 * didn't notice the Search bar at the top for a long time
 
