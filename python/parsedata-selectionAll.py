@@ -15,14 +15,14 @@ out = json.dumps( [ row for row in reader ] )
 
 allData = {
     "items":{},
-	"labelList": {},
+    "labelList": {},
     "users":{},
 
     "hierarchy":{},
     "hierarchyLastUpdated":-1,
-	
+    
     "completion":{},
-	"completionLastUpdated":-1,
+    "completionLastUpdated":-1,
 
     "chat":[],
     "userLocations":[], 
@@ -31,45 +31,45 @@ allData = {
         "locations":[], 
         "events":[]
     },
-	
-	"tfidf":{},
-	"tfidfLastUpdated":-1,
-	
+    
+    "tfidf":{},
+    "tfidfLastUpdated":-1,
+    
 }
 
 import csv
 import codecs
 #f = codecs.open("listOfSubmissions.csv", "rU", "ISO-8859-1")
-f = open( 'listOfSubmissions.csv', 'r' )  
+f = open( 'listOfSubmissionsCut1.csv', 'r' )  
 reader = csv.reader(f, skipinitialspace=True)
 lines = list(reader)
 
 '''
 
 item1 = {
-	"id": "item1",
+    "id": "item1",
     "html": "<b>item1 woof</b>",
-	"replies" : [],
-	"replyCounter" : 0,
-	"lastUpdateTime" : 12344556,
-	"creationTime": 1, 
-	"labels": {}
+    "replies" : [],
+    "replyCounter" : 0,
+    "lastUpdateTime" : 12344556,
+    "creationTime": 1, 
+    "labels": {}
 }
 allData["items"]["item1"] = item1
 
 label1 = {
-	"label" : "animal",
-	"itemsUsedBy" : ["item0", "item1"],
-	"user" : "hmslydia",
-	"creationTime" : 123456789
+    "label" : "animal",
+    "itemsUsedBy" : ["item0", "item1"],
+    "user" : "hmslydia",
+    "creationTime" : 123456789
 }
 
 label1Ref = {
-	"label": "animal",
-	"checked": true,
-	"likes" : [],
-	"dislikes" : [],
-	"lastUpdateTime" : 123456789
+    "label": "animal",
+    "checked": true,
+    "likes" : [],
+    "dislikes" : [],
+    "lastUpdateTime" : 123456789
 }
 
 allData["items"]["item1"] = item1
@@ -78,31 +78,31 @@ allData["labelList"]["animal"] = label1
 '''
 
 def createLabelRef(label):
-	labelRef = {
-		"label": label,
-		"checked": True,
-		"likes" : [],
-		"dislikes" : [],
-		"lastUpdateTime" : 123456789
-	}
-	return labelRef
+    labelRef = {
+        "label": label,
+        "checked": True,
+        "likes" : [],
+        "dislikes" : [],
+        "lastUpdateTime" : 123456789
+    }
+    return labelRef
 
 def createItem(id, html, content, creationTime, keywords):
-	item = {
-		"id": id,
-		"html": html,
+    item = {
+        "id": id,
+        "html": html,
         "content": content,
-		"replies" : [],
-		"replyCounter" : 0,
-		"lastUpdateTime" : 0,
-		"creationTime": creationTime, 
-		"labels": {},
-		"session": "none"
-	}
-	for k in keywords:
-		labelRef = createLabelRef(k)
-		item["labels"][k] = labelRef
-	return item
+        "replies" : [],
+        "replyCounter" : 0,
+        "lastUpdateTime" : 0,
+        "creationTime": creationTime, 
+        "labels": {},
+        "session": "none"
+    }
+    for k in keywords:
+        labelRef = createLabelRef(k)
+        item["labels"][k] = labelRef
+    return item
 
 #createHTML(id, title, authorList, abstract)	
 def createHTML(id, title, authorList, abstract):
@@ -113,11 +113,11 @@ def createHTML(id, title, authorList, abstract):
         authorListHTML = authorListHTML + author + "<br>"
     return "<b>"+id+"</b><br><b>"+title+"</b><br><span id='authors"+id+"'>"+authorListHTML+"</span><br> <span id='short-abstract-"+id+"'> <b>Abstract: </b>"+shortAbstract+"...<span id='more-abstract-"+id+"' class='more-abstract'>(more)</span></span>   <span id='full-abstract-"+id+"' > <b>Abstract: </b>"+abstract+"<span id='less-abstract-"+id+"' class='less-abstract'>(less)</span></span>"
 
-def createItemContent(id, title, authorList, abstract):    
+def createItemContent(id, title, authorList, abstract, authorAndAffiliationList):    
     itemContent = {}
     itemContent["id"] = id
     itemContent["title"] = title
-    itemContent["authorList"] = map( lambda x: x.strip() , authorList.split(","))
+    itemContent["authorList"] = authorAndAffiliationList #map( lambda x: x.strip() , authorList.split(","))
     itemContent["shortAbstract"] = abstract[:70]
     itemContent["fullAbstract"] = abstract
     return itemContent
@@ -125,17 +125,49 @@ def createItemContent(id, title, authorList, abstract):
 #populate allData["items"]
 allKeywords = {}
 counter = 0
-for line in lines[8:] :
+for line in lines[1:] :
     if len(line) > 100 :
         id = line[0]
         decision = line[1]
         title = line[2]
         authorList = line[8]
+        
+        
+        authorAndAffiliationList = []
+        startingIndex = 9
+        
+        #print authorList
+        
+        numAuthors = len(authorList.split(","))
+        #print numAuthors
+        for i in range(numAuthors):
+            index = i*9 +startingIndex
+            #print "index", index
+            
+            givenName = line[index]
+            #print "givenName", givenName
+            
+            middleInitial = line[index+1]
+            #print "middleInitial", middleInitial
+            
+            familyName = line[index+2]
+            #print "familyName", familyName
+            #email
+            #aff1 = line[index+4]
+            #print "aff1", aff1
+            
+            aff2 = line[index+5]
+            #print "aff2", aff2
+            authorText = givenName+" "+familyName+", "+ aff2
+            #print "author text: ",authorText
+            authorAndAffiliationList.append(authorText)
+            
+        
         #print "authorList",authorList
         keywords =  line[99]
         abstract = line[100]
-        
-        itemContent = createItemContent(id, title, authorList, abstract)
+                
+        itemContent = createItemContent(id, title, authorList, abstract, authorAndAffiliationList)
         itemHtml = createHTML(id, title, authorList, abstract)
         
         
@@ -145,7 +177,7 @@ for line in lines[8:] :
 
         '''
         only use the items if they have a keyword in the list
-         
+        
         containsAGoodLabel = False
         for keyword in splitKeywords:
             print keyword
@@ -192,7 +224,7 @@ for k in allKeywords:
 print "counter: ", counter
 
 
-	
+    
 def findOutItemsIn10to30():
     midsizeCategories = []
     allLabels = []
@@ -226,11 +258,11 @@ def findOutItemsIn10to30():
     print "itemsWithout: ", len(itemsWithout)        
 #findOutItemsIn10to30()
 
-	
+    
 print "JSON parsed!"  
 # Save the JSON  
-f = open( 'C:/Users/hmslydia/Documents/GitHub/frenzy2/testing/cscwDataAll.js', 'w')  
+f = open( '../testing/cscwDataAllcut1.js', 'w')  
 
 allData = json.dumps(allData, ensure_ascii=False) 
-f.write("allData = "+allData)  
+f.write("allDataOriginal = "+allData)  
 print "JSON saved!"  

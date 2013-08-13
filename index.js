@@ -106,7 +106,7 @@ var sessionsHelpers = require('./controller/sessions.js');
 var tfidfHelpers = require('./controller/tfidf.js');
 var filter = require('./controller/filter.js');
 var actionableFeedback = require('./controller/actionableFeedback.js');
-//var queryFeedback = require('./controller/queryFeedback.js');
+var queryFeedback = require('./controller/queryFeedback.js');
 
 function clone(a) {
    return JSON.parse(JSON.stringify(a));
@@ -116,7 +116,7 @@ function clone(a) {
 // Instatiate Database
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
-var instantiateData = require('./testing/cscwDataAll.js');
+var instantiateData = require('./testing/cscwDataAllcut1.js');
 //var instantiateData = require('./testing/cscwData12labels.js');
 //var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');
@@ -129,7 +129,7 @@ var instantiateData = require('./testing/cscwDataAll.js');
 //allData["acceptedPapers"] = ["movie0", "movie1", "movie2", "movie3", "movie4", "movie5", "movie6"] //["cscw654","cscw615"]
 
 //var instantiateAcceptedPapers = require('./testing/cscwAccepted100.js');
-var instantiateAcceptedPapers = require('./testing/cscwAccepted200.js');
+//var instantiateAcceptedPapers = require('./testing/cscwAccepted200.js');
 //var instantiateAcceptedPapers = require('./testing/cscwAccepted500.js');
 
 allData = clone(allDataOriginal)
@@ -138,13 +138,15 @@ allData = clone(allDataOriginal)
 
 
 
-    /*    
-allData["acceptedPapers"] = []
+       
+
+/*
 for( var i = 0; i< 250; i++){
     allData["acceptedPapers"].push("movie"+i)
-}    
-allData["sessionIds"] = {} //{"email": "hmslydia@gmail.com"}
-*/
+} 
+*/   
+//allData["sessionIds"] = {} //{"email": "hmslydia@gmail.com"}
+
 
 function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
     
@@ -180,7 +182,7 @@ function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
     }
     
 }
-updateAllDataForAcceptedPapers(acceptedPapers)
+//updateAllDataForAcceptedPapers(acceptedPapers)
 updateActionableFeedback()
 
 
@@ -410,7 +412,7 @@ function getAllServerData(query, type){
 	rtn["itemIdOrder"] = getFeedItemsAndOrder(query)
     
     var numberOfResults = rtn["itemIdOrder"].length
-	//rtn["queryResultObj"] = getQueryResultObj(query, numberOfResults)
+	rtn["queryResultObj"] = getQueryResultObj(query, numberOfResults)
 	//console.log("rtn")
     //console.log(rtn)
 

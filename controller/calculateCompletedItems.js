@@ -10,11 +10,11 @@ calculateCompletedItems = function(){
 	var items = allData["items"]
 
 	var arrayOfItemObjs =  utils.dictToArray(items)
-    
+    /*
 	arrayOfItemObjs = utils.filterArray(arrayOfItemObjs, function(x){
         return utils.arrayContains(allData["acceptedPapers"], x["id"])
     })
-    
+    */
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
         var ans = false
         var labelsDict = x["labels"]

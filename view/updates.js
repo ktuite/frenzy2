@@ -101,7 +101,6 @@ function updateItemsInFeed(){
     //if it was recently, then go to that individual UI elt and color it yellow.
     for(var i in itemIdOrder){        
         var itemId = itemIdOrder[i]
-        console.log(itemId)
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
@@ -224,6 +223,7 @@ function pushNewItemDivsOnFeed(newItemDivs){
 
 function updateSearchFeedback(queryResultObj){
     var queryObj = queryResultObj["query"]
+	console.log(queryObj)
     var queryType = queryObj["type"]
     var numResults = queryResultObj["numResults"]
     var querySortOrder = queryObj["sortOrder"]

@@ -54,11 +54,11 @@ getFeedItemsAndOrder = function(query){
 	// FILTER DOWN TO ACCEPTED PAPERS
 	//////////////////////////////	
     //console.log(itemIds)
-    
+    /*
     itemIds = utils.filterArray(itemIds, function(x){
         return utils.arrayContains(allData["acceptedPapers"], x)
     })
-    
+    */
 	//////////////////////////////
 	// SORT 
 	//////////////////////////////
