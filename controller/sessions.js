@@ -40,11 +40,27 @@ createSessions = function(){
 		var id = itemObj["id"]
 		var session = itemObj["session"]
 		if(session in sessions){
-			sessions[session].push(id)
+			sessions[session]["members"].push(id)
 		}else{
-			sessions[session] = [id]
+            var newSessionObj = newSession(session)
+            newSessionObj["members"].push(id)
+			sessions[session] = newSessionObj
 		}
 	}
+    sessions = utils.dictToArray(sessions)
+    sessions = utils.mapArray(sessions, function (x){
+        x["numMembers"] = x["members"].length
+        return x
+    })
 	return sessions
 }
 
+function newSession(session){
+    return {
+        "label": session,
+        "members": [],
+        "numMembers": 0,
+        "lastTimeUpdated": 0
+    }
+
+}

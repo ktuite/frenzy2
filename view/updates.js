@@ -19,8 +19,8 @@ function handleUpdates(result){
 		autocompleteLabels = makeAutocompleteListFromKeys(labelList)
 	}
 	if("sessions" in result){
-		var sessions = result["sessions"]
-		autocompleteSessions = makeAutocompleteListFromKeys(sessions)
+		sessions = result["sessions"]
+		
 		handleUpdatedSessions(sessions)
 	}
 	
@@ -635,10 +635,22 @@ function resizeHierarchy(){
 // sessions
 //////////////////////////////////////////
 function handleUpdatedSessions(sessionObjs){
+    autocompleteSessions = makeAutocompleteListFromKeys(sessions)
 
+    var sortType = $('#sessionSort').val()
+    displaySessionsSorted(sortType)
+
+}
+
+function displaySessionsSorted(sortType){
     var sessionsDiv = $("<div>")
-    for( var label in sessionObjs){
-        var counts = sessionObjs[label].length
+    
+    sortSessions(sortType)
+    
+    for(var i in sessions){
+        var sessionObj = sessions[i]
+        var label = sessionObj["label"]
+        var counts = sessionObj["numMembers"]
         var newLabelDiv = createSessionDiv(label, counts)
         sessionsDiv.append(newLabelDiv)        
     }
@@ -646,6 +658,39 @@ function handleUpdatedSessions(sessionObjs){
     $("#sessionSummary").append(sessionsDiv)
 }
 
+function sortSessions(sortType){
+    if(sortType == "mostItems"){
+        sessions.sort(function(a,b){
+            return b["numMembers"] - a["numMembers"]
+        })
+    }
+    if(sortType == "leastItems"){
+        sessions.sort(function(a,b){
+            return a["numMembers"] - b["numMembers"]
+        })
+    }
+    if(sortType == "az"){
+        sessions.sort(function(a, b){
+         var nameA=a["label"].toLowerCase(), nameB=b["label"].toLowerCase()
+         if (nameA < nameB) //sort string ascending
+          return -1 
+         if (nameA > nameB)
+          return 1
+         return 0 //default return value (no sorting)
+        });
+    }
+    if(sortType == "za"){
+        sessions.sort(function(a, b){
+         var nameA=a["label"].toLowerCase(), nameB=b["label"].toLowerCase()
+         if (nameA > nameB) //sort string ascending
+          return -1 
+         if (nameA < nameB)
+          return 1
+         return 0 //default return value (no sorting)
+        });
+    }
+
+}
 function createSessionDiv(label, counts){
     var div = $("<div class='sessionClickable'>")
     div.text(label + " ("+counts+") ")

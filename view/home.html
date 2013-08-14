@@ -50,6 +50,7 @@ var autocompleteLabels = []
 var autocompleteSessions = []
 var lastUpdateTime = 0
 var sessionMaking = false
+var sessions = []
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
@@ -121,11 +122,9 @@ function setUsername(username){
 }
 
 window.onresize=function(){
-	resizeHierarchy()
-		
-
-        
+	resizeHierarchy()		        
 };
+
 function resizeHierarchy(){
     var topLeft = $("#labelHierarchy").position().top +40;
     var margin = 30;
@@ -168,6 +167,12 @@ function testSignIn(){
 function setDefaultQuery(){
 	query["type"] = "all"
 	query["sortOrder"] = "creationTime"
+    
+    
+    $('#sessionSort').on('change', function() {
+        var sortType = $(this).val() 
+        displaySessionsSorted(sortType)
+    });
 }
 
 function setUpTextSearch(){
@@ -212,7 +217,7 @@ function getUpdatesSinceTimeT(t, typeOfRequest){
 }
 
 function pushAndPullUpdates(myUpdate, typeOfRequest){
-    console.log("pushAndPullUpdates")
+    //console.log("pushAndPullUpdates")
     var type = "synchronous"
     if(typeOfRequest != undefined){
         type = typeOfRequest
@@ -318,7 +323,16 @@ function takeDownSpinner(){
 				<div class="row" id='sessionMakingRow'>
                     <div class="span4" >
                        <div id ="sessionSummaryContainer" class="summaryContainer">     
-							<b>Sessions:</b><br>
+							<b>Sessions</b> sort by: 
+                                <select id="sessionSort">
+                                      <option value="mostItems">most papers</option>
+                                      <option value="leastItems">least papers</option>
+                                      <option value="az">a-z</option>
+                                      <option value="za">z-a</option>
+                                </select>
+                            
+                            
+                            <br>
 							<div id="sessionSummary"></div>
                         </div>
                     </div>
