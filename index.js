@@ -133,55 +133,58 @@ var instantiateData = require('./testing/cscwDataAllcut1.js');
 //var instantiateAcceptedPapers = require('./testing/cscwAccepted500.js');
 
 allData = clone(allDataOriginal)
-
-
-
-
-
-       
-
-/*
-for( var i = 0; i< 250; i++){
-    allData["acceptedPapers"].push("movie"+i)
-} 
-*/   
-//allData["sessionIds"] = {} //{"email": "hmslydia@gmail.com"}
-
+allData["deprecatedItems"] = {}
 
 function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
     
     
     allData["acceptedPapers"] = listOfAcceptedPapers
-    
+    var removedItems = []
     //limit the items to just the ones in the listOfAcceptedPapers
     
     //console.log(Object.keys(allData["items"]).length)
     var items = allData["items"]
     for (var itemId in items){
-        if( utils.arrayContains(allData["acceptedPapers"],itemId)){
-            //keep it
-        }else{
-            delete allData["items"][itemId];
+        if(itemId in allData["items"]){
+            if( utils.arrayContains(listOfAcceptedPapers,itemId)){
+                //keep it
+            }else{
+                allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
+                delete allData["items"][itemId];
+                removedItems.push(itemId)
+            }
         }
     }
     //console.log(Object.keys(allData["items"]).length)
     
     //parse out items in allData["labelList"][label]["itemsUsedBy"]
+    reComputeLabelList()
+    
+    return removedItems
+}
+
+function reComputeLabelList(){
     var labelObjs = allData["labelList"]
     for(var labelName in labelObjs){
         var itemsUsedBy = labelObjs[labelName]["itemsUsedBy"]
-        //console.log(labelName)
-        //console.log("a: "+itemsUsedBy.length)
-        //console.log(itemsUsedBy)
-        allData["labelList"][labelName]["itemsUsedBy"] = utils.arrayIntersection(itemsUsedBy, allData["acceptedPapers"])
-        //console.log("b: "+allData["labelList"][labelName]["itemsUsedBy"].length)
-        
-        //console.log(allData["labelList"][labelName]["itemsUsedBy"])
-        
-        //console.log("")
+        var acceptedPapers = Object.keys(allData["items"])
+        allData["labelList"][labelName]["itemsUsedBy"] = utils.arrayIntersection(itemsUsedBy, acceptedPapers)
+
     }
-    
+
 }
+
+function removePaper(itemId){
+    if(itemId in allData["items"]){
+        var itemObj
+        allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
+        delete allData["items"][itemId];
+        reComputeLabelList()
+        return true
+    }
+    return false
+}
+
 //updateAllDataForAcceptedPapers(acceptedPapers)
 updateActionableFeedback()
 
@@ -296,17 +299,44 @@ app.post('/acceptedPapers.html', function(request, response){
 	var command = request.body["command"]
 	var args = JSON.parse(request.body["args"])
     
-    if(command == "newItem"){
-		var newItemId = args["newItemId"]
-        allData["acceptedPapers"].push(newItemId)
-        response.send(JSON.stringify(allData["acceptedPapers"]))        
+    if(command == "removeItem"){
+		var badItemId = args["itemId"]
+        console.log(badItemId)
+        var numAcceptedPapersOld = Object.keys(allData["items"]).sort().length
+        
+        //allData["acceptedPapers"].push(newItemId)
+        var removalSuccess = removePaper(badItemId)
+        var acceptedPapers = Object.keys(allData["items"]).sort()
+       
+        var feedback = "Failure"
+        if(removalSuccess){
+            feedback = "Sucessfully removed "+badItemId+".\nThere were "+numAcceptedPapersOld+" papers. \nThere are now "+acceptedPapers.length+" papers"		
+        }
+        
+        var ret = {}
+        ret["acceptedPapers"] = acceptedPapers
+        ret["feedback"] = feedback
+		response.send(JSON.stringify(ret))       
 	}else if(command == "getAcceptedPapers"){
-		response.send(JSON.stringify(allData["acceptedPapers"])) 
+    
+        var acceptedPapers = Object.keys(allData["items"]).sort()
+        var ret = {}
+        ret["acceptedPapers"] = acceptedPapers
+        ret["feedback"] = "Showing "+acceptedPapers.length+" papers"
+		response.send(JSON.stringify(ret)) 
+        
 	}else if(command == "editAcceptedPapers"){
         var papers = args["papers"]
-        allData["acceptedPapers"] = papers
+        var numAcceptedPapersOld = Object.keys(allData["items"]).sort().length
         
-		response.send(JSON.stringify(allData["acceptedPapers"])) 
+        var removedItems = updateAllDataForAcceptedPapers(papers)
+        console.log(papers.length)
+        //allData["acceptedPapers"] = papers
+        var acceptedPapers = Object.keys(allData["items"]).sort()
+        var ret = {}
+        ret["acceptedPapers"] = acceptedPapers
+        ret["feedback"] = "Removed items "+ JSON.stringify(removedItems)+". \nThere were "+numAcceptedPapersOld+" papers. \nThere are now "+acceptedPapers.length+" papers"
+		response.send(JSON.stringify(ret)) 
 	}
 });
 

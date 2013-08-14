@@ -11,40 +11,53 @@ function ajax(command, message, callbackFunction) {
 	$.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
 }
 
-function addItem(){
+function removeItem(){
     var newItem = $("#addNewItem").val().trim()
     $("#addNewItem").val("")
     if(newItem != ""){
-        ajax("newItem", {"newItemId":newItem}, function(result){ 
-            var acceptedPapersJSON = JSON.parse(result)
-            printAcceptedPapers(acceptedPapersJSON)
+        console.log(newItem)
+        ajax("removeItem", {"itemId":newItem}, function(result){ 
+            var res = JSON.parse(result)
+            var acceptedPapers = res["acceptedPapers"]
+            var feedback = res["feedback"]
+            printAcceptedPapers(acceptedPapers)
+            alert(feedback)
         })
     }
 }
 
 function printAcceptedPapers(paperIds){
+/*
     var newTextListOfPaperIds = ""
     for(i in paperIds){
         var paperId = paperIds[i]
         newTextListOfPaperIds = newTextListOfPaperIds+ paperId+"\n"
     }
     $("#gregorianTextArea").val(newTextListOfPaperIds)
+    */
+    $("#gregorianTextArea").val(paperIds)
 }
 
 function getAndDisplayAcceptedPapers(){
     //console.log("getAndDisplayAcceptedPapers")
-    ajax("getAcceptedPapers", {}, function(result){printAcceptedPapers(JSON.parse(result))})
+    ajax("getAcceptedPapers", {}, function(result){
+        var res = JSON.parse(result)
+        var acceptedPapers = res["acceptedPapers"]
+        var feedback = res["feedback"]
+        printAcceptedPapers(acceptedPapers)
+        alert(feedback)
+    })
 }
 $(document).ready(function(){
     getAndDisplayAcceptedPapers()
     
     $("#submitNewItemId").click(function(){
-        addItem()
+        removeItem()
     })
     
     $("#addNewItem").keypress(function(event){
         if( event.which == 13){
-            addItem()
+            removeItem()
         }
     })
     
@@ -54,9 +67,13 @@ $(document).ready(function(){
     
     $("#editButton").click(function(){
         var allPapersInTextArea = $("#gregorianTextArea").val()
-        var arr = allPapersInTextArea.split("\n");
+        var arr = allPapersInTextArea.split(",");
         ajax("editAcceptedPapers", {"papers": arr}, function(result){
-            printAcceptedPapers(JSON.parse(result))
+            var res = JSON.parse(result)
+            var acceptedPapers = res["acceptedPapers"]
+            var feedback = res["feedback"]
+            printAcceptedPapers(acceptedPapers)
+            alert(feedback)
         })
     })
 })
@@ -65,8 +82,8 @@ $(document).ready(function(){
 <button id='refreshButton'>Refresh</button>
 
 <br>
-NewItemId: <input type="text" id="addNewItem">
-</input><button id='submitNewItemId'>Submit new item Id</button>
+ItemId: <input type="text" id="addNewItem">
+</input><button id='submitNewItemId'>Remove item</button>
 <br>
 
 <textarea id="gregorianTextArea" rows="50" cols="50">
