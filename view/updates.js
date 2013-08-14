@@ -206,6 +206,7 @@ function displayFeed(itemIds){
     
     for( var i in itemIds){
 		var itemId = itemIds[i]
+        
 		var itemObj = items[itemId]
 		var newItemDiv = createItemAndReplyDiv(itemObj)     
         $("#feed").append(newItemDiv)
@@ -644,11 +645,13 @@ function handleUpdatedSessions(sessionObjs){
 
 function displaySessionsSorted(sortType){
     var sessionsDiv = $("<div>")
+    var sessionsArray = dictToArray(sessions)
+    console.log("sessionsArray")
+    console.log(sessionsArray)
+    sortSessions(sessionsArray, sortType)
     
-    sortSessions(sortType)
-    
-    for(var i in sessions){
-        var sessionObj = sessions[i]
+    for(var i in sessionsArray){
+        var sessionObj = sessionsArray[i]
         var label = sessionObj["label"]
         var counts = sessionObj["numMembers"]
         var newLabelDiv = createSessionDiv(label, counts)
@@ -658,19 +661,19 @@ function displaySessionsSorted(sortType){
     $("#sessionSummary").append(sessionsDiv)
 }
 
-function sortSessions(sortType){
+function sortSessions(sessionsArray, sortType){
     if(sortType == "mostItems"){
-        sessions.sort(function(a,b){
+        sessionsArray.sort(function(a,b){
             return b["numMembers"] - a["numMembers"]
         })
     }
     if(sortType == "leastItems"){
-        sessions.sort(function(a,b){
+        sessionsArray.sort(function(a,b){
             return a["numMembers"] - b["numMembers"]
         })
     }
     if(sortType == "az"){
-        sessions.sort(function(a, b){
+        sessionsArray.sort(function(a, b){
          var nameA=a["label"].toLowerCase(), nameB=b["label"].toLowerCase()
          if (nameA < nameB) //sort string ascending
           return -1 
@@ -680,7 +683,7 @@ function sortSessions(sortType){
         });
     }
     if(sortType == "za"){
-        sessions.sort(function(a, b){
+        sessionsArray.sort(function(a, b){
          var nameA=a["label"].toLowerCase(), nameB=b["label"].toLowerCase()
          if (nameA > nameB) //sort string ascending
           return -1 
@@ -699,10 +702,9 @@ function createSessionDiv(label, counts){
 		query = {
 			"type" : "session",
 			"label" : label,
-            "sortOrder" : "creationTime"
+            "sortOrder" : "mostItems"
 		}
 		getAllData("synchronous")
-		//filterItemsByLabel(memberItemIds)
 	})
 	
     return div

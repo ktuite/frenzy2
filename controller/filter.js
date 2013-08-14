@@ -29,10 +29,13 @@ getFeedItemsAndOrder = function(query){
 		
 		}
 	}
+    console.log(query)
 	if(queryType == "session"){
 		var label = query["label"]
 		if (label in allData["sessions"]) {
-            itemIds = allData["sessions"][label]
+            itemIds = allData["sessions"][label]["members"]
+            //console.log("sessions")
+            //console.log(itemIds)
         }
 	}
     if(queryType == "text"){

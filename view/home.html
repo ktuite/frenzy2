@@ -217,7 +217,8 @@ function getUpdatesSinceTimeT(t, typeOfRequest){
 }
 
 function pushAndPullUpdates(myUpdate, typeOfRequest){
-    //console.log("pushAndPullUpdates")
+    console.log("query: ")
+    console.log(query)
     var type = "synchronous"
     if(typeOfRequest != undefined){
         type = typeOfRequest

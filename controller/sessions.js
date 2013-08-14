@@ -33,8 +33,8 @@ label1Ref = {
 allData["items"]["item0"]["labels"]["animal"] = label1Ref
 */
 createSessions = function(){
-	sessions = {}
-	allItems = allData["items"]
+	var sessions = {}
+	var allItems = allData["items"]
 	for( var i in allItems){
 		var itemObj = allItems[i]
 		var id = itemObj["id"]
@@ -47,11 +47,17 @@ createSessions = function(){
 			sessions[session] = newSessionObj
 		}
 	}
+    
+    for(var label in sessions){
+        sessions[label]["numMembers"] = sessions[label]["members"].length
+    }
+    /*
     sessions = utils.dictToArray(sessions)
     sessions = utils.mapArray(sessions, function (x){
         x["numMembers"] = x["members"].length
         return x
     })
+    */
 	return sessions
 }
 

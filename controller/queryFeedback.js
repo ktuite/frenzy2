@@ -15,6 +15,10 @@ getQueryFeedback = function(query, numResults){
         var relevantLabels = getRelevantLabels(query)
         feedback["relevantLabels"] = relevantLabels
     }
+    if( queryType == "session"){
+        var relevantLabels = getRelevantLabels(query)
+        feedback["relevantLabels"] = relevantLabels
+    }
     
     return feedback 
 }
