@@ -43,6 +43,16 @@ function handleUpdates(result){
 		handleUpdatedCompletion(completion)
 	}
     
+    if("sessionMaking" in result){
+		sessionMaking = result["sessionMaking"]
+		console.log("sessionMaking: "+sessionMaking)
+        if(!sessionMaking){
+            $("#sessionMakingRow").hide()
+        }else{
+            $("#sessionMakingRow").show()
+        }
+	}
+    
     
 
     
@@ -156,12 +166,16 @@ function updateItemsInFeed(){
 }
 
 function markItemAsUpdated(itemId){
+    console.log("updateItem: "+itemId)
     var itemUI = $("#containerFor-"+itemId)
     var currentHeight = itemUI.height() 
     
     itemUI.height(currentHeight)
     itemUI.css('overflowY', 'auto');
     var itemObj = items[itemId]
+    
+    var sessionUIDiv = $("#sessionUI-"+itemId)
+    createAddSessionDiv(sessionUIDiv, itemObj)
     
     //var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
     var inCategoriesDiv = $("#inCategoriesDiv-"+itemId)

@@ -49,6 +49,7 @@ var labelList = []
 var autocompleteLabels = []
 var autocompleteSessions = []
 var lastUpdateTime = 0
+var sessionMaking = false
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
@@ -313,8 +314,8 @@ function takeDownSpinner(){
                         </div>
                     </div>
                 </div>
-				<!--
-				<div class="row">
+				
+				<div class="row" id='sessionMakingRow'>
                     <div class="span4" >
                        <div id ="sessionSummaryContainer" class="summaryContainer">     
 							<b>Sessions:</b><br>
@@ -322,7 +323,7 @@ function takeDownSpinner(){
                         </div>
                     </div>
                 </div>
-                -->
+                
                 
                 <div class="row">
                    <div class="span4" >

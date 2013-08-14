@@ -9,6 +9,7 @@ app.use(express.session({ secret: "keyboard cat" }))
 app.use(express.bodyParser());
 
 var testing = true;
+
 ////////////////////////
 // Data structure
 ////////////////////////
@@ -135,10 +136,9 @@ var instantiateData = require('./testing/cscwDataAllcut1.js');
 
 allData = clone(allDataOriginal)
 allData["deprecatedItems"] = {}
+allData["sessionMaking"] = true
 
-function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
-    
-    
+function updateAllDataForAcceptedPapers(listOfAcceptedPapers){    
     allData["acceptedPapers"] = listOfAcceptedPapers
     var removedItems = []
     //limit the items to just the ones in the listOfAcceptedPapers
@@ -146,16 +146,13 @@ function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
     //DEPRICATE ITEMS 
     for (var itemId in allData["items"]){
         if(itemId in allData["items"]){
-            console.log("has: "+itemId)
             if( utils.arrayContains(listOfAcceptedPapers,itemId)){
                 //keep it
             }else{
-                console.log("depricate "+itemId)
                 allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
                 
                 delete allData["items"][itemId]
                 removedItems.push(itemId)
-                
                 
                 //remove this itemId from all the LabelList[label]["itemsUsedBy"] that it appears in.
                 var labelsForItem = allData["deprecatedItems"][itemId]["labels"]
@@ -177,8 +174,6 @@ function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
     var resussitatedItems = []
     var currentItems = Object.keys(allData["items"])
     var itemsToBeResussitated = utils.arrayMinus(listOfAcceptedPapers, currentItems)
-    console.log("itemsToBeResussitated")
-    console.log(itemsToBeResussitated)
     for(var i in itemsToBeResussitated){
         var itemId = itemsToBeResussitated[i]
         console.log("resussitate "+itemId)
@@ -201,58 +196,17 @@ function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
             }
         }
     }
-    console.log('allData["deprecatedItems"]')
-    console.log(Object.keys(allData["deprecatedItems"]))
 
-    
-    //parse out items in allData["labelList"][label]["itemsUsedBy"]
-    //reComputeLabelList()
     
     return {"removedItems":removedItems, "resussitatedItems":resussitatedItems}
 }
 
-function reComputeLabelList(){
-    /*
-    var labelObjs = allData["labelList"]
-    for(var labelName in labelObjs){
-        var itemsUsedBy = labelObjs[labelName]["itemsUsedBy"]
-        var acceptedPapers = Object.keys(allData["items"])
-        allData["labelList"][labelName]["itemsUsedBy"] = utils.arrayIntersection(itemsUsedBy, acceptedPapers)
-
-    }
-    */
-    
-    /*
-            allData["items"][id] = newItem
-        #print allData["items"][id]
-        for s in splitKeywords:
-            if s in allKeywords:
-                allKeywords[s].append(id)
-            else:
-                allKeywords[s] = [id]   
-    */
-    for(var itemId in allData["items"]){
-        var itemObj = allData["items"][itemId]
-        var labelsDict = itemObj["labels"]
-        for (var label in labelsDict){
-            var labelObj = labelsDict[label]
-            var labelChecked = labelObj["checked"]
-            if(labelChecked){
-                allData["labelList"][label]["itemsUsedBy"].push(itemId)
-            }
-        
-        }
-    }
-}
-
 function removePaper(itemId){
     if(itemId in allData["items"]){
-        console.log("depricate "+itemId)
         allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
         
         delete allData["items"][itemId]
         //removedItems.push(itemId)
-        
         
         //remove this itemId from all the LabelList[label]["itemsUsedBy"] that it appears in.
         var labelsForItem = allData["deprecatedItems"][itemId]["labels"]
@@ -270,20 +224,7 @@ function removePaper(itemId){
         return true
     }
     return false
-/*
-    if(itemId in allData["items"]){
-        var itemObj
-        allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
-        delete allData["items"][itemId];
-        reComputeLabelList()
-        
-            console.log('allData["deprecatedItems"]')
-    console.log(Object.keys(allData["deprecatedItems"]))
-        
-        return true
-    }
-    return false
-    */
+
 }
 
 //updateAllDataForAcceptedPapers(acceptedPapers)
@@ -544,6 +485,8 @@ function getAllServerData(query, type){
     //6. recently edited items
     //7. order of items
 	rtn["itemIdOrder"] = getFeedItemsAndOrder(query)
+    
+    rtn["sessionMaking"] = allData["sessionMaking"]	
     
     var numberOfResults = rtn["itemIdOrder"].length
 	rtn["queryResultObj"] = getQueryResultObj(query, numberOfResults)

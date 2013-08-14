@@ -20,33 +20,21 @@ function createItemAndReplyDivInternals(itemObj){
     
     var itemId = itemObj["id"]
     //var itemCheckboxDiv = $("<input type='checkbox' class='itemCheckbox' id='"+itemId+"' style='position:relative;float:right;'>")
-    var sessionDiv = createAddSessionDiv(itemObj)
+    var sessionDiv = $('<div id="sessionUI-'+itemId+'">')
+    
     var labelsDiv = createLabelsDiv(itemObj)
     //var replyDiv = $("<div class='span4 replyList' style='background:white' id='replies-to-"+itemObj["id"]+"'>")    
     
     
     //var replyDivContent = createReplyDivContent(itemObj)
     //replyDiv.append(replyDivContent)
-    
-    /*
-    wrap = function(div, id){
-        $(div).click(function(index){
-            ajax("updateLocation",{"id":id},function(){})
-        })
-    }
-    wrap(replyDiv, itemObj["id"] )
-    */
-    
-    /*
-    var itemId = itemObj["id"]
-	var parentId = ""
-    var baseReplyDiv = createBlankReplyDiv(itemId, parentId)
-    replyDiv.append(baseReplyDiv)
-    */
-    
+        
     itemAndReplyDiv.append(itemDiv)
     //labelsAndRepliesDiv.append(itemCheckboxDiv)
-    //labelsAndRepliesDiv.append(sessionDiv)
+    labelsAndRepliesDiv.append(sessionDiv)
+    if(sessionMaking){
+        createAddSessionDiv(sessionDiv, itemObj)
+    }
     labelsAndRepliesDiv.append(labelsDiv)
     //labelsAndRepliesDiv.append(replyDiv)
     itemAndReplyDiv.append(labelsAndRepliesDiv)
@@ -156,11 +144,12 @@ function createItemDiv(itemObj){
 /////////////////////////
 // LABELS
 /////////////////////////
-function createAddSessionDiv(itemObj){
+function createAddSessionDiv(div, itemObj){
+    div.empty()
 	var session = itemObj["session"]
     var itemId = itemObj["id"]
 
-    var div = $('<div>')
+    //var div = $('<div>')
     if(session == "none"){
         var initialText = ""
         createWithoutSession(div, itemId, initialText)
@@ -172,7 +161,7 @@ function createAddSessionDiv(itemObj){
     var lineBreak = " <br> "
     $(lineBreakDiv).html(lineBreak)
     div.append(lineBreakDiv)
-    return div
+    //return div
 }
 function createWithoutSession(div, itemId, initialText){
     var sessionText = "Session: "
@@ -402,7 +391,7 @@ function updateSession(itemId, sessionLabel){
 				"sessionLabel" : sessionLabel
 	}
 
-	pushAndPullUpdates(myUpdate, "synchronous")
+	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
 

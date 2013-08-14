@@ -396,7 +396,9 @@ handleSessionUpdate = function(markSessionOnItem){
 	var itemId = markSessionOnItem["itemId"]
 	var sessionLabel = markSessionOnItem["sessionLabel"]	
 	
+    
 	var itemReference = allData["items"][itemId]
-
+    itemReference["lastUpdateTime"] = time
+    
 	itemReference["session"] = sessionLabel
 }
