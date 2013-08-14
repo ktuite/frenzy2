@@ -67,6 +67,15 @@ function makeAutocompleteListFromKeys(lst){
 	for(var i in lst){
 		allLabels.push(i)
 	}
+    
+    allLabels.sort(function(a, b){
+         var nameA=a.toLowerCase(), nameB=b.toLowerCase()
+         if (nameA < nameB) //sort string ascending
+          return -1 
+         if (nameA > nameB)
+          return 1
+         return 0 //default return value (no sorting)
+        });
 
 	return allLabels
 }
@@ -414,7 +423,7 @@ function createAddLabelUI(queryResultObj){
     
     var textbox = $('<input type="textbox">')
 	textbox.autocomplete({
-      source: autocompleteLabels
+        source: autocompleteLabels
     });
 	uiwidgetDiv.append(textbox)
     div.append(uiwidgetDiv)
@@ -547,13 +556,31 @@ function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
 
 
 function updateNewLabel(textboxValue,itemId){
+
+    if(! arrayContains(autocompleteLabels, textboxValue)){
+    
+        autocompleteLabels.push(textboxValue)
+        
+        autocompleteLabels.sort(function(a, b){
+             var nameA=a.toLowerCase(), nameB=b.toLowerCase()
+             if (nameA < nameB) //sort string ascending
+              return -1 
+             if (nameA > nameB)
+              return 1
+             return 0 //default return value (no sorting)
+            });
+            console.log(autocompleteLabels)
+    }    
+    //autocompleteLabels.sort()
+    
     var addNewLabelUpdate = {
         type : "addLabelToItem",
         time : getTime(),
         itemId : itemId , 
         labelText : textboxValue
     }
-    pushAndPullUpdates(addNewLabelUpdate)
+    $("#addCategoryTextbox-"+itemId).val("")
+    pushAndPullUpdates(addNewLabelUpdate, "asynchronous")
 }
 
 //////////////////////////////////////////

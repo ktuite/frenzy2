@@ -186,7 +186,7 @@ function createWithoutSession(div, itemId, initialText){
         sessionNameTextbox[0].select()
     }
     sessionNameTextbox.autocomplete({
-    source: autocompleteSessions
+        source: autocompleteSessions
     });
     
     var addButtonText ="add"
