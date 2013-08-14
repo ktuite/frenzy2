@@ -3,6 +3,7 @@ var express = require('express');
 fs = require('fs');
 app = express();
 
+app.use(express.compress());
 app.use(express.cookieParser()); 
 app.use(express.session({ secret: "keyboard cat" }))
 app.use(express.bodyParser());
@@ -142,25 +143,51 @@ function updateAllDataForAcceptedPapers(listOfAcceptedPapers){
     var removedItems = []
     //limit the items to just the ones in the listOfAcceptedPapers
     
+    
     //console.log(Object.keys(allData["items"]).length)
-    var items = allData["items"]
-    for (var itemId in items){
+    
+    for (var itemId in allData["items"]){
         if(itemId in allData["items"]){
+            console.log("has: "+itemId)
             if( utils.arrayContains(listOfAcceptedPapers,itemId)){
                 //keep it
             }else{
+                console.log("depricate "+itemId)
                 allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
-                delete allData["items"][itemId];
+                
+                delete allData["items"][itemId]
+                console.log(Object.keys(allData["items"]).length)
                 removedItems.push(itemId)
             }
         }
     }
+    
+    var resussitatedItems = []
+    var currentItems = Object.keys(allData["items"])
+    var itemsToBeResussitated = utils.arrayMinus(listOfAcceptedPapers, currentItems)
+    console.log("itemsToBeResussitated")
+    console.log(itemsToBeResussitated)
+    for(var i in itemsToBeResussitated){
+        var itemId = itemsToBeResussitated[i]
+        console.log("resussitate "+itemId)
+        //check if it's in the deprecatedItems and recussitate it
+        if(itemId in allData["deprecatedItems"]){
+            
+            var itemObj = clone( allData["deprecatedItems"][itemId] )
+            console.log(itemObj)
+            allData["items"][itemId] = itemObj
+            delete allData["deprecatedItems"][itemId];
+            resussitatedItems.push(itemId)
+        }
+    }
     //console.log(Object.keys(allData["items"]).length)
+    console.log('allData["deprecatedItems"]')
+    console.log(Object.keys(allData["deprecatedItems"]))
     
     //parse out items in allData["labelList"][label]["itemsUsedBy"]
     reComputeLabelList()
     
-    return removedItems
+    return {"removedItems":removedItems, "resussitatedItems":resussitatedItems}
 }
 
 function reComputeLabelList(){
@@ -180,6 +207,10 @@ function removePaper(itemId){
         allData["deprecatedItems"][itemId] = clone(allData["items"][itemId])
         delete allData["items"][itemId];
         reComputeLabelList()
+        
+            console.log('allData["deprecatedItems"]')
+    console.log(Object.keys(allData["deprecatedItems"]))
+        
         return true
     }
     return false
@@ -329,13 +360,16 @@ app.post('/acceptedPapers.html', function(request, response){
         var papers = args["papers"]
         var numAcceptedPapersOld = Object.keys(allData["items"]).sort().length
         
-        var removedItems = updateAllDataForAcceptedPapers(papers)
-        console.log(papers.length)
+        var removalFeedback = updateAllDataForAcceptedPapers(papers)
+        var removedItems = removalFeedback["removedItems"]
+        var resussitatedItems = removalFeedback["resussitatedItems"]
+        
+        //console.log(papers.length)
         //allData["acceptedPapers"] = papers
         var acceptedPapers = Object.keys(allData["items"]).sort()
         var ret = {}
         ret["acceptedPapers"] = acceptedPapers
-        ret["feedback"] = "Removed items "+ JSON.stringify(removedItems)+". \nThere were "+numAcceptedPapersOld+" papers. \nThere are now "+acceptedPapers.length+" papers"
+        ret["feedback"] = "Removed items "+ JSON.stringify(removedItems)+". \nResussitatedItems: "+JSON.stringify(resussitatedItems)+"\nThere were "+numAcceptedPapersOld+" papers. \nThere are now "+acceptedPapers.length+" papers"
 		response.send(JSON.stringify(ret)) 
 	}
 });
