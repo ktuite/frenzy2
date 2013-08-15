@@ -137,6 +137,7 @@ var instantiateData = require('./testing/cscwDataAllcut1.js');
 allData = clone(allDataOriginal)
 allData["deprecatedItems"] = {}
 allData["sessionMaking"] = true
+allData["categories"] = {}
 
 function updateAllDataForAcceptedPapers(listOfAcceptedPapers){    
     allData["acceptedPapers"] = listOfAcceptedPapers
@@ -470,8 +471,9 @@ function getAllServerData(query, type){
     rtn["allItems"] = allData["items"]
     
     //2. hierarchy 
-	rtn["hierarchy"] = allData["hierarchy"]	
-
+	//rtn["hierarchy"] = allData["hierarchy"]	
+    rtn["categories"] = allData["categories"]
+    
     //2. hierarchy 
 	rtn["sessions"] = allData["sessions"]
     

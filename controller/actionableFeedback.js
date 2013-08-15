@@ -1,5 +1,5 @@
 updateActionableFeedback = function(){
-	updateHierarchy()
+	//updateHierarchy()
 	updateCompletedItems()	
 	updateSessions()
 	updateTFIDF()

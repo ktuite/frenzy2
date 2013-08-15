@@ -173,6 +173,19 @@ function setDefaultQuery(){
         var sortType = $(this).val() 
         displaySessionsSorted(sortType)
     });
+    
+    $('#categoriesSort').on('change', function() {
+        var sortType = $(this).val() 
+        displayCategoriesSorted(sortType)
+    });
+    
+    $("#showAllCategories").click(function(){
+        query = {
+            "type" : "all",      
+            "sortOrder" : "creationTime"
+        }
+        getAllData("synchronous") 
+    })
 }
 
 function setUpTextSearch(){
@@ -343,7 +356,15 @@ function takeDownSpinner(){
                 <div class="row">
                    <div class="span4" >
                         <div id ="hashtagSummaryContainer" class="summaryContainer">
-                            <b>Categories:</b><br>
+                            <b>Categories:</b> sort by:
+                            <select id="categoriesSort">
+                                      <option value="mostItems">most papers</option>
+                                      <option value="leastItems">least papers</option>
+                                      <option value="az">a-z</option>
+                                      <option value="za">z-a</option>
+                                </select>
+                            <br>
+                            <input type="button" id="showAllCategories" value="Show all"></input>
                             <div class="column" id="labelHierarchy">
                             
                             </div>

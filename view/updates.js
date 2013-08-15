@@ -16,11 +16,11 @@ function handleUpdates(result){
 	
 	if("labelList" in result){
 		labelList = result["labelList"]
-		autocompleteLabels = makeAutocompleteListFromKeys(labelList)
+		handleUpdatedCategory(labelList)
+        //createCategoryList()
 	}
 	if("sessions" in result){
-		sessions = result["sessions"]
-		
+		sessions = result["sessions"]		
 		handleUpdatedSessions(sessions)
 	}
 	
@@ -166,7 +166,6 @@ function updateItemsInFeed(){
 }
 
 function markItemAsUpdated(itemId){
-    console.log("updateItem: "+itemId)
     var itemUI = $("#containerFor-"+itemId)
     var currentHeight = itemUI.height() 
     
@@ -247,7 +246,6 @@ function pushNewItemDivsOnFeed(newItemDivs){
 
 function updateSearchFeedback(queryResultObj){
     var queryObj = queryResultObj["query"]
-	console.log(queryObj)
     var queryType = queryObj["type"]
     var numResults = queryResultObj["numResults"]
     var querySortOrder = queryObj["sortOrder"]
@@ -610,26 +608,6 @@ function handleUpdatedHierarchy(hierarchy){
     }
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
-    
-    //resizeHierarchy()
-}
-
-function resizeHierarchy(){
-/*
-    console.log('resizeHierarchy')
-    var offsetFromTop = $("#labelHierarchy").offset()
-    var offsetFromTop = offsetFromTop["top"]
-    var labelHeight = $("#labelHierarchy").height()
-    
-    var labelBottom = labelHeight + offsetFromTop
-    var windowHeight = $(window).height();
-    
-    
-    //if( labelBottom > windowHeight){
-        console.log("RESIZE: "+(windowHeight - offsetFromTop))
-        $("#labelHierarchy").height(windowHeight - offsetFromTop-30)
-    //}
-    */
 }
 
 //////////////////////////////////////////
@@ -646,8 +624,6 @@ function handleUpdatedSessions(sessionObjs){
 function displaySessionsSorted(sortType){
     var sessionsDiv = $("<div>")
     var sessionsArray = dictToArray(sessions)
-    console.log("sessionsArray")
-    console.log(sessionsArray)
     sortSessions(sessionsArray, sortType)
     
     for(var i in sessionsArray){
@@ -692,8 +668,8 @@ function sortSessions(sessionsArray, sortType){
          return 0 //default return value (no sorting)
         });
     }
-
 }
+
 function createSessionDiv(label, counts){
     var div = $("<div class='sessionClickable'>")
     div.text(label + " ("+counts+") ")
@@ -710,4 +686,118 @@ function createSessionDiv(label, counts){
     return div
 }
 
+//////////////////////////////
+// Create Category List
+//////////////////////////////
+function handleUpdatedCategory(labelList){
+    autocompleteLabels = makeAutocompleteListFromKeys(labelList)
+    var sortType = $('#categoriesSort').val()
+    displayCategoriesSorted(sortType)    
+}
 
+/*
+"Virtual Worlds/Avatars/Proxies": {
+      "itemsUsedBy": [
+        "cscw356",
+        "cscw490",
+        "cscw602",
+        "cscw625",
+        "cscw637"
+      ],
+      "creator": "system",
+      "creationTime": 0,
+      "user": "cscw",
+      "label": "Virtual Worlds/Avatars/Proxies"
+    }
+
+*/
+function displayCategoriesSorted(sortType){
+    var labelHierarchyDiv = $("<div>")
+    var labelsArray = dictToArray(labelList)
+    sortLabels(labelsArray, sortType)
+    
+    for(var i in labelsArray){
+        var labelObj = labelsArray[i]        
+        var newLabelDiv = createCategoryLabelDiv(labelObj)
+        labelHierarchyDiv.append(newLabelDiv)        
+    }
+	$("#labelHierarchy").empty()
+    $("#labelHierarchy").append(labelHierarchyDiv)
+}
+
+function sortLabels(labelsArray, sortType){
+    if(sortType == "mostItems"){
+        labelsArray.sort(function(a,b){
+            return b["itemsUsedBy"].length - a["itemsUsedBy"].length
+        })
+    }
+    if(sortType == "leastItems"){
+        labelsArray.sort(function(a,b){
+            return a["itemsUsedBy"].length - b["itemsUsedBy"].length
+        })
+    }
+    if(sortType == "az"){
+        labelsArray.sort(function(a, b){
+         var nameA=a["label"].toLowerCase(), nameB=b["label"].toLowerCase()
+         if (nameA < nameB) //sort string ascending
+          return -1 
+         if (nameA > nameB)
+          return 1
+         return 0 //default return value (no sorting)
+        });
+    }
+    if(sortType == "za"){
+        labelsArray.sort(function(a, b){
+         var nameA=a["label"].toLowerCase(), nameB=b["label"].toLowerCase()
+         if (nameA > nameB) //sort string ascending
+          return -1 
+         if (nameA < nameB)
+          return 1
+         return 0 //default return value (no sorting)
+        });
+    }
+}
+
+function createCategoryLabelDiv(labelObj){
+    var label = labelObj["label"]
+    var counts = labelObj["itemsUsedBy"].length
+    var creator = labelObj["creator"]
+    var div = $("<div class='sessionClickable'>")
+    div.text(label + " ("+counts+") ")
+    if(creator == "system"){
+        div.addClass("systemLabel")
+    }else{
+        div.addClass("nonSystemLabel")
+    }
+	
+	div.click(function(){
+		query = {
+			"type" : "label",
+			"label" : label,
+			"checked" : true,            
+            "sortOrder" : "creationTime"
+		}
+		getAllData("synchronous")
+	})
+	
+    return div
+}
+
+/////////////////////////////////////////
+
+/*
+"Virtual Worlds/Avatars/Proxies": {
+      "itemsUsedBy": [
+        "cscw356",
+        "cscw490",
+        "cscw602",
+        "cscw625",
+        "cscw637"
+      ],
+      "creator": "system",
+      "creationTime": 0,
+      "user": "cscw",
+      "label": "Virtual Worlds/Avatars/Proxies"
+    }
+
+*/

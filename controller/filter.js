@@ -17,6 +17,7 @@ getFeedItemsAndOrder = function(query){
 	if(queryType == "label"){
 		var label = query["label"]
 		var checked = query["label"]
+        /*
 		var labelInHierarchy = utils.filterArray(allData["hierarchy"], function(x){
 			return x["label"]["label"] == label
 		})
@@ -28,8 +29,10 @@ getFeedItemsAndOrder = function(query){
 			console.log("error getFeedItemsAndOrder - 1")
 		
 		}
+        */
+        itemIds = allData["labelList"][label]["itemsUsedBy"]
 	}
-    console.log(query)
+
 	if(queryType == "session"){
 		var label = query["label"]
 		if (label in allData["sessions"]) {
