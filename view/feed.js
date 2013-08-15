@@ -382,6 +382,12 @@ update = {
 }
 */
 function updateSession(itemId, sessionLabel){
+    //WORK HERE
+    //turn the session back to with
+    var sessionDiv = $("#sessionUI-"+itemId) //$('<div id="sessionUI-'+itemId+'">')
+    items[itemId]["session"] = sessionLabel
+    createAddSessionDiv(sessionDiv, items[itemId] )
+
     if(! arrayContains(autocompleteSessions, sessionLabel)){
     
         autocompleteSessions.push(sessionLabel)
