@@ -171,7 +171,13 @@ function markItemAsUpdated(itemId){
     var itemObj = items[itemId]
     
     var sessionUIDiv = $("#sessionUI-"+itemId)
-    createAddSessionDiv(sessionUIDiv, itemObj)
+    //console.log( $("#addSessionTextbox-"+itemId) )
+    if ($("#addSessionTextbox-"+itemId).is(":focus")) {
+        //alert('focus: '+itemId);
+        console.log("don't update: "+itemId)
+    }else{
+        createAddSessionDiv(sessionUIDiv, itemObj)
+    }
     
     //var itemAndReplyDivInternals = createItemAndReplyDivInternals(itemObj) 
     var inCategoriesDiv = $("#inCategoriesDiv-"+itemId)
