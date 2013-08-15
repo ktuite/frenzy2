@@ -71,9 +71,6 @@ function createItemHTML(itemContent, searchQuery){
                 
     }
     
-
-       
-    
     var authorListHTML = ""
     for (var i in authorList){
         var author = authorList[i]
@@ -166,7 +163,7 @@ function createAddSessionDiv(div, itemObj){
 function createWithoutSession(div, itemId, initialText){
     var sessionText = "Session: "
     $(div).html(sessionText)
-    var sessionNameTextbox = $('<input type="textbox" class="sessionTextbox" >')
+    var sessionNameTextbox = $('<input type="textbox" class="sessionTextbox" id="addSessionTextbox-'+itemId+'">')
     div.append(sessionNameTextbox)
     sessionNameTextbox.val(initialText)
     if(initialText != ""){
@@ -385,6 +382,33 @@ update = {
 }
 */
 function updateSession(itemId, sessionLabel){
+    if(! arrayContains(autocompleteSessions, sessionLabel)){
+    
+        autocompleteSessions.push(sessionLabel)
+        
+        autocompleteSessions.sort(function(a, b){
+            var nameA = a.toLowerCase(), nameB = b.toLowerCase()
+            if (nameA < nameB) {
+                return -1 
+            }
+            if (nameA > nameB){
+                return 1
+            }
+            return 0 
+        });
+        
+        for(var index in itemIdOrder){
+            
+            var itemIdPrime = itemIdOrder[index]
+            
+            wrap = function(id, lst){
+                $('#addSessionTextbox-'+id).autocomplete("option", { source: lst });
+            }
+            wrap(itemIdPrime, autocompleteSessions)
+        }
+    }  
+
+
 	var myUpdate = {"type": "session", 
 				"time" : getTime(), 
 				"itemId" : itemId, 

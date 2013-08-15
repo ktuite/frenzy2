@@ -5,8 +5,8 @@ function handleUpdates(result){
         handleUpdatedItems(updatedItems)
     }
 	*/
-    console.log("result")
-	console.log(result)
+    //console.log("result")
+	//console.log(result)
     
     var type = result["type"]
     
@@ -29,8 +29,7 @@ function handleUpdates(result){
 	}
 	if("queryResultObj" in result){
         queryResultObj = result["queryResultObj"]
-        query = queryResultObj["query"]
-		
+        query = queryResultObj["query"]		
 	}
 	
     if("hierarchy" in result){
@@ -45,16 +44,12 @@ function handleUpdates(result){
     
     if("sessionMaking" in result){
 		sessionMaking = result["sessionMaking"]
-		console.log("sessionMaking: "+sessionMaking)
         if(!sessionMaking){
             $("#sessionMakingRow").hide()
         }else{
             $("#sessionMakingRow").show()
         }
 	}
-    
-    
-
     
     //depending on the query type, either redisplay the all the Feed
     //or just update some items with yellow backgrounds.
@@ -79,13 +74,15 @@ function makeAutocompleteListFromKeys(lst){
 	}
     
     allLabels.sort(function(a, b){
-         var nameA=a.toLowerCase(), nameB=b.toLowerCase()
-         if (nameA < nameB) //sort string ascending
-          return -1 
-         if (nameA > nameB)
-          return 1
-         return 0 //default return value (no sorting)
-        });
+        var nameA = a.toLowerCase(), nameB = b.toLowerCase()
+        if (nameA < nameB) {
+            return -1 
+        }
+        if (nameA > nameB){
+            return 1
+        }
+        return 0 
+    });
 
 	return allLabels
 }
@@ -568,33 +565,6 @@ function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
 
 
 
-function updateNewLabel(textboxValue,itemId){
-
-    if(! arrayContains(autocompleteLabels, textboxValue)){
-    
-        autocompleteLabels.push(textboxValue)
-        
-        autocompleteLabels.sort(function(a, b){
-             var nameA=a.toLowerCase(), nameB=b.toLowerCase()
-             if (nameA < nameB) //sort string ascending
-              return -1 
-             if (nameA > nameB)
-              return 1
-             return 0 //default return value (no sorting)
-            });
-            console.log(autocompleteLabels)
-    }    
-    //autocompleteLabels.sort()
-    
-    var addNewLabelUpdate = {
-        type : "addLabelToItem",
-        time : getTime(),
-        itemId : itemId , 
-        labelText : textboxValue
-    }
-    $("#addCategoryTextbox-"+itemId).val("")
-    pushAndPullUpdates(addNewLabelUpdate, "asynchronous")
-}
 
 //////////////////////////////////////////
 // hierarchy
@@ -783,21 +753,43 @@ function createCategoryLabelDiv(labelObj){
     return div
 }
 
-/////////////////////////////////////////
 
-/*
-"Virtual Worlds/Avatars/Proxies": {
-      "itemsUsedBy": [
-        "cscw356",
-        "cscw490",
-        "cscw602",
-        "cscw625",
-        "cscw637"
-      ],
-      "creator": "system",
-      "creationTime": 0,
-      "user": "cscw",
-      "label": "Virtual Worlds/Avatars/Proxies"
+function updateNewLabel(textboxValue, itemId){
+    $("#addCategoryTextbox-"+itemId).val("")
+    if(! arrayContains(autocompleteLabels, textboxValue)){
+    
+        autocompleteLabels.push(textboxValue)
+        
+        autocompleteLabels.sort(function(a, b){
+            var nameA = a.toLowerCase(), nameB = b.toLowerCase()
+            if (nameA < nameB) {
+                return -1 
+            }
+            if (nameA > nameB){
+                return 1
+            }
+            return 0 
+        });
+            
+        for(var index in itemIdOrder){
+            
+            var itemIdPrime = itemIdOrder[index]
+            
+            wrap = function(id, lst){
+                $('#addCategoryTextbox-'+id).autocomplete("option", { source: lst });
+            }
+            wrap(itemIdPrime, autocompleteLabels)
+        }
+    }    
+    $("#addCategoryTextbox-"+itemId).val("")
+    
+    var addNewLabelUpdate = {
+        type : "addLabelToItem",
+        time : getTime(),
+        itemId : itemId , 
+        labelText : textboxValue
     }
+    
+    pushAndPullUpdates(addNewLabelUpdate, "asynchronous")
+}
 
-*/

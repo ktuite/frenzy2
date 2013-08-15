@@ -231,10 +231,6 @@ function removePaper(itemId){
 //updateAllDataForAcceptedPapers(acceptedPapers)
 updateActionableFeedback()
 
-
-
-//console.log(rankLabelsForTargetLabel("Workflow management"))
-
 /////////////////////////////////
 // Client Communication Handling
 /////////////////////////////////
@@ -344,7 +340,6 @@ app.post('/acceptedPapers.html', function(request, response){
     
     if(command == "removeItem"){
 		var badItemId = args["itemId"]
-        console.log(badItemId)
         var numAcceptedPapersOld = Object.keys(allData["items"]).sort().length
         
         //allData["acceptedPapers"].push(newItemId)
