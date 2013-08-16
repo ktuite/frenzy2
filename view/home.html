@@ -24,6 +24,7 @@
 -->  
 <script type = "text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/utils.js"></script>
+<script type = "text/javascript" src="bootstrap.min.js"></script>
 <!--
 
 <script type = "text/javascript" src="textSearch.js"></script>
@@ -80,12 +81,12 @@ var query = {}
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
-var username = false
 */
+var username = false
+
 function ajax(command, message, callbackFunction) {    
 	$.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
 }
-
 
 function getUsername(){
 /*
@@ -166,6 +167,7 @@ function testSignIn(){
 	ajax("signIn", {"user": getUsername()}, function(result){ 
 		var res = JSON.parse(result)
 		username = res["user"]
+        console.log("signed in as user " + username)
 	})
 }
 

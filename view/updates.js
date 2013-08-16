@@ -175,8 +175,8 @@ function markItemAsUpdated(itemId){
     var inCategoriesDiv = $("#inCategoriesDiv-"+itemId)
     var itemObj = items[itemId]
     var labelObjDict = itemObj["labels"]
-    inCategoriesDiv.empty()
     
+    clearCategories(inCategoriesDiv)
     appendCategories(inCategoriesDiv, itemId, labelObjDict)
     
     //old code from when we were updating the entire div
