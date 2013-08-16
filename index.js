@@ -101,6 +101,10 @@ app.get('/bootstrap-responsive.css', function(request, response){
     response.sendfile('view/refs/bootstrap/css/bootstrap-responsive.min.css')
 });
 
+app.get('/spring.jpg', function(request, response){
+    response.sendfile('view/spring.jpg')
+});
+
 ////
 
 app.get('/updates.js', function(request, response){
