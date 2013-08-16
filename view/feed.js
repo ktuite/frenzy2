@@ -234,7 +234,7 @@ function createLabelsDiv(itemObj){
     var categoryTitle = "In Categories"
     div.append(categoryTitle)    
     
-    var categoryCheckboxesDiv = $('<div id="inCategoriesDiv-'+itemId+'">')    
+    var categoryCheckboxesDiv = $('<table id="inCategoriesDiv-'+itemId+'">')    
     appendCategories(categoryCheckboxesDiv, itemId, labelObjDict)
     div.append(categoryCheckboxesDiv)
 
@@ -262,8 +262,11 @@ function createLabelsDiv(itemObj){
     return div
 }
 
-function appendCategories(div, itemId, labelObjDict){
+function clearCategories(div) {
+    div.empty()
+}
 
+function appendCategories(div, itemId, labelObjDict){
     for(var i in labelObjDict){
         var labelObj = labelObjDict[i]
 		
@@ -309,13 +312,16 @@ function makeInteractiveLabelUI(labelObj, itemId){
     var labelText = labelObj["label"]
     var labelChecked = labelObj["checked"]
     
+    var labelLikes = labelObj["likes"]
+    var labelLikedByMe = ($.inArray(username, labelLikes) != -1)
+    var labelLikeCount = labelLikes.length
+
     var labelListObj = labelList[labelText]
     
     var creator = labelListObj["creator"]
     var numItems = labelListObj["itemsUsedBy"].length
 	
-    
-    var div = $('<div>')
+    var row = $('<tr>')
     
 	//make radio button
     /*
@@ -335,7 +341,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
 	
 	//make label checkbox
 	var checkbox = $('<input type="checkbox" checked=true>')
-    div.append(checkbox)
+    row.append('<td>').append(checkbox)
     if(labelChecked==true){
         $(checkbox).attr('checked');
     }
@@ -367,9 +373,39 @@ function makeInteractiveLabelUI(labelObj, itemId){
     
     //var counts = labelList[labelText]["itemsUsedBy"].length
     //labelSpan.html(labelText+" ("+counts+")<br>")
-    labelSpan.html(labelText+" ("+numItems+")<br>")
-    div.append(labelSpan)
-    return div
+    labelSpan.html(labelText+" ("+numItems+")")
+    row.append("<td>").append(labelSpan)
+
+    // add like button
+    var likeButton = $('<button type="button" class="btn btn-primary likeButton" data-toggle="button"></button>')
+
+    var tooltipPrefix = "";
+    if(labelLikedByMe){
+        likeButton.addClass('active')
+        tooltipPrefix = "You and other people think";
+    }
+    else if (labelLikeCount == 0) {
+        likeButton.addClass("zero")
+        tooltipPrefix = "Nobody thinks"
+    } else {
+        tooltipPrefix = "Other people think"
+    }
+    likeButton.attr("title", tooltipPrefix + " " + labelText + " would be a good session for this paper")
+
+    // label the button with +N if N people have liked it, or just +1 if nobody has liked it yet
+    // (that's how Google+ does it, so why not)
+    likeButton.text('+' + Math.max(labelLikeCount, 1))
+
+    likeButton.on('click', function() {
+        var t = $(this)
+        var nowLiked = !t.is(".active") 
+        toggleLabelLiked(labelText, itemId, nowLiked)
+    })
+
+
+    row.append("<td>").append(likeButton)
+
+    return row
 }
 
 /*
@@ -447,7 +483,27 @@ function toggleLabelUpdate(labelText, itemId, checked){
 	pushAndPullUpdates(myUpdate, "asynchronous")
 }
 
+/*
+update = {
+    type : "toggleLabelLiked",
+    user : "hmslydia",
+    time : 1234567891,
+    itemId : "item0" , 
+    labelText : "animal",
+    like : true
+}
+*/
+function toggleLabelLiked(labelText, itemId, liked) {
+    var myUpdate = {"type": "toggleLabelLiked", 
+                "time" : getTime(), 
+                "itemId" : itemId, 
+                "labelText" : labelText, 
+                "liked": liked
+    }
 
+    pushAndPullUpdates(myUpdate, "asynchronous")
+
+}
 
 ////////////////////////////////
 // Replies

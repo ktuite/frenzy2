@@ -75,6 +75,10 @@ app.get('/utils.js', function(request, response){
 	response.sendfile('view/utils.js')
 });
 
+app.get('/bootstrap.min.js', function(request, response){
+    response.sendfile('view/bootstrap.min.js')
+});
+
 app.get('/updates.js', function(request, response){
 	response.sendfile('view/updates.js')
 });
@@ -320,8 +324,9 @@ app.post('/home.html', function(request, response){
         
 	}else if(command == "signIn"){
 		var user = args["user"]
-		request.session.user = user
-		var rtn = {"user": request.session.user}
+        request.session.user = user
+        console.log("signed in as user " + user)
+        var rtn = {"user": request.session.user}
 		
 		response.send(JSON.stringify(rtn))
 	}
@@ -411,7 +416,10 @@ handleClientUpdateData = function(update){
             handleToggleLabelFromItem(update)
         }else if(updateType == "session"){
             handleSessionUpdate(update)
+        }else if(updateType == "toggleLabelLiked"){
+            handleToggleLabelLiked(update)
         }
+
     }
 	
 	updateActionableFeedback()

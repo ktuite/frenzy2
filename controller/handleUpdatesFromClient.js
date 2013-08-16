@@ -402,3 +402,46 @@ handleSessionUpdate = function(markSessionOnItem){
     
 	itemReference["session"] = sessionLabel
 }
+
+
+/////////////////////////////////////
+// TOGGLE LIKE OF LABEL ON ITEM 
+/////////////////////////////////////
+/*
+update = {
+	type : "toggleLabelLiked",
+	user : "hmslydia",
+	time : 1234567891,
+	itemId : "item0" , 
+	labelText : "animal",
+	liked : true
+}
+*/
+handleToggleLabelLiked = function(toggleLabelLiked){
+	var user = toggleLabelLiked["user"]
+	var time = toggleLabelLiked["time"]
+	var itemId = toggleLabelLiked["itemId"]
+	var labelText = toggleLabelLiked["labelText"]	
+	var liked = toggleLabelLiked["liked"]	
+	
+	var itemReference = allData["items"][itemId]
+    itemReference["lastUpdateTime"] = time
+
+	var usersLiking = itemReference["labels"][labelText]["likes"]
+    //console.log("usersLiking was")
+    //console.log(usersLiking)
+	
+	// first remove all occurrences of the user from the list
+	var i
+	while ((i = usersLiking.indexOf(user)) != -1) {
+		usersLiking.splice(i,1)
+	}
+
+	// then add back if looking liking move (Act 1 Scene 3)
+	if (liked) {
+		usersLiking.push(user)
+	}
+
+    //console.log("usersLiking is now")
+    //console.log(usersLiking)
+}

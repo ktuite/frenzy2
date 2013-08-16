@@ -13,7 +13,7 @@ function handleUpdatedCompletion(completion){
 var goalAchievedTime = -1
 
 function goalSetup(){
-    $("#goalDescription").html("Every paper needs to be in at least one new category (in red)")
+    $("#goalDescription").html("Every paper needs to have a category with at least +2 votes for session-making potential")
 }
 
 function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds){

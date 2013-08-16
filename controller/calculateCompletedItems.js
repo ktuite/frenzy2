@@ -15,50 +15,33 @@ calculateCompletedItems = function(){
         return utils.arrayContains(allData["acceptedPapers"], x["id"])
     })
     */
-	var completedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
+    var isComplete = function(x){
         var ans = false
         var labelsDict = x["labels"]
         for( var label in labelsDict ){
+            var labelObj = labelsDict[label]
+            var labelLikes = labelObj["likes"]
+            if (labelLikes.length >= 2) {
+                ans = true
+            }
+            /* old goal: at least one non-user-created label
             var labelObj = allData["labelList"][label]
             var labelCreator = labelObj["creator"]
             if (labelCreator != "system"){
                 ans = true
-            }
+            }*/
         }
         return ans
-      
-	})
+    }
+
+	var completedItemObj = utils.filterArray(arrayOfItemObjs, isComplete)
     
 	var completedItemIds = utils.mapArray(completedItemObj, function (x){
 		return x["id"]
 	})
 	
-	var incompletedItemObj = utils.filterArray(arrayOfItemObjs, function(x){
-        var ans = true
-        var labelsDict = x["labels"]
-        for( var label in labelsDict ){
-            var labelObj = allData["labelList"][label]
-            var labelCreator = labelObj["creator"]
-            if (labelCreator != "system"){
-                ans = false
-            }
-        }
-        /*
-        var labelsDict = x["labels"]
-        for( var label in labelsDict){
-            var labelObj = allData["labelList"][label]
-            var labelsMembers = labelObj["itemsUsedBy"]
-            labelsMembers = utils.filterArray(labelsMembers, function(x){
-                return utils.arrayContains(allData["acceptedPapers"], x)
-            })
-            
-            if(labelsMembers.length == 5){
-                ans = false
-            }
-        }
-        */
-        return ans
-	})
+	var incompletedItemObj = utils.filterArray(arrayOfItemObjs, function(x){ return !isComplete(x) })
+
 	var incompletedItemIds = utils.mapArray(incompletedItemObj, function (x){
 		return x["id"]
 	})

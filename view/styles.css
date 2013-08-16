@@ -379,3 +379,13 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
  .masked{
     opacity: .5
  }
+
+ .likeButton:hover, .likeButton:focus, .likeButton:active, .likeButton.active, .likeButton.disabled, .likeButton[disabled] {
+  color: #FFFFFF;
+  background-color: #CC3900;
+ }
+.likeButton.zero {
+  color: #000000;
+  background-color: #FFFFFF;
+  background-image: none;
+ }
