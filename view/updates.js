@@ -57,7 +57,7 @@ function handleUpdates(result){
     if(type == "synchronous"){
         itemsInQueryIveChanged = [] //reset this state variable.
         displayFeed(itemIdOrder)
-        updateSearchFeedback(queryResultObj)
+        updateHyperBar(queryResultObj)
     }
     if(type == "asynchronous"){
         updateItemsInFeed()        

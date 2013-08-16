@@ -127,6 +127,10 @@ app.get('/completionFeedback.js', function(request, response){
 	response.sendfile('view/completionFeedback.js')
 });
 
+app.get('/hyperbar.js', function(request, response){
+	response.sendfile('view/hyperbar.js')
+});
+
 ////////////////////////
 // Server side includes
 ////////////////////////
@@ -517,20 +521,42 @@ function getAllServerData(query, type){
     //5. userLocations
     //6. recently edited items
     //7. order of items
-	rtn["itemIdOrder"] = getFeedItemsAndOrder(query)
+    //WORK HERE (extraQueryParameters is temporary.  Find a better place to put it.)
+    query["extraQueryParameters"] = "initialize"
+    
+    var itemIdOrder = getFeedItemsAndOrder(query)
+	rtn["itemIdOrder"] = itemIdOrder
     
     rtn["sessionMaking"] = allData["sessionMaking"]	
     
-    var numberOfResults = rtn["itemIdOrder"].length
-	rtn["queryResultObj"] = getQueryResultObj(query, numberOfResults)
+    
+	rtn["queryResultObj"] = getQueryResultObj(query, itemIdOrder)
 	//console.log("rtn")
     //console.log(rtn)
 
     return rtn
 }
 
+//testing queryFeedbackObject
 
 
+app.get('/test', function(request, response){
+    var label = "Entertainment/games"
+    var query = {
+        "type" : "label",
+        "label" : label,
+        "checked" : true,            
+        "sortOrder" : "creationTime"
+    }
+    query["extraQueryParameters"] = "initialize"
+    var itemIdOrder = getFeedItemsAndOrder(query)
+    console.log(itemIdOrder)
+
+    var queryResultObj = getQueryResultObj(query, itemIdOrder)
+    //console.log(queryResultObj)
+	//response.send(JSON.stringify(queryResultObj))
+    response.send(queryResultObj)
+});
 
 //////////////////////////////////////////
 //// start serving

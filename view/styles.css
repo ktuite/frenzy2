@@ -401,3 +401,14 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
   background-color: #FFFFFF;
   background-image: none;
  }
+ 
+ #hyperbarOverlappingCategoryList{
+    height: 100px;
+    overflow-y: auto;
+    width: 400px;
+ }
+ 
+ .overlappingLabelDiv{
+    cursor: pointer;
+    color: blue;
+ }

@@ -58,6 +58,7 @@ var itemsInQueryIveChanged = []
 <script type = "text/javascript" src="completionFeedback.js"></script>
 <script type = "text/javascript" src="updates.js"></script>
 <script type = "text/javascript" src="feed.js"></script>
+<script type = "text/javascript" src="hyperbar.js"></script>
 
 
 
@@ -99,14 +100,9 @@ window.onresize=function(){
 function resizeHierarchy(){
     if(sessionMaking){
         var bottomOfGoalSummary = $("#sessionSummaryContainer").position().top
-        console.log("bottomOfGoalSummary: "+bottomOfGoalSummary)
         var margin = 30;
         var totalHeight = window.innerHeight - margin - bottomOfGoalSummary;
-        
-        console.log("totalHeight: "+totalHeight)
-        //var totalHeight = h-bottomOfGoalSummary
         var sessionHeight = totalHeight/2 - 100
-        console.log("sessionHeight: "+sessionHeight)
         $("#sessionSummary").css("max-height",sessionHeight + "px");
         
         
@@ -374,11 +370,11 @@ function takeDownSpinner(){
                    <div class="span4" >
                         <div id ="hashtagSummaryContainer" class="summaryContainer">
                             <b>Categories:</b> sort by:
-                            <select id="categoriesSort">
-                                      <option value="mostItems">most papers</option>
-                                      <option value="leastItems">least papers</option>
-                                      <option value="az">a-z</option>
-                                      <option value="za">z-a</option>
+                                <select id="categoriesSort">
+                                    <option value="mostItems">most papers</option>
+                                    <option value="leastItems">least papers</option>
+                                    <option value="az">a-z</option>
+                                    <option value="za">z-a</option>
                                 </select>
                             <br>
                             
