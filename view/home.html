@@ -49,12 +49,17 @@ var labelList = []
 var autocompleteLabels = []
 var autocompleteSessions = []
 var lastUpdateTime = 0
-var sessionMaking = false
+var sessionMaking = true
 var sessions = []
 //var hierarchy = []
 //var completionData = {}
 //var userLocations = {}
 var username = false
+
+var itemsInQueryIveChanged = ["cscw663"] 
+//This is introduced to solve the bug that when I search for "Needs work" and I add a category, 
+//this item no longer gets updated, because it's not in the list anymore
+
 </script>
 <script type = "text/javascript" src="utils.js"></script>
 <script type = "text/javascript" src="hierarchy.js"></script>
@@ -186,6 +191,17 @@ function setDefaultQuery(){
         }
         getAllData("synchronous") 
     })
+    
+    if(sessionMaking){
+        var key1 = "mostSessionNeeded"
+        var value1 = "most papers needing sessions"
+        $('#categoriesSort').append($("<option></option>").attr("value",key1).text(value1));
+        
+        var key2 = "leastSessionNeeded"
+        var value2 = "least papers needing sessions"
+        $('#categoriesSort').append($("<option></option>").attr("value",key2).text(value2));        
+    
+    }
 }
 
 function setUpTextSearch(){

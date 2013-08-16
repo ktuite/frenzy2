@@ -84,3 +84,14 @@ var getTime = function(){
 var arrayContains = function(arr, val){
 	return arr.indexOf(val) > -1;
 }
+
+var	arrayIntersection = function(arr1, arr2){
+    var intersection = []
+    for( i in arr1){
+        elti = arr1[i]
+        if( arrayContains(arr2, elti) ){
+            intersection.push(elti)
+        }
+    }
+    return intersection
+}

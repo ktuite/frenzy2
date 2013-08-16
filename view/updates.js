@@ -55,6 +55,8 @@ function handleUpdates(result){
     //or just update some items with yellow backgrounds.
 
     if(type == "synchronous"){
+        itemsInQueryIveChanged = [] //reset this state variable.
+        console.log("wipe itemsInQueryIveChanged")
         displayFeed(itemIdOrder)
         updateSearchFeedback(queryResultObj)
     }
@@ -90,26 +92,6 @@ function makeAutocompleteListFromKeys(lst){
 //////////////////////////////////////////
 // update items in feed
 //////////////////////////////////////////
-/*
-function handleUpdatedItems(updatedItems){  
-	var updatedItemObjs = []    
-    for( var i in updatedItems){  
-		
-        var updatedItemObj = updatedItems[i]
-        var id = updatedItemObj["id"]
-        var lastUpdateTime = updatedItemObj["lastUpdateTime"]
-        
-		//push the item to the top of the stack in the order it is given to you
-		//var newItemDiv = createItemAndReplyDiv(updatedItemObj)
-		//newItemDivs.push(newItemDiv)	
-        updatedItemObjs.push(updatedItemObj)
-		
-        //update the local data structure
-        items[id] = updatedItemObj        
-    }    
-    displayFeed()
-}
-*/
 
 function updateItemsInFeed(){
     //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
@@ -123,13 +105,23 @@ function updateItemsInFeed(){
             markItemAsUpdated(itemId)            
         }
     }
+    for(var i in itemsInQueryIveChanged){  
+        console.log(itemsInQueryIveChanged[i])
+        var itemId = itemsInQueryIveChanged[i]
+        var itemObj = items[itemId]
+        var itemUpdateTime = itemObj["lastUpdateTime"]
+        if(itemUpdateTime > lastUpdateTime){
+            markItemAsUpdated(itemId)            
+        }
+    }
     
     //go through the items on the screen and if any of them aren't updated, 
     //color it.
     var itemsInFeed = $(".item")
     $(".item").each(function(t){
         var itemId = $(this).attr("id")
-        if( !arrayContains(itemIdOrder, itemId)){
+        
+        if( !arrayContains(itemIdOrder, itemId) && !arrayContains(itemsInQueryIveChanged, itemId)){
             var container = $("#containerFor-"+itemId)
             if( ! $("#overlayFor-"+itemId).length){
                 var cover = $("<div class='overlay' id='overlayFor-"+itemId+"' >")
@@ -425,152 +417,6 @@ function createNumResultsDiv(num){
     return numResultsDiv
 }
 
-	
-function createAddLabelUI(queryResultObj){
-
-    var div = $('<div>')
-    
-    var addLabelText = $("<span>")
-    addLabelText.text("add label: ")
-    div.append(addLabelText)
-  
-	var uiwidgetDiv = $('<span class="ui-widget">')
- 
-    
-    var textbox = $('<input type="textbox">')
-	textbox.autocomplete({
-        source: autocompleteLabels
-    });
-	uiwidgetDiv.append(textbox)
-    div.append(uiwidgetDiv)
-    
-     var addLabelText2 = $("<span>")
-    addLabelText2.text("to all selected items ")
-    div.append(addLabelText2)
-	
-    
-    var addButton = $('<button id="addButton">go</button>')
-    addButton.click(function(){
-        var textboxValue = textbox.val()
-        updateNewLabelForQuery(textboxValue,itemIdOrder)
-    })
-    div.append(addButton)
-    return div    
-}
-
-function createAddSessionUI(queryResultObj){
-    var div = $('<div>')
-    
-    var addLabelText = $("<span>")
-    addLabelText.text("add to session: ")
-    div.append(addLabelText)
-    
-    
-    var uiwidgetDiv = $('<span class="ui-widget">')
- 
-    
-    var textbox = $('<input type="textbox">')
-	textbox.autocomplete({
-      source: autocompleteSessions
-    });
-	uiwidgetDiv.append(textbox)
-    
-    div.append(uiwidgetDiv)
-    
-     var addLabelText2 = $("<span>")
-    addLabelText2.text("to all selected items ")
-    div.append(addLabelText2)
-    
-	
-	
-    var addButton = $('<button id="addButton">go</button>')
-    addButton.click(function(){
-        var textboxValue = textbox.val()
-        updateNewSessionForQuery(textboxValue,itemIdOrder)
-    })
-    div.append(addButton)
-    return div    
-}
-
-function getSelectedItemIds(){
-    var selectedItemIds = []
-    $('.itemCheckbox:checked').each(function() {
-        selectedItemIds.push($(this).attr("id"));
-    });
-    return selectedItemIds 
-}
-
-function updateNewLabelForQuery(textboxValue,itemIds){
-    //actually, just get the selected itemIds.
-    var selectedItemIds = getSelectedItemIds()
-    
-    var addNewLabelUpdateForQuery = {
-        type : "addLabelToItemsInQuery",
-        time : getTime(),
-        itemIds : selectedItemIds , 
-        labelText : textboxValue
-    }
-    pushAndPullUpdates(addNewLabelUpdateForQuery, "synchronous")
-}
-
-function updateNewSessionForQuery(textboxValue,itemIds){
-    var selectedItemIds = getSelectedItemIds()
-
-    var addNewSessionUpdateForQuery = {
-        type : "addSessionToItemsInQuery",
-        time : getTime(),
-        itemIds : selectedItemIds , 
-        labelText : textboxValue
-    }
-    pushAndPullUpdates(addNewSessionUpdateForQuery, "synchronous")
-}
-
-/*
-//DEPRICATED
-//this was a way to only update new items rather than repost everything.
-//the problem was that if you pressed refresh, all the items would go away :(
-//Also
-function handleUpdatedItems(updatedItems){       
-    var newItemDivs = []    
-    for( var i in updatedItems){  
-		
-        var updatedItemObj = updatedItems[i]
-        var id = updatedItemObj["id"]
-        var lastUpdateTime = updatedItemObj["lastUpdateTime"]
-        if( id in items){
-            updateExistingItemDiv(updatedItemObj)            
-        }else{
-            //push the item to the top of the stack in the order it is given to you
-            var newItemDiv = createItemAndReplyDiv(updatedItemObj)
-            newItemDivs.push({"div": newItemDiv, "lastUpdateTime": lastUpdateTime})
-        }
-        
-        //update the local data structure
-        items[id] = updatedItemObj        
-    }
-    
-    pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs)
-}
-
-function updateExistingItemDiv(updatedItemObj){
-    var newItemDiv = createItemAndReplyDiv(updatedItemObj)
-    var itemId = updatedItemObj["id"]
-	var itemAndReplyDivInternals = createItemAndReplyDivInternals(updatedItemObj)
-    //itemAndReplyDiv.append(itemAndReplyDivInternals)
-    $("#containerFor"+itemId).html(itemAndReplyDivInternals)
-}
-
-function pushNewItemDivsOnFeedInReverseTimeOrder(newItemDivs){
-    newItemDivs.sort(function(a,b){return a["lastUpdateTime"] - b["lastUpdateTime"]})
-    for( var i in newItemDivs){
-        var newItemDiv = newItemDivs[i]["div"]        
-        $("#feed").prepend(newItemDiv)
-    }
-}
-*/
-
-
-
 
 //////////////////////////////////////////
 // hierarchy
@@ -644,6 +490,7 @@ function sortSessions(sessionsArray, sortType){
          return 0 //default return value (no sorting)
         });
     }
+
 }
 
 function createSessionDiv(label, counts){
@@ -701,6 +548,22 @@ function displayCategoriesSorted(sortType){
     $("#labelHierarchy").append(labelHierarchyDiv)
 }
 
+function getItemsInSessions(){
+    var itemsInSessions = []
+    var itemsNotInSessions = []
+    
+    for(var itemId in items){
+        var itemObj = items[itemId]
+        var session = itemObj["session"]
+        if(session == "none"){
+            itemsNotInSessions.push(itemId)
+        }else{
+            itemsInSessions.push(itemId)
+        }
+    }
+    return {"itemsInSessions":itemsInSessions, "itemsNotInSessions":itemsNotInSessions}
+}
+
 function sortLabels(labelsArray, sortType){
     if(sortType == "mostItems"){
         labelsArray.sort(function(a,b){
@@ -731,6 +594,26 @@ function sortLabels(labelsArray, sortType){
           return 1
          return 0 //default return value (no sorting)
         });
+    }
+    if(sortType == "leastSessionNeeded"){
+        var sessionMembership = getItemsInSessions()
+        var itemsInSessions = sessionMembership["itemsInSessions"]
+        var itemsNotInSessions = sessionMembership["itemsNotInSessions"]
+    
+        labelsArray.sort(function(a,b){
+            var aMembers = a["members"]
+            var bMembers = b["members"]
+            
+            var aItemsWithoutSessions = arrayIntersection(aMembers, itemsNotInSessions)
+            var bItemsWithoutSessions = arrayIntersection(bMembers, itemsNotInSessions)
+        
+            return aItemsWithoutSessions.length - bItemsWithoutSessions.length
+        })
+    }
+    if(sortType == "mostSessionNeeded"){
+        sessionsArray.sort(function(a,b){
+            return a["numMembers"] - b["numMembers"]
+        })
     }
 }
 
@@ -788,6 +671,8 @@ function updateNewLabel(textboxValue, itemId){
         }
     }    
     $("#addCategoryTextbox-"+itemId).val("")
+    
+    itemsInQueryIveChanged.push(itemId)
     
     var addNewLabelUpdate = {
         type : "addLabelToItem",

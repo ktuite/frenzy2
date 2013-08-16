@@ -414,7 +414,7 @@ function updateSession(itemId, sessionLabel){
         }
     }  
 
-
+    itemsInQueryIveChanged.push(itemId)
 	var myUpdate = {"type": "session", 
 				"time" : getTime(), 
 				"itemId" : itemId, 
@@ -437,6 +437,9 @@ update = {
 }
 */
 function toggleLabelUpdate(labelText, itemId, checked){
+
+    itemsInQueryIveChanged.push(itemId)
+    
 	var myUpdate = {"type": "toggleLabelFromItem", 
 				"time" : getTime(), 
 				"itemId" : itemId, 
@@ -452,6 +455,7 @@ function toggleLabelUpdate(labelText, itemId, checked){
 ////////////////////////////////
 // Replies
 ////////////////////////////////
+
 var repliesDiv = $("<div>")
 
 function findAllRepliesToReplyId(parentId, allReplies){
