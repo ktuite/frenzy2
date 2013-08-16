@@ -175,7 +175,26 @@ $(document).ready(function(){
 	setDefaultQuery()
     setUpTextSearch()
    
-
+    $("#expandAll").click(function(){
+        $(".item").each(function(t){
+            var itemId = $(this).attr("id")
+            
+            $("#short-abstract-"+itemId).hide()
+            $("#full-abstract-"+itemId).show()
+            
+        })
+    })
+    $("#collapseAll").click(function(){
+        $(".item").each(function(t){
+            var itemId = $(this).attr("id")
+            
+            $("#short-abstract-"+itemId).show()
+            $("#full-abstract-"+itemId).hide()
+            
+        })    
+    })
+   
+   
 	getAllData("synchronous")
     //resizeHierarchy()
     setInterval(function(){ getAllData("asynchronous") },5000);
@@ -325,6 +344,9 @@ function takeDownSpinner(){
                 <input type="button" class="btn" id="showAllCategories" value="Show all"></input>
                     <input class="span2" type="text" placeholder="search" id="search">
                     <input type="button" class="btn" id="sortSubmit" value= "Search" />
+                    
+                    <input type="button" class="btn" id="expandAll" value= "Expand all" />
+                    <input type="button" class="btn" id="collapseAll" value= "Collapse all" />
                 <!--
                 <input type="text" id="username" placeholder="username" >
                 <input type="button" class="btn" id="signInOut" value= "Sign In" />
