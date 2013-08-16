@@ -17,7 +17,9 @@ getFeedItemsAndOrder = function(query){
 	if(queryType == "label"){
 		var label = query["label"]
 		var checked = query["label"]
-        itemIds = allData["labelList"][label]["itemsUsedBy"]
+		var labelObj = allData["labelList"][label]
+		// label might have been renamed or deleted, so return empty list if so
+		var itemIds = labelObj ? labelObj["itemsUsedBy"] : []
 	}
 
 	if(queryType == "session"){

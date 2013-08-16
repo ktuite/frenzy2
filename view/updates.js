@@ -610,23 +610,47 @@ function createCategoryLabelDiv(labelObj){
     var label = labelObj["label"]
     var counts = labelObj["itemsUsedBy"].length
     var creator = labelObj["creator"]
-    var div = $("<div class='sessionClickable'>")
-    div.text(label + " ("+counts+") ")
+    var div = $("<div>")
+
+    var labelSpan = $("<span class='sessionClickable'>")
+    labelSpan.text(label + " ("+counts+") ")
     if(creator == "system"){
-        div.addClass("systemLabel")
+        labelSpan.addClass("systemLabel")
     }else{
-        div.addClass("nonSystemLabel")
+        labelSpan.addClass("nonSystemLabel")
     }
-	
-	div.click(function(){
-		query = {
-			"type" : "label",
-			"label" : label,
-			"checked" : true,            
+    div.append(labelSpan)
+
+    labelSpan.click(function(){
+        query = {
+            "type" : "label",
+            "label" : label,
+            "checked" : true,            
             "sortOrder" : "creationTime"
-		}
-		getAllData("synchronous")
-	})
+        }
+        getAllData("synchronous")
+    })
+
+    var renameButton = $('<img class="clickable-pencil-icon" src="pencil.png"></span>')
+    div.append(renameButton)	
+
+    renameButton.click(function() {
+        var newLabel = window.prompt("Rename this category:", label)
+        if (!newLabel   // null return value means user cancelled
+            || !(newLabel.trim()) // blank category names are a bad idea
+            || label == newLabel) {
+            return;  // change nothing
+        }
+
+        console.log("renaming " + label + " to " + newLabel)
+
+        var myUpdate = {"type": "renameLabel", 
+                    "time" : getTime(), 
+                    "labelText" : label, 
+                    "newLabelText": newLabel
+        }
+        pushAndPullUpdates(myUpdate, "asynchronous")
+    })
 	
     return div
 }

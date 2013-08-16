@@ -416,3 +416,15 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 .categoriesDiv td {
   vertical-align: top;
 }
+
+
+.clickable-pencil-icon {
+  padding: 0px;
+  width: 10px;
+  height: 10px;
+/*  display: inline-block;*/
+}
+
+.clickable-pencil-icon:hover {
+  cursor: pointer;
+}
