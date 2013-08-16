@@ -369,6 +369,10 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     overflow-y: auto;
 }
 
+#sessionSummary{
+    overflow-y: auto;
+}
+
 .ui-autocomplete {
     max-height: 200px;
     overflow-y: auto;

@@ -57,7 +57,7 @@ var sessions = []
 //var userLocations = {}
 var username = false
 
-var itemsInQueryIveChanged = ["cscw663"] 
+var itemsInQueryIveChanged = [] 
 //This is introduced to solve the bug that when I search for "Needs work" and I add a category, 
 //this item no longer gets updated, because it's not in the list anymore
 
@@ -132,12 +132,30 @@ window.onresize=function(){
 };
 
 function resizeHierarchy(){
-    var topLeft = $("#labelHierarchy").position().top +40;
-    var margin = 30;
-    var h = window.innerHeight - topLeft - margin;
-
+    if(sessionMaking){
+        var bottomOfGoalSummary = $("#sessionSummaryContainer").position().top
+        console.log("bottomOfGoalSummary: "+bottomOfGoalSummary)
+        var margin = 30;
+        var totalHeight = window.innerHeight - margin - bottomOfGoalSummary;
+        
+        console.log("totalHeight: "+totalHeight)
+        //var totalHeight = h-bottomOfGoalSummary
+        var sessionHeight = totalHeight/2 - 100
+        console.log("sessionHeight: "+sessionHeight)
+        $("#sessionSummary").css("max-height",sessionHeight + "px");
+        
+        
+        var topLeft = $("#labelHierarchy").position().top +40;
+        var margin = 30;
+        var h = window.innerHeight - topLeft - margin;
+        $("#labelHierarchy").css("max-height",h + "px");
     
-    $("#labelHierarchy").css("max-height",h + "px");
+    }else{
+        var topLeft = $("#labelHierarchy").position().top +40;
+        var margin = 30;
+        var h = window.innerHeight - topLeft - margin;
+        $("#labelHierarchy").css("max-height",h + "px");
+    }
 }
 
 $(document).ready(function(){
@@ -159,7 +177,7 @@ $(document).ready(function(){
    
 
 	getAllData("synchronous")
-    resizeHierarchy()
+    //resizeHierarchy()
     setInterval(function(){ getAllData("asynchronous") },5000);
 })
 
@@ -260,7 +278,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
     }
     //console.log("type: "+type)
     var message = {"update": myUpdate, "query": query, "type": type}   
-    ajax("update", message, function(result){ takeDownSpinner() ; handleUpdates(JSON.parse(result))})
+    ajax("update", message, function(result){ takeDownSpinner() ; handleUpdates(JSON.parse(result)) ; resizeHierarchy() })
 }
 
 function putUpSpinner(){
@@ -290,20 +308,21 @@ function takeDownSpinner(){
             <ul class="nav">
                 <li class="active">
                     <p class="navbar-text" id="username"></p> 
-                    <!--
-                    <div class="homeImage"><a href="#" onclick="goToHome()"><h2 id="counter"></h2><img class="homeButton" id='homeButton' src="http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png"></a></div>
-                    -->
+                    
+                    
                 </li>
             </ul>
             
-            <form class="navbar-form pull-right" id="navBarForm">
-                
+            <form class="navbar-form pull-left" id="navBarForm">
+                <input type="button" class="btn" id="showAllCategories" value="Show all"></input>
+                    <input class="span2" type="text" placeholder="search" id="search">
+                    <input type="button" class="btn" id="sortSubmit" value= "Search" />
                 <!--
                 <input type="text" id="username" placeholder="username" >
                 <input type="button" class="btn" id="signInOut" value= "Sign In" />
                 <input class="span2" type="text" placeholder="search" id="search">
                 -->
-                <input class="span2" type="text" placeholder="search" id="search">
+                
                 <!--
                 <select class="span2" id="sortBy">
                     <option value="default">(default)</option>
@@ -314,7 +333,7 @@ function takeDownSpinner(){
                     <option value="original">(original order)</option>
                 </select>
                 -->
-              <input type="button" class="btn" id="sortSubmit" value= "Search" />
+
             </form>
           </div>
           
@@ -381,7 +400,7 @@ function takeDownSpinner(){
                                       <option value="za">z-a</option>
                                 </select>
                             <br>
-                            <input type="button" id="showAllCategories" value="Show all"></input>
+                            
                             <div class="column" id="labelHierarchy">
                             
                             </div>
