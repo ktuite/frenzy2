@@ -494,7 +494,7 @@ function sortSessions(sessionsArray, sortType){
 }
 
 function createSessionDiv(label, counts){
-    var div = $("<div class='sessionClickable'>")
+    var div = $("<div class='sessionLabel'>")
     div.text(label + " ("+counts+") ")
 	
 	div.click(function(){

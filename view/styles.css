@@ -353,8 +353,12 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     color: blue;
 }
 .nonSystemLabel{
-    color: red;
+    color: blue;
 }
+
+.sessionLabel{
+    color: red;
+}   
 
 #hashtagSummaryContainer{
     padding:5px;
@@ -367,6 +371,10 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 }
 #labelHierarchy{
     overflow-y: auto;
+}
+
+#searchFeedbackDiv{
+    margin-top: 0px;
 }
 
 #sessionSummary{

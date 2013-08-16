@@ -210,7 +210,7 @@ function createWithoutSession(div, itemId, initialText){
 }
 function createWithSession(div, itemId, session){
 
-    var sessionText = "In Session: " + session
+    var sessionText = "In Session: <span class='sessionLabel'>" + session+ "</span> "
     $(div).html(sessionText)
     /*var sessionNameTextbox = $('<input type="textbox" id="sessionTextbox" >')
     var textboxText = session

@@ -278,7 +278,15 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
     }
     //console.log("type: "+type)
     var message = {"update": myUpdate, "query": query, "type": type}   
-    ajax("update", message, function(result){ takeDownSpinner() ; handleUpdates(JSON.parse(result)) ; resizeHierarchy() })
+    ajax("update", message, function(result){ 
+        takeDownSpinner()  
+        handleUpdates(JSON.parse(result))  
+        resizeHierarchy() 
+        
+        if(type == "synchronous"){
+            window.scrollTo(0, 0);
+        }
+    })
 }
 
 function putUpSpinner(){
