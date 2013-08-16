@@ -229,7 +229,7 @@ function createLabelsDiv(itemObj){
     var categoryTitle = "In Categories"
     div.append(categoryTitle)    
     
-    var categoryCheckboxesDiv = $('<table id="inCategoriesDiv-'+itemId+'">')    
+    var categoryCheckboxesDiv = $('<table class="categoriesDiv" id="inCategoriesDiv-'+itemId+'">')    
     appendCategories(categoryCheckboxesDiv, itemId, labelObjDict)
     div.append(categoryCheckboxesDiv)
 
@@ -300,7 +300,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
 	
 	//make label checkbox
 	var checkbox = $('<input type="checkbox" checked=true>')
-    row.append('<td>').append(checkbox)
+    row.append($('<td>').append(checkbox))
     if(labelChecked==true){
         $(checkbox).attr('checked');
     }
@@ -331,7 +331,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
     
 
     labelSpan.html(labelText+" ("+numItems+")")
-    row.append("<td>").append(labelSpan)
+    row.append($('<td class="categoriesDivCategoryLabel">').append(labelSpan))
 
     // add like button
     var likeButton = $('<button type="button" class="btn btn-primary likeButton" data-toggle="button"></button>')
@@ -339,7 +339,11 @@ function makeInteractiveLabelUI(labelObj, itemId){
     var tooltipPrefix = "";
     if(labelLikedByMe){
         likeButton.addClass('active')
-        tooltipPrefix = "You and other people think";
+        if (labelLikeCount == 1) {
+            tooltipPrefix = "You think"
+        } else {
+            tooltipPrefix = "You and other people think"
+        }
     }
     else if (labelLikeCount == 0) {
         likeButton.addClass("zero")
@@ -347,7 +351,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
     } else {
         tooltipPrefix = "Other people think"
     }
-    likeButton.attr("title", tooltipPrefix + " " + labelText + " would be a good session for this paper")
+    likeButton.attr("title", tooltipPrefix + ' "' + labelText + '" would be a good session for this paper')
 
     // label the button with +N if N people have liked it, or just +1 if nobody has liked it yet
     // (that's how Google+ does it, so why not)
@@ -359,7 +363,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
         toggleLabelLiked(labelText, itemId, nowLiked)
     })
 
-    row.append("<td>").append(likeButton)
+    row.append($("<td>").append(likeButton))
 
     return row
 }

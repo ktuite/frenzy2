@@ -392,12 +392,27 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     opacity: .5
  }
 
- .likeButton:hover, .likeButton:focus, .likeButton:active, .likeButton.active, .likeButton.disabled, .likeButton[disabled] {
+.likeButton:active, .likeButton.active, .likeButton:hover, .likeButton:focus {
   color: #FFFFFF;
-  background-color: #CC3900;
- }
-.likeButton.zero {
+  background-color: #058600; 
+}
+.likeButton.zero, .likeButton.disabled, .likeButton[disabled] {
   color: #000000;
   background-color: #FFFFFF;
   background-image: none;
- }
+}
+.likeButton {
+  color: #000000;
+  background-color: #AEDDAC;
+  background-image: none;
+}
+
+.categoriesDiv {
+  width: 100%;
+}
+.categoriesDivCategoryLabel {
+  width: 100%;  
+}
+.categoriesDiv td {
+  vertical-align: top;
+}
