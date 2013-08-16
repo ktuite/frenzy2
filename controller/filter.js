@@ -17,19 +17,6 @@ getFeedItemsAndOrder = function(query){
 	if(queryType == "label"){
 		var label = query["label"]
 		var checked = query["label"]
-        /*
-		var labelInHierarchy = utils.filterArray(allData["hierarchy"], function(x){
-			return x["label"]["label"] == label
-		})
-		if(labelInHierarchy.length > 0){
-			var labelObj = labelInHierarchy[0]["label"]
-			itemIds = labelObj["memberItemIds"]			
-		
-		}else{
-			console.log("error getFeedItemsAndOrder - 1")
-		
-		}
-        */
         itemIds = allData["labelList"][label]["itemsUsedBy"]
 	}
 
@@ -37,18 +24,11 @@ getFeedItemsAndOrder = function(query){
 		var label = query["label"]
 		if (label in allData["sessions"]) {
             itemIds = allData["sessions"][label]["members"]
-            //console.log("sessions")
-            //console.log(itemIds)
         }
 	}
     if(queryType == "text"){
         var text = query["text"]
         var itemIds = getAllItemIdsWithTextT(text)
-        /*
-		if (label in allData["sessions"]) {
-            itemIds = allData["sessions"][label]
-        }
-        */
 	}
 	if(queryType == "completed"){
 		itemIds = allData["completion"]["completedItemIds"]
@@ -56,15 +36,7 @@ getFeedItemsAndOrder = function(query){
 	if(queryType == "incompleted"){
 		itemIds = allData["completion"]["incompletedItemIds"]
 	}
-	//////////////////////////////
-	// FILTER DOWN TO ACCEPTED PAPERS
-	//////////////////////////////	
-    //console.log(itemIds)
-    /*
-    itemIds = utils.filterArray(itemIds, function(x){
-        return utils.arrayContains(allData["acceptedPapers"], x)
-    })
-    */
+
 	//////////////////////////////
 	// SORT 
 	//////////////////////////////

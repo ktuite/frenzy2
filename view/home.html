@@ -8,38 +8,29 @@
     <meta name="author" content="">
 
     <!-- Le styles -->   
-    <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!--<link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+    <link href="bootstrap.css" rel="stylesheet">
+    
     <style type="text/css">
       body {
         padding-top: 40px;
         padding-bottom: 40px;
       }
     </style>
-    <link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <!--<link href="http://abstract.cs.washington.edu/~hmslydia/utils/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">-->
+    <link href="bootstrap-responsive.css" rel="stylesheet">
+    
+	<!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" >-->
+    <link rel="stylesheet" href="jquery-ui.css" >
+    
+    <!--<script type = "text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+    <script type = "text/javascript" src="jquery-1.10.2.min.js"></script> 
+    
+    <!--<script type = "text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>--> 
+    <script type = "text/javascript" src="jquery-ui.min.js"></script>   
+    
+    <script type = "text/javascript" src="bootstrap.min.js"></script>
 
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" >
-<script type = "text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>  
-<!-- Le styles 
-<script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/jquery.js"></script>
--->  
-<script type = "text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script type = "text/javascript" src="http://abstract.cs.washington.edu/~hmslydia/coda/helpers/utils.js"></script>
-<script type = "text/javascript" src="bootstrap.min.js"></script>
-<!--
-
-<script type = "text/javascript" src="textSearch.js"></script>
-<script type = "text/javascript" src="twitterFeed.js"></script>
-<script type = "text/javascript" src="hashtagSummary.js"></script>
-<script type = "text/javascript" src="editTweets.js"></script>
-<script type = "text/javascript" src="goals.js"></script>
--->
-
-<!--
-<script type = "text/javascript" src="chat.js"></script>
-<script type = "text/javascript" src="signInOut.js"></script>
-
-<script type = "text/javascript" src="filter.js"></script>
--->
 <script type="text/javascript">
 //var twitterFeed = []
 var items = {}
@@ -73,15 +64,6 @@ var itemsInQueryIveChanged = []
 <link href="/styles.css" rel="stylesheet">
 
 <script type="text/javascript">
-/*
-//var twitterFeed = []
-var items = {}
-var itemIdOrder = []
-var query = {}
-//var hierarchy = []
-//var completionData = {}
-//var userLocations = {}
-*/
 var username = false
 
 function ajax(command, message, callbackFunction) {    
@@ -89,24 +71,7 @@ function ajax(command, message, callbackFunction) {
 }
 
 function getUsername(){
-/*
-	var browser = "Chrome"
-	var userAgent = $.browser
-	if(userAgent.mozilla){
-		browser = "Firefox"
-	}
-	return browser
-	*/
 	return getTime()
-}
-
-
-function goToHome(){
-	/*
-	twitterFeedSetup();
-	$("#homeButton").attr('src','http://homes.cs.washington.edu/~felicia0/images/twitify/homebutton.png');
-	$("#counter").text("");
-	*/
 }
 
 function checkLogin(){
@@ -159,26 +124,21 @@ function resizeHierarchy(){
 }
 
 $(document).ready(function(){
-
-/*
-    goalSetup()
-    twitterFeedSetup()
-	textSearchSetup()
-    signInOutSetup()
-    chatSetup()   
-*/
-    //pushAndPullUpdates({"type":"foo"}, 12334)    
-    //checkLogin()
-    
+    //checkLogin()    
     goalSetup()
 	testSignIn()
 	setDefaultQuery()
     setUpTextSearch()
+    setUpAbstractHideShow()
    
+	getAllData("synchronous")
+    setInterval(function(){ getAllData("asynchronous") },5000);
+})
+
+function setUpAbstractHideShow(){
     $("#expandAll").click(function(){
         $(".item").each(function(t){
-            var itemId = $(this).attr("id")
-            
+            var itemId = $(this).attr("id")            
             $("#short-abstract-"+itemId).hide()
             $("#full-abstract-"+itemId).show()
             
@@ -186,19 +146,13 @@ $(document).ready(function(){
     })
     $("#collapseAll").click(function(){
         $(".item").each(function(t){
-            var itemId = $(this).attr("id")
-            
+            var itemId = $(this).attr("id")            
             $("#short-abstract-"+itemId).show()
             $("#full-abstract-"+itemId).hide()
             
         })    
     })
-   
-   
-	getAllData("synchronous")
-    //resizeHierarchy()
-    setInterval(function(){ getAllData("asynchronous") },5000);
-})
+}
 
 function testSignIn(){
 	ajax("signIn", {"user": getUsername()}, function(result){ 
@@ -244,7 +198,6 @@ function setDefaultQuery(){
 }
 
 function setUpTextSearch(){
-
     $("#sortSubmit").click(function(){
         var searchText = $("#search").val().trim()
         if(searchText != ""){
@@ -257,10 +210,8 @@ function setUpTextSearch(){
             $("#search").val("")
         }
     })    
-    
-    
-    $("#search").keypress(function(event){
-              
+        
+    $("#search").keypress(function(event){              
         if( event.which == 13 ) {
             event.preventDefault();
             var searchText = $("#search").val()
@@ -271,8 +222,7 @@ function setUpTextSearch(){
             }
             getAllData("synchronous") 
             $("#search").val("")
-        } 
-              
+        }               
     })
 }
 
@@ -295,11 +245,12 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
         lastUpdateTime = getTime()
         putUpSpinner()
     }
-    //console.log("type: "+type)
+    
     var message = {"update": myUpdate, "query": query, "type": type}   
     ajax("update", message, function(result){ 
         takeDownSpinner()  
         handleUpdates(JSON.parse(result))  
+        //resizing the hierarchy only really needs to be done here the first time the page loads 
         resizeHierarchy() 
         
         if(type == "synchronous"){

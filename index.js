@@ -76,8 +76,32 @@ app.get('/utils.js', function(request, response){
 });
 
 app.get('/bootstrap.min.js', function(request, response){
-    response.sendfile('view/bootstrap.min.js')
+    response.sendfile('view/refs/bootstrap.min.js')
 });
+
+////
+
+app.get('/jquery-1.10.2.min.js', function(request, response){
+    response.sendfile('view/refs/jquery/jquery-1.10.2.min.js')
+});
+
+app.get('/jquery-ui.min.js', function(request, response){
+    response.sendfile('view/refs/jquery/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js')
+});
+
+app.get('/jquery-ui.css', function(request, response){
+    response.sendfile('view/refs/jquery/jquery-ui-1.10.3/themes/smoothness/jquery-ui.css')
+});
+
+app.get('/bootstrap.css', function(request, response){
+    response.sendfile('view/refs/bootstrap/css/bootstrap.min.css')
+});
+
+app.get('/bootstrap-responsive.css', function(request, response){
+    response.sendfile('view/refs/bootstrap/css/bootstrap-responsive.min.css')
+});
+
+////
 
 app.get('/updates.js', function(request, response){
 	response.sendfile('view/updates.js')

@@ -210,14 +210,9 @@ function createWithoutSession(div, itemId, initialText){
 }
 function createWithSession(div, itemId, session){
 
-    var sessionText = "In Session: <span class='sessionLabel'>" + session+ "</span> "
+    var sessionText = "In Session: <span class='sessionLabel'>" + session+ "</span>"
     $(div).html(sessionText)
-    /*var sessionNameTextbox = $('<input type="textbox" id="sessionTextbox" >')
-    var textboxText = session
-    $('#sessionTextbox').val(textboxText)
-    console.log(textboxText)
-    div.append(sessionNameTextbox)
-    */
+
     var changeButton = $('<button id="changeButton">edit</button>')
     changeButton.click(function(){
         createWithoutSession(div, itemId, session)
@@ -238,23 +233,6 @@ function createLabelsDiv(itemObj){
     appendCategories(categoryCheckboxesDiv, itemId, labelObjDict)
     div.append(categoryCheckboxesDiv)
 
-	/*
-	var noSessionDiv = $("<div>")
-	var checked = ""
-	if(session=="none"){
-		checked = 'checked="checked"'
-	}
-	//var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="none" '+checked+'>')
-	//var sessionNoneSpan = $("<span>")
-	//sessionNoneSpan.html("(none)")
-	//noSessionDiv.append(sessionRadioButton)	
-	//noSessionDiv.append(sessionNoneSpan)
-    
-	
-	//div.append(noSessionDiv)
-	*/
-
-
     var addLabelUI = addLabel(itemId)
     div.append(addLabelUI)
         
@@ -269,10 +247,7 @@ function clearCategories(div) {
 function appendCategories(div, itemId, labelObjDict){
     for(var i in labelObjDict){
         var labelObj = labelObjDict[i]
-		
-		//var label = labelObj["label"]
-		var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)
-        
+		var interactiveLabelUI = makeInteractiveLabelUI(labelObj, itemId)        
 		div.append(interactiveLabelUI)
     }
 }
@@ -321,23 +296,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
     var creator = labelListObj["creator"]
     var numItems = labelListObj["itemsUsedBy"].length
 	
-    var row = $('<tr>')
-    
-	//make radio button
-    /*
-	var checked = ""	
-	if(isSession){
-		checked = 'checked="checked"'
-	}	
-	//var sessionRadioButton = $('<input type="radio" name="'+itemId+'-session" value="'+labelText+'" '+checked+'>')
-	sessionRadioButton.click(function(e){
-		var sessionLabel = e.target.value
-		var name = e.target.name
-		var itemId = name.substring(0, name.indexOf("-"))
-		updateSession(itemId, sessionLabel)
-	})
-    */
-	//div.append(sessionRadioButton)
+    var row = $('<tr>')    
 	
 	//make label checkbox
 	var checkbox = $('<input type="checkbox" checked=true>')
@@ -370,9 +329,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
         labelSpan.addClass("nonSystemLabel")
     }
     
-    
-    //var counts = labelList[labelText]["itemsUsedBy"].length
-    //labelSpan.html(labelText+" ("+counts+")<br>")
+
     labelSpan.html(labelText+" ("+numItems+")")
     row.append("<td>").append(labelSpan)
 
@@ -401,7 +358,6 @@ function makeInteractiveLabelUI(labelObj, itemId){
         var nowLiked = !t.is(".active") 
         toggleLabelLiked(labelText, itemId, nowLiked)
     })
-
 
     row.append("<td>").append(likeButton)
 

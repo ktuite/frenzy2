@@ -56,14 +56,11 @@ function handleUpdates(result){
 
     if(type == "synchronous"){
         itemsInQueryIveChanged = [] //reset this state variable.
-        console.log("wipe itemsInQueryIveChanged")
         displayFeed(itemIdOrder)
         updateSearchFeedback(queryResultObj)
     }
     if(type == "asynchronous"){
-        //displayFeed(itemIdOrder)
         updateItemsInFeed()        
-        //updateSearchFeedback(queryResultObj)
     }
 	
 }
@@ -280,14 +277,6 @@ function updateSearchFeedback(queryResultObj){
                 console.log("sort order: "+sortOrder)
                
                 query["sortOrder"] = sortOrder
-                /*
-                query = {
-                    "type" : "label",
-                    "label" : label,
-                    "checked" : true,            
-                    "sortOrder" : "creationTime"
-                }
-                */
                 getAllData("synchronous")
             })
         }
