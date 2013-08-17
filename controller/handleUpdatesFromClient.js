@@ -502,11 +502,15 @@ handleRenameSession = function(renameSession){
 
 		itemReference["session"] = newName
 	}
+
+	// now store the old/new name pair in the cache
+	renamedSessionCache[oldName] = newName;
 }
 
 /////////////////////////////////////
 // RENAME LABEL
 /////////////////////////////////////
+
 /*
 update = {
 	type : "renameLabel",
@@ -563,5 +567,8 @@ handleRenameLabel = function(renameLabel){
 		delete itemLabelList[oldName]
 		itemLabelList[newName] = itemLabelObj
 	}
+
+	// now store the old/new name pair in the cache
+	renamedLabelCache[oldName] = newName;
 }
 

@@ -21,15 +21,13 @@ getFeedItemsAndOrder = function(query){
 		var checked = query["checked"]
         
         var label0 =labelsToFilter[0]      
-		var labelObj = allData["labelList"][label0]
-		// label might have been renamed or deleted, so return empty list if so
-		var itemIds = labelObj ? labelObj["itemsUsedBy"] : []
+		var itemIds = getAllItemIdsWithLabel(label0)
         
         for(var i = 1; i<labelsToFilter.length; i++){
             
             var thisLabel = labelsToFilter[i]
             var thisLabelObj = allData["labelList"][thisLabel]
-            var itemIdsForThisLabel = thisLabelObj ? thisLabelObj["itemsUsedBy"] : []
+            var itemIdsForThisLabel = getAllItemIdsWithLabel(thisLabel)
             itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
             
         }
@@ -155,6 +153,15 @@ getAllItemIdsWithTextT = function(text){
 		return x["id"]
 	})
     return itemIdsContainingText
+}
+
+getAllItemIdsWithLabel = function(label){
+    var labelObj = lookupDespiteRenaming(allData["labelList"], label, renamedLabelCache)
+    if (!labelObj) {
+        return []
+    } else {
+        return labelObj["itemsUsedBy"]
+    }
 }
 
 function escapeRegExp(str) {
