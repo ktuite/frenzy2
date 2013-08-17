@@ -524,7 +524,7 @@ function createCategoryLabelDiv(labelObj){
                     "labelText" : label, 
                     "newLabelText": newLabel
         }
-        pushAndPullUpdates(myUpdate, "asynchronous")
+        pushAndPullUpdates(myUpdate, "synchronous")
     })
 	
     return div

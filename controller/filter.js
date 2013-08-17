@@ -19,23 +19,19 @@ getFeedItemsAndOrder = function(query){
         var labelsToFilter = query["labels"]        
 		var checked = query["checked"]
         
-        var label0 =labelsToFilter[0]
-        
-        itemIds = allData["labelList"][label0]["itemsUsedBy"]
+        var label0 =labelsToFilter[0]      
+		var labelObj = allData["labelList"][label0]
+		// label might have been renamed or deleted, so return empty list if so
+		var itemIds = labelObj ? labelObj["itemsUsedBy"] : []
         
         for(var i = 1; i<labelsToFilter.length; i++){
             
             var thisLabel = labelsToFilter[i]
-            var itemIdsForThisLabel = allData["labelList"][thisLabel]["itemsUsedBy"]
+            var thisLabelObj = allData["labelList"][thisLabel]
+            var itemIdsForThisLabel = thisLabelObj ? thisLabelObj["itemsUsedBy"] : []
             itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
             
         }
-
-		var checked = query["label"]
-		var labelObj = allData["labelList"][label]
-		// label might have been renamed or deleted, so return empty list if so
-		var itemIds = labelObj ? labelObj["itemsUsedBy"] : []
-
 	}
 
 	if(queryType == "session"){
