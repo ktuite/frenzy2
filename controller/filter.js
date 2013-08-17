@@ -34,7 +34,12 @@ getFeedItemsAndOrder = function(query){
             itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
             
         }
-        
+
+		var checked = query["label"]
+		var labelObj = allData["labelList"][label]
+		// label might have been renamed or deleted, so return empty list if so
+		var itemIds = labelObj ? labelObj["itemsUsedBy"] : []
+
 	}
 
 	if(queryType == "session"){

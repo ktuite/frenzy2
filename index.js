@@ -76,7 +76,7 @@ app.get('/utils.js', function(request, response){
 });
 
 app.get('/bootstrap.min.js', function(request, response){
-    response.sendfile('view/refs/bootstrap.min.js')
+    response.sendfile('view/refs/bootstrap/js/bootstrap.min.js')
 });
 
 ////
@@ -103,6 +103,10 @@ app.get('/bootstrap-responsive.css', function(request, response){
 
 app.get('/spring.jpg', function(request, response){
     response.sendfile('view/spring.jpg')
+});
+
+app.get('/pencil.png', function(request, response){
+    response.sendfile('view/pencil.png')
 });
 
 ////
@@ -450,6 +454,8 @@ handleClientUpdateData = function(update){
             handleSessionUpdate(update)
         }else if(updateType == "toggleLabelLiked"){
             handleToggleLabelLiked(update)
+        }else if(updateType == "renameLabel"){
+            handleRenameLabel(update)
         }
 
     }

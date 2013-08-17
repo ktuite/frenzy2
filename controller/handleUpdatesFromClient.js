@@ -445,3 +445,65 @@ handleToggleLabelLiked = function(toggleLabelLiked){
     //console.log("usersLiking is now")
     //console.log(usersLiking)
 }
+
+
+/////////////////////////////////////
+// RENAME LABEL
+/////////////////////////////////////
+/*
+update = {
+	type : "renameLabel",
+	user : "hmslydia",
+	time : 1234567891,
+	labelText : "animal",
+	newLabelText : "vegetable",
+}
+*/
+handleRenameLabel = function(renameLabel){
+	var user = renameLabel["user"]
+	var time = renameLabel["time"]
+	var labelText = renameLabel["labelText"]	
+	var newLabelText = renameLabel["newLabelText"]	
+
+    if (!newLabelText   // null return value means user cancelled
+        || !(newLabelText.trim()) // blank category names are a bad idea
+        || newLabelText in allData["labelList"] // new label is already in use
+        ) {
+    	console.log("error - illegal label rename from " + labelText + " to " + newLabelText)
+        return;  // change nothing
+    }
+
+	console.log("renaming " + labelText + " to " + newLabelText)
+
+	// first rename the label in labelList
+	var labelList = allData["labelList"]
+	var labelObj = labelList[labelText]
+	if (!labelObj) {
+		console.log("error - can't find " + labelText + " to rename it, maybe somebody already renamed it")
+		return
+	}
+
+	labelObj["label"] = newLabelText
+	delete labelList[labelText]
+	labelList[newLabelText] = labelObj
+
+	// now rename the label on every item where it occurs
+	var items = allData["items"]
+	var itemsWithThisLabel = labelObj["itemsUsedBy"]
+	for (var i = 0; i < itemsWithThisLabel.length; ++i) {
+		var itemId = itemsWithThisLabel[i]
+		var itemReference = items[itemId]
+		itemReference["lastUpdateTime"] = time
+
+		var itemLabelList = itemReference["labels"]
+		var itemLabelObj = itemLabelList[labelText]
+		if (!itemLabelObj) {
+			console.log("error - can't find " + labelText + " on " + itemId + "to rename it")
+			continue
+		}
+
+		itemLabelObj["label"] = newLabelText
+		delete itemLabelList[labelText]
+		itemLabelList[newLabelText] = itemLabelObj
+	}
+}
