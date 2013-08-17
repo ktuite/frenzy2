@@ -312,11 +312,6 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     color: blue;
 }
 
-.sessionClickable{
-    cursor: pointer;
-    color: blue;
-}
-
 
 .overlay{
     width: 100%;

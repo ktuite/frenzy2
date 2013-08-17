@@ -454,6 +454,8 @@ handleClientUpdateData = function(update){
             handleSessionUpdate(update)
         }else if(updateType == "toggleLabelLiked"){
             handleToggleLabelLiked(update)
+        }else if(updateType == "renameSession"){
+            handleRenameSession(update)
         }else if(updateType == "renameLabel"){
             handleRenameLabel(update)
         }
