@@ -224,151 +224,7 @@ function displayFeed(itemIds){
 	//get the order to display them in
 }
 
-/*
-function pushNewItemDivsOnFeed(newItemDivs){
-    $("#feed").empty()     
-	
-    for( var i in newItemDivs){
-        var newItemDiv = newItemDivs[i]    
-        $("#feed").append(newItemDiv)
-    }
-	updateSearchFeedback()	
-}
-*/
 
-function updateSearchFeedback(queryResultObj){
-    var queryObj = queryResultObj["query"]
-    var queryType = queryObj["type"]
-    var numResults = queryResultObj["numResults"]
-    var querySortOrder = queryObj["sortOrder"]
-    
-    $("#searchFeedbackDiv").empty()
-	
-    var searchFeedbackContainer = $("<div>")
-    
-    var numResultsDiv = createNumResultsDiv(numResults)
-    
-    var refreshButton = $("<input type='button' value='refresh'>")
-    refreshButton.click(function(){
-        getAllData("synchronous")
-    })
-    numResultsDiv.append(refreshButton)
-    searchFeedbackContainer.append(numResultsDiv)
-    
-    //Sort options
-    
-    var sortOptions = $("<div id='sortOptions'>")
-    sortOptions.append("Sort items by: <br>")
-    var sortOptionStrings = [{"name":"most recently added", "sortType": "creationTime"},{"name":"most recently updated", "sortType": "mostActive"}, {"name":"least recently updated",  "sortType": "leastActive"}]
-    
-    
-    for(var sortOptionIndex in sortOptionStrings){
-        var sortOptionString = sortOptionStrings[sortOptionIndex]["name"]
-        var sortOptionSortType = sortOptionStrings[sortOptionIndex]["sortType"]
-        //name='sortOption' value='"sortOptionString"'
-        var sortRadio = $("<input type='radio'  name='sortOption' value='"+sortOptionSortType+"'>")
-        if(sortOptionSortType == querySortOrder){
-            sortRadio.prop("checked", true)
-        }
-        wrap = function(radioButton, sortIndex){
-            radioButton.click(function(){
-                
-                var sortOrder = sortOptionStrings[sortIndex]["sortType"]
-                console.log("sort order: "+sortOrder)
-               
-                query["sortOrder"] = sortOrder
-                getAllData("synchronous")
-            })
-        }
-        wrap(sortRadio, sortOptionIndex)
-        
-        sortOptions.append(sortRadio)
-        sortOptions.append(sortOptionString+"<br>")
-    }
-    
-
-    
-    searchFeedbackContainer.append(sortOptions)
-    
-    /*
-    var querySortOrder = query["sortOrder"]
-    console.log("querySortOrder: "+querySortOrder)
-    $('input:radio[value='+querySortOrder+']').prop("checked", true)
-    */
-    /*
-    // MASS EDIT - removed for fear of the whole interface freaking out.
-    
-    var addLabelUI = createAddLabelUI(queryResultObj)
-    searchFeedbackContainer.append(addLabelUI)
-    
-    var addSessionUI = createAddSessionUI(queryResultObj)
-    searchFeedbackContainer.append(addSessionUI)
-    
-    var selectAllButton = $("<input type='button' value='select all results'>")
-    
-    searchFeedbackContainer.append(selectAllButton)
-    selectAllButton.click(function(){
-        $(".itemCheckbox").each(function(){
-            $(this).prop('checked', true);
-            //$(this).attr("checked","checked")
-        })
-    })
-    
-    var unselectAllButton = $("<input type='button' value='remove all selections'>")
-    searchFeedbackContainer.append(unselectAllButton)
-    unselectAllButton.click(function(){
-        $(".itemCheckbox").each(function(){
-            $(this).prop('checked', false);
-            //$(this).removeAttr("checked")
-        })
-    })
-    */
-    $("#searchFeedbackDiv").append(searchFeedbackContainer)
-    
-    //adjust the underlay height
-    var searchFeedbackHeight = $("#searchFeedbackDiv").height()
-    $("#resultsUnderlay").height(searchFeedbackHeight + 20)
-    
-    if(queryType == "label"){
-		
-	}
-    
-    /*
-    
-	if(queryType == "all"){
-		var numberOfItems = itemIdOrder.length
-		searchFeedbackText = "Showing all items ("+numberOfItems+")"
-	}
-	if(queryType == "label"){
-		var numberOfItems = itemIdOrder.length
-		var label = query["label"]
-		console.log(numberOfItems)
-		searchFeedbackText = "Showing items labeled '"+label+"' ("+numberOfItems+")"
-	}
-	if(queryType == "session"){
-		var numberOfItems = itemIdOrder.length
-		var label = query["label"]
-		console.log(numberOfItems)
-		searchFeedbackText = "Showing items in session '"+label+"' ("+numberOfItems+")"
-	}
-	if(queryType == "completed"){
-		var numberOfItems = itemIdOrder.length
-		console.log(numberOfItems)
-		searchFeedbackText = "Showing all items with at least one label ("+numberOfItems+")"
-	}
-	if(queryType == "incompleted"){
-		var numberOfItems = itemIdOrder.length
-		console.log(numberOfItems)
-		searchFeedbackText = "Showing all items with no labels ("+numberOfItems+")"
-	}
-	
-    var searchFeedbackUI = makeSearchFeedbackUI(query)
-    
-	//$("#searchFeedbackDiv").text(searchFeedbackText)
-    */
-    
-    
-}
 
 function createNumResultsDiv(num){
     var numResultsDiv = $("<div class='numResults'>")
@@ -490,6 +346,7 @@ function createSessionDiv(label, counts){
 		query = {
 			"type" : "session",
 			"label" : label,
+           /* "labels" : [label],*/
             "sortOrder" : "mostItems"
 		}
 		getAllData("synchronous")
@@ -622,6 +479,7 @@ function createCategoryLabelDiv(labelObj){
 		query = {
 			"type" : "label",
 			"label" : label,
+            "labels" : [label],
 			"checked" : true,            
             "sortOrder" : "creationTime"
 		}

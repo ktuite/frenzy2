@@ -16,8 +16,25 @@ getFeedItemsAndOrder = function(query){
 	}
 	if(queryType == "label"){
 		var label = query["label"]
-		var checked = query["label"]
-        itemIds = allData["labelList"][label]["itemsUsedBy"]
+        var labelsToFilter = query["labels"]
+        console.log("label query labels")
+        console.log(labelsToFilter)
+        
+		var checked = query["checked"]
+        
+        var label0 =labelsToFilter[0]
+        
+        itemIds = allData["labelList"][label0]["itemsUsedBy"]
+        console.log(labelsToFilter.length)
+        
+        for(var i = 1; i<labelsToFilter.length; i++){
+            
+            var thisLabel = labelsToFilter[i]
+            var itemIdsForThisLabel = allData["labelList"][thisLabel]["itemsUsedBy"]
+            itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
+            
+        }
+        
 	}
 
 	if(queryType == "session"){

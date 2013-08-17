@@ -545,6 +545,7 @@ app.get('/test', function(request, response){
     var query = {
         "type" : "label",
         "label" : label,
+        "labels": [label],
         "checked" : true,            
         "sortOrder" : "creationTime"
     }

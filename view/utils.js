@@ -95,3 +95,11 @@ var	arrayIntersection = function(arr1, arr2){
     }
     return intersection
 }
+var clone = function(obj) {
+		if (null == obj || "object" != typeof obj) return obj;
+		var copy = obj.constructor();
+		for (var attr in obj) {
+			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+		}
+		return copy;
+	}
