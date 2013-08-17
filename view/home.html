@@ -244,13 +244,16 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
     
     var message = {"update": myUpdate, "query": query, "type": type}   
     ajax("update", message, function(result){ 
-        takeDownSpinner()  
-        handleUpdates(JSON.parse(result))  
-        //resizing the hierarchy only really needs to be done here the first time the page loads 
-        resizeHierarchy() 
-        
-        if(type == "synchronous"){
-            window.scrollTo(0, 0);
+        try {
+            handleUpdates(JSON.parse(result))  
+            //resizing the hierarchy only really needs to be done here the first time the page loads 
+            resizeHierarchy() 
+            
+            if(type == "synchronous"){
+                window.scrollTo(0, 0);
+            }
+        } finally {
+            takeDownSpinner()
         }
     })
 }
