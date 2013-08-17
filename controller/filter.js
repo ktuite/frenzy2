@@ -35,13 +35,12 @@ getFeedItemsAndOrder = function(query){
 
 	if(queryType == "session"){
 		var label = query["label"]
-		if (label in allData["sessions"]) {
-            itemIds = allData["sessions"][label]["members"]
-        }
+        var sessionObj = lookupDespiteRenaming(allData["sessions"], label, renamedSessionCache)
+        itemIds = sessionObj ? sessionObj["members"] : []
 	}
     if(queryType == "text"){
         var text = query["text"]
-        var itemIds = getAllItemIdsWithTextT(text)
+        itemIds = getAllItemIdsWithTextT(text)
 	}
 	if(queryType == "completed"){
 		itemIds = allData["completion"]["completedItemIds"]
