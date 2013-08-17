@@ -31,6 +31,20 @@ function updateHyperBar(queryResultObj){
         searchFeedbackContainer.append(labelFilter)    
     }
     
+    //session membership filter
+    if(sessionMaking){
+    
+        var sessionFilterOption = "all"
+        
+        if("sessionFilter" in query){
+            sessionFilterOption = query["sessionFilter"]
+        }
+        
+        var sessionFilter = createSessionFilter(sessionFilterOption, sessionFilterOption)
+        
+        searchFeedbackContainer.append(sessionFilter)  
+    }
+    
 
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
     
@@ -52,6 +66,7 @@ function createRefreshButton(){
 function createSortOptions(querySortOrder){
     var sortOptions = $("<div id='sortOptions'>")
     sortOptions.append("Sort items by: <br>")
+    
     var sortOptionStrings = [{"name":"most recently added", "sortType": "creationTime"},{"name":"most recently updated", "sortType": "mostActive"}, {"name":"least recently updated",  "sortType": "leastActive"}]
     
     
@@ -151,6 +166,72 @@ function createNumResultsDiv(num){
     return numResultsDiv
 }
 
+
+function createSessionFilter(defaultFilter){
+    var div = $("<div id='sessionFilter'>")
+    var members = itemIdOrder
+    var allItemsNotInSessions = sessions["none"]["members"]
+    
+    var displayedItemsInSession = []
+    var displayedItemsNotInSession = []
+        
+    for(var itemIdIndex in members){
+        var memberItemId = members[itemIdIndex]
+        if( arrayContains(allItemsNotInSessions, memberItemId) ){
+            displayedItemsNotInSession.push(memberItemId)
+        }else{
+            displayedItemsInSession.push(memberItemId)
+        }
+    }
+    
+    var numItemsInSession = displayedItemsInSession.length
+    var numItemsNotInSession = displayedItemsNotInSession.length
+        
+    
+    
+    var allItemsText = "All Items ("+members.length+")"
+    var allItemsNeedingSessions = "Only items needing sessions ("+numItemsNotInSession+")"
+    var allItemsHavingSessions = "Only items in sessions ("+numItemsInSession+")"
+    
+    
+    div.append("Showing: <br>")
+    
+    var sessionFilterOptions = [
+        {"name":allItemsText, "filter": "all"},
+        {"name":allItemsHavingSessions, "filter": "withSessions"}, 
+        {"name":allItemsNeedingSessions,  "filter": "withoutSessions"}
+    ]
+    
+    
+    for(var index in sessionFilterOptions){
+        var sessionFilterString = sessionFilterOptions[index]["name"]
+        var sessionFilterType = sessionFilterOptions[index]["filter"]
+         
+        var sessionFilterRadio = $("<input type='radio'  name='sessionFilter' value='"+sessionFilterType+"'>")
+        
+        if(sessionFilterType == defaultFilter){
+            sessionFilterRadio.prop("checked", true)
+        }
+        
+        wrap = function(sessionFilterRadioPrime, sessionFilterTypePrime){
+            sessionFilterRadioPrime.click(function(){
+                query["sessionFilter"] = sessionFilterTypePrime
+                getAllData("synchronous")
+
+            })
+        }
+        wrap(sessionFilterRadio, sessionFilterType)
+        
+        div.append(sessionFilterRadio)
+        div.append(sessionFilterString+"<br>")
+    }
+    
+    return div
+}
+
+//////////////////////////////////
+// Overlapping Label Filter
+//////////////////////////////////
 function createLabelFilter(labelFeedback, alreadyFilteredLabels){
     var sortOrder = labelFeedback["sortOrder"]
     var overlappingLabels = labelFeedback["overlappingLabels"]

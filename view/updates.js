@@ -104,7 +104,6 @@ function updateItemsInFeed(){
         }
     }
     for(var i in itemsInQueryIveChanged){  
-        console.log(itemsInQueryIveChanged[i])
         var itemId = itemsInQueryIveChanged[i]
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
