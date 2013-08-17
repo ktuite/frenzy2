@@ -55,40 +55,57 @@ getFeedItemsAndOrder = function(query){
     //////////////////////////////
 	// Session Filter 
 	//////////////////////////////
-    
-    if("sessionFilter" in query){
-        var sessionFilter = query["sessionFilter"]
-        if(sessionFilter == "all"){
-            //do nothing
-        }else{
-            var allItemsNotInSessions = []
-            if("none" in allData["sessions"]){
-                var allItemsNotInSessions = allData["sessions"]["none"]["members"]
-            }
-            var displayedItemsInSession = []
-            var displayedItemsNotInSession = []
-                
-            for(var itemIdIndex in itemIds){
-                var memberItemId = itemIds[itemIdIndex]
-                if( utils.arrayContains(allItemsNotInSessions, memberItemId) ){
-                    displayedItemsNotInSession.push(memberItemId)
-                }else{
-                    displayedItemsInSession.push(memberItemId)
-                }
-            }
-            //console.log(displayedItemsInSession)
-            //console.log(displayedItemsNotInSession)
+    if(allData["sessionMaking"]){
+    //if("sessionFilter" in query){
+        
+        var sessionFilter = "all"
+        if("sessionFilter" in query){
+            sessionFilter = query["sessionFilter"]
+        }
+        console.log("session filter: "+sessionFilter)
+        var numAll = itemIds.length 
+        var numWithoutSession = 0
+        var numWithSession = 0
+        
+        var allItemsNotInSessions = []
+        if("none" in allData["sessions"]){
+            var allItemsNotInSessions = allData["sessions"]["none"]["members"]
+        }
+        var displayedItemsInSession = []
+        var displayedItemsNotInSession = []
             
-            if(sessionFilter == "withSessions"){
-                itemIds = displayedItemsInSession
+        for(var itemIdIndex in itemIds){
+            var memberItemId = itemIds[itemIdIndex]
+            if( utils.arrayContains(allItemsNotInSessions, memberItemId) ){
+                displayedItemsNotInSession.push(memberItemId)
+            }else{
+                displayedItemsInSession.push(memberItemId)
             }
-            if(sessionFilter == "withoutSessions"){
-                itemIds = displayedItemsNotInSession
-            }  
+        }
+        //console.log(displayedItemsInSession)
+        //console.log(displayedItemsNotInSession)
+        
+        
+        
+        if(sessionFilter == "withSessions"){
+            console.log("with sessionss")
+            itemIds = displayedItemsInSession
+        }
+        if(sessionFilter == "withoutSessions"){
+            console.log("withOUT sessionss")
+            itemIds = displayedItemsNotInSession
+        }  
+        console.log("foo")
+                       
+        numWithoutSession = displayedItemsNotInSession.length
+        numWithSession = displayedItemsInSession.length
+        query["sessionFilterData"]={
+            "numAll": numAll,
+            "numWithoutSession": numWithoutSession,
+            "numWithSession": numWithSession
         }        
     }
-    console.log(sessionFilter)
-    console.log(itemIds)
+   
 	//////////////////////////////
 	// SORT 
 	//////////////////////////////

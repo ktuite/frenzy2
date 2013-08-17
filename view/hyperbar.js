@@ -126,12 +126,31 @@ unselectAllButton.click(function(){
 */
 
 function createNumResultsDiv(num){
+    //N items (with sessions/ without sessions) in 
+    //(all times OR in categories list, in session, containing text)
     var numResultsDiv = $("<div class='numResults'>")
     var numResultsText = num+" Items"
     if(num == 1){
         numResultsText = num+" Item"
     }
     var queryType = query["type"]
+    
+    if(sessionMaking){
+        if("sessionFilter" in query){
+            var sessionFilter = query["sessionFilter"]
+            if(sessionFilter == "withSessions"){
+                numResultsText = numResultsText + " with sessions "
+            }
+            if(sessionFilter == "withoutSessions"){
+                numResultsText = numResultsText + " <i>without</i> sessions "
+            }
+            
+        }
+    }
+    
+    if(queryType == "all"){
+        numResultsText = numResultsText + " in all items"
+    }
     
     if(queryType == "label"){
         var label = query["label"]
@@ -172,26 +191,15 @@ function createSessionFilter(defaultFilter){
     var members = itemIdOrder
     var allItemsNotInSessions = sessions["none"]["members"]
     
-    var displayedItemsInSession = []
-    var displayedItemsNotInSession = []
-        
-    for(var itemIdIndex in members){
-        var memberItemId = members[itemIdIndex]
-        if( arrayContains(allItemsNotInSessions, memberItemId) ){
-            displayedItemsNotInSession.push(memberItemId)
-        }else{
-            displayedItemsInSession.push(memberItemId)
-        }
-    }
-    
-    var numItemsInSession = displayedItemsInSession.length
-    var numItemsNotInSession = displayedItemsNotInSession.length
+    var numAll = query["sessionFilterData"]["numAll"]
+    var numWithoutSession = query["sessionFilterData"]["numWithoutSession"]
+    var numWithSession = query["sessionFilterData"]["numWithSession"]
         
     
     
     var allItemsText = "All Items ("+members.length+")"
-    var allItemsNeedingSessions = "Only items needing sessions ("+numItemsNotInSession+")"
-    var allItemsHavingSessions = "Only items in sessions ("+numItemsInSession+")"
+    var allItemsNeedingSessions = "Only items needing sessions ("+numWithoutSession+")"
+    var allItemsHavingSessions = "Only items in sessions ("+numWithSession+")"
     
     
     div.append("Showing: <br>")

@@ -56,25 +56,30 @@ initializeQueryFeedbackObj = function(query, itemIdOrder){
     var queryFeedbackObject = {}
     if(queryType == "label"){
         var label = query["label"]
-        queryFeedbackObject["sessionsDisplayed"] = initializeSessionsDisplayedForLabel(label, itemIdOrder)
+        //queryFeedbackObject["sessionsDisplayed"] = initializeSessionsDisplayedForLabel(label, itemIdOrder)
         queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
-        queryFeedbackObject["sessionFeedback"] = initializeSessionFeedbackForLabel(label, itemIdOrder)
+        //queryFeedbackObject["sessionFeedback"] = initializeSessionFeedbackForLabel(label, itemIdOrder)
     }
     if(queryType == "session"){
         //WORK HERE
+        queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
         console.log("error - not implemented: queryFeedback for session")
     }
     if(queryType == "text"){
         //WORK HERE
-        console.log("error - not implemented: queryFeedback for text")
+        queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
+        
+        //console.log("error - not implemented: queryFeedback for text")
     }
     if(queryType == "all"){
         //WORK HERE
-        console.log("error - not implemented: queryFeedback for all")
+        //console.log("error - not implemented: queryFeedback for all")
     }
     if(queryType == "completed"){
         //WORK HERE
-        console.log("error - not implemented: queryFeedback for completed")
+        //console.log("error - not implemented: queryFeedback for completed")
+        queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
+        
     }
     /*
     if(queryType == "incompleted"){
