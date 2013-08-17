@@ -546,7 +546,7 @@ function getAllServerData(query, type){
     return rtn
 }
 
-//testing queryFeedbackObject
+//testing queryFeedbackObj
 
 
 app.get('/test', function(request, response){
