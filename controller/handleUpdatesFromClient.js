@@ -448,6 +448,63 @@ handleToggleLabelLiked = function(toggleLabelLiked){
 
 
 /////////////////////////////////////
+// RENAME SESSION
+/////////////////////////////////////
+/*
+update = {
+	type : "renameSession",
+	user : "hmslydia",
+	time : 1234567891,
+	oldName : "animal",
+	newName : "vegetable",
+}
+*/
+handleRenameSession = function(renameSession){
+	var user = renameSession["user"]
+	var time = renameSession["time"]
+	var oldName = renameSession["oldName"]	
+	var newName = renameSession["newName"]	
+
+    if (!newName   // null return value means user cancelled
+        || !(newName.trim()) // blank names are a bad idea
+        || newName in allData["sessions"] // new name is already in use
+        ) {
+    	console.log("error - illegal session rename from " + oldName + " to " + newName)
+        return;  // change nothing
+    }
+
+	console.log("renaming " + oldName + " to " + newName)
+
+	// first rename the label in labelList
+	var sessions = allData["sessions"]
+	var sessionObj = sessions[oldName]
+	if (!sessionObj) {
+		console.log("error - can't find " + oldName + " to rename it, maybe somebody already renamed it")
+		return
+	}
+
+	sessionObj["label"] = newName
+	delete sessions[oldName]
+	sessions[newName] = sessionObj
+
+	// now rename the session on every item where it occurs
+	var items = allData["items"]
+	var itemsInThisSession = sessionObj["members"]
+	for (var i = 0; i < itemsInThisSession.length; ++i) {
+		var itemId = itemsInThisSession[i]
+		var itemReference = items[itemId]
+		itemReference["lastUpdateTime"] = time
+
+		if (itemReference["session"] != oldName) {
+			console.log("error - " + itemId + " doesn't seem to be in session " + oldName + " for renaming the session")
+			continue
+		}
+
+		itemReference["session"] = newName
+	}
+}
+
+/////////////////////////////////////
 // RENAME LABEL
 /////////////////////////////////////
 /*
@@ -455,37 +512,37 @@ update = {
 	type : "renameLabel",
 	user : "hmslydia",
 	time : 1234567891,
-	labelText : "animal",
-	newLabelText : "vegetable",
+	oldName : "animal",
+	newName : "vegetable",
 }
 */
 handleRenameLabel = function(renameLabel){
 	var user = renameLabel["user"]
 	var time = renameLabel["time"]
-	var labelText = renameLabel["labelText"]	
-	var newLabelText = renameLabel["newLabelText"]	
+	var oldName = renameLabel["oldName"]	
+	var newName = renameLabel["newName"]	
 
-    if (!newLabelText   // null return value means user cancelled
-        || !(newLabelText.trim()) // blank category names are a bad idea
-        || newLabelText in allData["labelList"] // new label is already in use
+    if (!newName   // null return value means user cancelled
+        || !(newName.trim()) // blank names are a bad idea
+        || newName in allData["labelList"] // new name is already in use
         ) {
-    	console.log("error - illegal label rename from " + labelText + " to " + newLabelText)
+    	console.log("error - illegal label rename from " + oldName + " to " + newName)
         return;  // change nothing
     }
 
-	console.log("renaming " + labelText + " to " + newLabelText)
+	console.log("renaming " + oldName + " to " + newName)
 
 	// first rename the label in labelList
 	var labelList = allData["labelList"]
-	var labelObj = labelList[labelText]
+	var labelObj = labelList[oldName]
 	if (!labelObj) {
-		console.log("error - can't find " + labelText + " to rename it, maybe somebody already renamed it")
+		console.log("error - can't find " + oldName + " to rename it, maybe somebody already renamed it")
 		return
 	}
 
-	labelObj["label"] = newLabelText
-	delete labelList[labelText]
-	labelList[newLabelText] = labelObj
+	labelObj["label"] = newName
+	delete labelList[oldName]
+	labelList[newName] = labelObj
 
 	// now rename the label on every item where it occurs
 	var items = allData["items"]
@@ -496,14 +553,15 @@ handleRenameLabel = function(renameLabel){
 		itemReference["lastUpdateTime"] = time
 
 		var itemLabelList = itemReference["labels"]
-		var itemLabelObj = itemLabelList[labelText]
+		var itemLabelObj = itemLabelList[oldName]
 		if (!itemLabelObj) {
-			console.log("error - can't find " + labelText + " on " + itemId + "to rename it")
+			console.log("error - can't find " + oldName + " on " + itemId + "to rename it")
 			continue
 		}
 
-		itemLabelObj["label"] = newLabelText
-		delete itemLabelList[labelText]
-		itemLabelList[newLabelText] = itemLabelObj
+		itemLabelObj["label"] = newName
+		delete itemLabelList[oldName]
+		itemLabelList[newName] = itemLabelObj
 	}
 }
+

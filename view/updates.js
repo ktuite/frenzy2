@@ -6,7 +6,7 @@ function handleUpdates(result){
     }
 	*/
     //console.log("result")
-	//console.log(result)
+	console.log(result)
     
     var type = result["type"]
     
@@ -340,10 +340,13 @@ function sortSessions(sessionsArray, sortType){
 }
 
 function createSessionDiv(label, counts){
-    var div = $("<div class='sessionLabel'>")
-    div.text(label + " ("+counts+") ")
-	
-	div.click(function(){
+    var div = $("<div>")
+
+    var span = $("<span class='sessionLabel'>")
+    span.text(label + " ("+counts+") ")
+	div.append(span)
+
+	span.click(function(){
 		query = {
 			"type" : "session",
 			"label" : label,
@@ -353,6 +356,10 @@ function createSessionDiv(label, counts){
 		getAllData("synchronous")
 	})
 	
+    if (label != "none") {
+        div.append(makeRenameButton("session", label));
+    }
+    
     return div
 }
 
@@ -484,7 +491,7 @@ function createCategoryLabelDiv(labelObj){
         var numItemsInSession = itemsInSession.length
         counts = "<span class='numSessionsDisplay'>"+numItemsInSession+"</span> / "+counts
     }
-    var labelSpan = $("<span class='sessionClickable'>")
+    var labelSpan = $("<span class='categoryClickable'>")
     labelSpan.html(label + " ("+counts+") ")
     if(creator == "system"){
         labelSpan.addClass("systemLabel")
@@ -505,30 +512,41 @@ function createCategoryLabelDiv(labelObj){
         getAllData("synchronous")
     })
 
-    var renameButton = $('<span class="clickable-pencil-icon"></span>')
-    div.append(renameButton)	
-
-    renameButton.click(function() {
-        var newLabel = window.prompt("Rename this category:", label)
-        if (!newLabel   // null return value means user cancelled
-            || !(newLabel.trim()) // blank category names are a bad idea
-            || label == newLabel) {
-            return;  // change nothing
-        }
-
-        console.log("renaming " + label + " to " + newLabel)
-
-        var myUpdate = {"type": "renameLabel", 
-                    "time" : getTime(), 
-                    "labelText" : label, 
-                    "newLabelText": newLabel
-        }
-        pushAndPullUpdates(myUpdate, "synchronous")
-    })
+    div.append(makeRenameButton("label", label))	
 	
     return div
 }
 
+function makeRenameButton(kindOfName, // must be either "session" or "label"
+                          oldName // name of session or label that will be renamed by the button
+                          ) {
+    var variants = {
+        "label": { uiName: "category", queryType: "renameLabel" },
+        "session": { uiName: "session", queryType: "renameSession" },
+    };
+
+    var renameButton = $('<span class="clickable-pencil-icon"></span>')
+
+    renameButton.click(function() {
+        var newName = window.prompt("Rename this " + variants[kindOfName].uiName + ":", oldName)
+        if (!newName   // null return value means user cancelled
+            || !(newName.trim()) // blank names are a bad idea
+            || oldName == newName) {
+            return;  // change nothing
+        }
+
+        console.log("renaming " + oldName + " to " + newName)
+
+        var myUpdate = {"type": variants[kindOfName].queryType,
+                    "time" : getTime(),
+                    "oldName" : oldName, 
+                    "newName": newName
+        }
+        pushAndPullUpdates(myUpdate, "synchronous")
+    })    
+
+    return renameButton
+}
 
 function updateNewLabel(textboxValue, itemId){
     $("#addCategoryTextbox-"+itemId).val("")
