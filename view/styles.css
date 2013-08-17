@@ -428,7 +428,9 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
   padding: 0px;
   width: 10px;
   height: 10px;
-/*  display: inline-block;*/
+  background-image: url("pencil.png");
+  background-size: 100% 100%;
+  display: inline-block;
 }
 
 .clickable-pencil-icon:hover {
