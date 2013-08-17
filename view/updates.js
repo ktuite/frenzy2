@@ -506,7 +506,7 @@ function createCategoryLabelDiv(labelObj){
         getAllData("synchronous")
     })
 
-    var renameButton = $('<img class="clickable-pencil-icon" src="pencil.png"></span>')
+    var renameButton = $('<span class="clickable-pencil-icon"></span>')
     div.append(renameButton)	
 
     renameButton.click(function() {
