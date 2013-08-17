@@ -358,6 +358,7 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 
 .sessionLabel{
     color: red;
+    cursor: pointer;
 }   
 
 #hashtagSummaryContainer{
@@ -445,3 +446,8 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     cursor: pointer;
     color: blue;
  }
+ 
+ .numSessionsDisplay{
+    color: red;
+ }
+ 

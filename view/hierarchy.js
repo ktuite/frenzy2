@@ -1,4 +1,6 @@
 function createLabelDiv(labelObj){
+    console.log("error createLabelDiv in hiearachy.js")
+    /*
     var labelParents = labelObj["parents"]
     var label = labelObj["label"]["label"]
     var labelHTML = labelObj["label"]["labelHTML"]
@@ -17,6 +19,7 @@ function createLabelDiv(labelObj){
 		query = {
 			"type" : "label",
 			"label" : label,
+            "label" : [label],
 			"checked" : true,            
             "sortOrder" : "creationTime"
 		}
@@ -24,6 +27,7 @@ function createLabelDiv(labelObj){
 		//filterItemsByLabel(memberItemIds)
 	})
     return div
+    */
 }
 
 

@@ -13,16 +13,17 @@ function handleUpdates(result){
 	if("allItems" in result){
 		items = result["allItems"]
 	}
-	
+	if("sessions" in result){
+		sessions = result["sessions"]		
+		handleUpdatedSessions(sessions)
+	}
+    
 	if("labelList" in result){
 		labelList = result["labelList"]
 		handleUpdatedCategory(labelList)
         //createCategoryList()
 	}
-	if("sessions" in result){
-		sessions = result["sessions"]		
-		handleUpdatedSessions(sessions)
-	}
+
 	
 	if("itemIdOrder" in result){
 		itemIdOrder = result["itemIdOrder"]
@@ -31,12 +32,12 @@ function handleUpdates(result){
         queryResultObj = result["queryResultObj"]
         query = queryResultObj["query"]		
 	}
-	
+	/*
     if("hierarchy" in result){
         var hierarchy = result["hierarchy"]
         handleUpdatedHierarchy(hierarchy)
     }
-	
+	*/
 	if("completion" in result){
 		var completion = result["completion"]
 		handleUpdatedCompletion(completion)
@@ -266,6 +267,7 @@ function createNumResultsDiv(num){
 //////////////////////////////////////////
 // hierarchy
 //////////////////////////////////////////
+/*
 function handleUpdatedHierarchy(hierarchy){
     var labelHierarchyDiv = $("<div>")
     for( var i in hierarchy){
@@ -276,7 +278,7 @@ function handleUpdatedHierarchy(hierarchy){
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
 }
-
+*/
 //////////////////////////////////////////
 // sessions
 //////////////////////////////////////////
@@ -468,9 +470,23 @@ function createCategoryLabelDiv(labelObj){
     var counts = labelObj["itemsUsedBy"].length
     var creator = labelObj["creator"]
     var div = $("<div>")
-
+    
+    
+    if(sessionMaking){
+        var itemsInSession = []
+        var itemsInNoSession = sessions["none"]["members"]
+        var members = labelObj["itemsUsedBy"]
+        for(var itemIdIndex in members){
+            var memberItemId = members[itemIdIndex]
+            if( !arrayContains(itemsInNoSession, memberItemId) ){
+                itemsInSession.push(memberItemId)
+            }
+        }
+        var numItemsInSession = itemsInSession.length
+        counts = "<span class='numSessionsDisplay'>"+numItemsInSession+"</span> / "+counts
+    }
     var labelSpan = $("<span class='sessionClickable'>")
-    labelSpan.text(label + " ("+counts+") ")
+    labelSpan.html(label + " ("+counts+") ")
     if(creator == "system"){
         labelSpan.addClass("systemLabel")
     }else{
@@ -483,7 +499,8 @@ function createCategoryLabelDiv(labelObj){
         query = {
             "type" : "label",
             "label" : label,
-            "checked" : true,            "labels" : [label],
+            "checked" : true,            
+            "labels" : [label],
             "sortOrder" : "creationTime"
         }
         getAllData("synchronous")

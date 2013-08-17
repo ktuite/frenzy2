@@ -16,16 +16,12 @@ getFeedItemsAndOrder = function(query){
 	}
 	if(queryType == "label"){
 		var label = query["label"]
-        var labelsToFilter = query["labels"]
-        console.log("label query labels")
-        console.log(labelsToFilter)
-        
+        var labelsToFilter = query["labels"]        
 		var checked = query["checked"]
         
         var label0 =labelsToFilter[0]
         
         itemIds = allData["labelList"][label0]["itemsUsedBy"]
-        console.log(labelsToFilter.length)
         
         for(var i = 1; i<labelsToFilter.length; i++){
             
