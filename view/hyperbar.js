@@ -10,18 +10,31 @@ function updateHyperBar(queryResultObj){
 	
     var searchFeedbackContainer = $("<div>")
     
-    //Number of Results
+    //Number of Results and type of results text
     var numResultsDiv = createNumResultsDiv(numResults)
     searchFeedbackContainer.append(numResultsDiv)
+    searchFeedbackContainer.append("<br>")
     
+    var table = $("<table>")
+    var tr = $("<tr valign='top'>")
+    var td1 = $("<td width='260px'>")
+    var td2 = $("<td width='400px'>")
+    var td3 = $("<td width='100px'>")
+    table.append(tr)
+    tr.append(td1)
+    tr.append(td2)
+    tr.append(td3)
+    searchFeedbackContainer.append(table)
+    
+    //Button Panel - refresh
     var buttonDiv = $("<div id='hyperbarButtonDiv'>")
-    searchFeedbackContainer.append(buttonDiv)
+    td3.append(buttonDiv)
     //Refresh button
     var refreshButton = createRefreshButton()    
     buttonDiv.append(refreshButton)
     buttonDiv.append("<br>")
     
-    //expand, collapse
+    //Button panel - expand, collapse
     var abstractButtons = setUpAbstractHideShow()
     var expandAbstractionButton = abstractButtons[0]
     var collapseAbstractionButton = abstractButtons[1]
@@ -33,16 +46,10 @@ function updateHyperBar(queryResultObj){
     //Sort options
     if( !sessionMaking){
         var sortOptions = createSortOptions(querySortOrder)
-        searchFeedbackContainer.append(sortOptions)    
+        //searchFeedbackContainer.append(sortOptions)  
+        td1.append(sortOptions)
     }
-    //label filter 
-    if( "labelFeedback" in queryFeedbackObj){
-        var labelFeedback = queryFeedbackObj["labelFeedback"]
-        var label = queryObj["label"]
-        var alreadyFilteredLabels = [label] //make a list of labels we don't want to show because they're already filtered
-        var labelFilter = createLabelFilter(labelFeedback, alreadyFilteredLabels)
-        searchFeedbackContainer.append(labelFilter)    
-    }
+    
     
     //session membership filter
     if(sessionMaking && queryType != "session"){
@@ -55,10 +62,22 @@ function updateHyperBar(queryResultObj){
         
         var sessionFilter = createSessionFilter(sessionFilterOption, sessionFilterOption)
         
-        searchFeedbackContainer.append(sessionFilter)  
+        //searchFeedbackContainer.append(sessionFilter)  
+        td1.append(sessionFilter)  
     }
-    
 
+    //label filter 
+    if( "labelFeedback" in queryFeedbackObj){
+        var labelFeedback = queryFeedbackObj["labelFeedback"]
+        var label = queryObj["label"]
+        var alreadyFilteredLabels = [label] //make a list of labels we don't want to show because they're already filtered
+        var labelFilter = createLabelFilter(labelFeedback, alreadyFilteredLabels)
+        //searchFeedbackContainer.append(labelFilter) 
+        td2.append(labelFilter) 
+        
+    }    
+
+    
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
     
     //adjust the underlay height
@@ -229,7 +248,7 @@ function createNumResultsDiv(num){
 
 
 function createSessionFilter(defaultFilter){
-    var div = $("<div id='sessionFilter'>")
+    var div = $("<div id='sessionFilter' width='260px'>")
     var members = itemIdOrder
     var allItemsNotInSessions = sessions["none"]["members"]
     
@@ -296,18 +315,18 @@ function createLabelFilter(labelFeedback, alreadyFilteredLabels){
 
     var div = $("<div id='hyperbarOverlappingCategoryFilter'>")
     
-    var instructions1 = "Narrow results to papers also in categories<br>"
+    var instructions1 = "Filter to papers also in categories:<br>"
     var instructions2 = "sort by"
     
     div.append(instructions1)
-    div.append(instructions2)
+    //div.append(instructions2)
     
     //create Category Filter
     var hyperbarOverlappingCategoryFilter = $("<div id='hyperbarOverlappingCategoryFilter'>")
     div.append(hyperbarOverlappingCategoryFilter)
     
         var hyperbarOverlappingCategorySort = createHyperbarOverlappingCategorySort(overlappingLabels, alreadyFilteredLabels, sortOrder) 
-        hyperbarOverlappingCategoryFilter.append(hyperbarOverlappingCategorySort)
+        //hyperbarOverlappingCategoryFilter.append(hyperbarOverlappingCategorySort)
 
         var hyperbarOverlappingCategoryListContainer = $("<div id='hyperbarOverlappingCategoryListContainer'>")
         hyperbarOverlappingCategoryFilter.append(hyperbarOverlappingCategoryListContainer)
