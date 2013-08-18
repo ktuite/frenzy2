@@ -42,25 +42,33 @@ function updateHyperBar(queryResultObj){
     buttonDiv.append("<br>")
     buttonDiv.append(collapseAbstractionButton)
     
-    
-    //Sort options
+    /*
+    //Sort options    
     if( !sessionMaking){
         var sortOptions = createSortOptions(querySortOrder)
         //searchFeedbackContainer.append(sortOptions)  
-        td1.append(sortOptions)
+        td1.append(sortOptions)        
+    }
+    */
+    
+    //plus one membership filter
+    if( !sessionMaking){
+        var plusOneFilterOption = "all"        
+        if("plusOneFilter" in query){
+            plusOneFilterOption = query["plusOneFilter"]
+        }        
+        var plusOneFilter = createPlusOneFilter(plusOneFilterOption)        
+        td1.append(plusOneFilter)
     }
     
     
     //session membership filter
-    if(sessionMaking && queryType != "session"){
-    
-        var sessionFilterOption = "all"
-        
+    if(sessionMaking && queryType != "session"){    
+        var sessionFilterOption = "all"        
         if("sessionFilter" in query){
             sessionFilterOption = query["sessionFilter"]
-        }
-        
-        var sessionFilter = createSessionFilter(sessionFilterOption, sessionFilterOption)
+        }        
+        var sessionFilter = createSessionFilter(sessionFilterOption)
         
         //searchFeedbackContainer.append(sessionFilter)  
         td1.append(sessionFilter)  
@@ -76,7 +84,6 @@ function updateHyperBar(queryResultObj){
         td2.append(labelFilter) 
         
     }    
-
     
     $("#searchFeedbackDiv").append(searchFeedbackContainer)
     
@@ -244,6 +251,65 @@ function createNumResultsDiv(num){
     return numResultsDiv
 }
 
+
+function createPlusOneFilter(defaultFilter){
+    var div = $("<div id='plusOneFilter' width='260px'>")
+    var members = itemIdOrder
+    var allItemsWithOutPlusOne = completion["incompletedItemIds"]
+    
+    var numAll = query["plusOneFilterData"]["numAll"]
+    var numWithoutPlusOne = query["plusOneFilterData"]["numWithoutPlusOne"]
+    var numWithPlusOne = query["plusOneFilterData"]["numWithPlusOne"]
+        
+    
+    
+    var allItemsText = "All papers ("+members.length+")"
+    var allItemsNeedingPlusOne = "Papers needing +1 ("+numWithoutPlusOne+")"
+    var allItemsHavingPlusOne = "Papers with +1 ("+numWithPlusOne+")"
+    
+    
+    div.append("Showing: <br>")
+    
+    var plusOneFilterOptions = [
+        {"name":allItemsText, "filter": "all"},
+        {"name":allItemsNeedingPlusOne, "filter": "withoutPlusOne"}, 
+        {"name":allItemsHavingPlusOne,  "filter": "withPlusOne"}
+    ]
+    
+    
+    for(var index in plusOneFilterOptions){
+        var plusOneFilterString = plusOneFilterOptions[index]["name"]
+        var plusOneFilterType = plusOneFilterOptions[index]["filter"]
+        var plusOneFilterStringSpan = "<span>"+plusOneFilterString+"</span><br>"
+         
+        var plusOneFilterRadio = $("<input type='radio'  name='plusOneFilter' value='"+plusOneFilterType+"'>")
+        
+        if(plusOneFilterType == defaultFilter){
+            plusOneFilterRadio.prop("checked", true)
+            plusOneFilterStringSpan = "<span class='selectedPlusOneFilter'>"+plusOneFilterString+"</span><br>"
+        }
+        
+        wrap = function(plusOneFilterRadioPrime, plusOneFilterTypePrime){
+            plusOneFilterRadioPrime.click(function(){
+                query["plusOneFilter"] = plusOneFilterTypePrime
+                /*
+                $(".sessionFilterText").each(function(){
+                    $(this).removeClass("selectedFilter")
+                })
+                $('#'+sessionFilterTypePrime).addClass("selectedFilter")
+                */
+                getAllData("synchronous")
+
+            })
+        }
+        wrap(plusOneFilterRadio, plusOneFilterType)
+        
+        div.append(plusOneFilterRadio)
+        div.append(plusOneFilterStringSpan)
+    }
+    
+    return div
+}
 
 function createSessionFilter(defaultFilter){
     var div = $("<div id='sessionFilter' width='260px'>")

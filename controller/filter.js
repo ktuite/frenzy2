@@ -63,53 +63,52 @@ getFeedItemsAndOrder = function(query){
 	}
 
     //////////////////////////////
-	// Session Filter 
+	// Plus One Filter 
 	//////////////////////////////
-    if(allData["sessionMaking"]){
+    if(!allData["sessionMaking"]){
     //if("sessionFilter" in query){
         
-        var sessionFilter = "all"
-        if("sessionFilter" in query){
-            sessionFilter = query["sessionFilter"]
+        var plusOneFilter = "all"
+        if("plusOneFilter" in query){
+            plusOneFilter = query["plusOneFilter"]
         }
         
         var numAll = itemIds.length 
-        var numWithoutSession = 0
-        var numWithSession = 0
+        var numWithoutPlusOne = 0
+        var numWithPlusOne = 0
         
-        var allItemsNotInSessions = []
+        var allItemsWithoutPlusOne = allData["completion"]["incompletedItemIds"]
+        /*
         if("none" in allData["sessions"]){
             var allItemsNotInSessions = allData["sessions"]["none"]["members"]
         }
-        var displayedItemsInSession = []
-        var displayedItemsNotInSession = []
+        */
+        var displayedItemsWithPlusOne = []
+        var displayedItemsWithoutPlusOne = []
             
         for(var itemIdIndex in itemIds){
             var memberItemId = itemIds[itemIdIndex]
-            if( utils.arrayContains(allItemsNotInSessions, memberItemId) ){
-                displayedItemsNotInSession.push(memberItemId)
+            if( utils.arrayContains(allItemsWithoutPlusOne, memberItemId) ){
+                displayedItemsWithoutPlusOne.push(memberItemId)
             }else{
-                displayedItemsInSession.push(memberItemId)
+                displayedItemsWithPlusOne.push(memberItemId)
             }
         }
-        //console.log(displayedItemsInSession)
-        //console.log(displayedItemsNotInSession)
         
         
-        
-        if(sessionFilter == "withSessions"){
-            itemIds = displayedItemsInSession
+        if(plusOneFilter == "withPlusOne"){
+            itemIds = displayedItemsWithPlusOne
         }
-        if(sessionFilter == "withoutSessions"){
-            itemIds = displayedItemsNotInSession
+        if(plusOneFilter == "withoutPlusOne"){
+            itemIds = displayedItemsWithoutPlusOne
         }  
                        
-        numWithoutSession = displayedItemsNotInSession.length
-        numWithSession = displayedItemsInSession.length
-        query["sessionFilterData"]={
+        numWithoutPlusOne = displayedItemsWithoutPlusOne.length
+        numWithPlusOne = displayedItemsWithPlusOne.length
+        query["plusOneFilterData"]={
             "numAll": numAll,
-            "numWithoutSession": numWithoutSession,
-            "numWithSession": numWithSession
+            "numWithoutPlusOne": numWithoutPlusOne,
+            "numWithPlusOne": numWithPlusOne
         }        
     }
    

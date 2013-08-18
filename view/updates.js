@@ -17,7 +17,10 @@ function handleUpdates(result){
 		sessions = result["sessions"]		
 		handleUpdatedSessions(sessions)
 	}
-    
+    if("completion" in result){
+		completion = result["completion"]
+		handleUpdatedCompletion(completion)
+	}
 	if("labelList" in result){
 		labelList = result["labelList"]
 		handleUpdatedCategory(labelList)
@@ -38,10 +41,7 @@ function handleUpdates(result){
         handleUpdatedHierarchy(hierarchy)
     }
 	*/
-	if("completion" in result){
-		var completion = result["completion"]
-		handleUpdatedCompletion(completion)
-	}
+
     
     if("sessionMaking" in result){
 		sessionMaking = result["sessionMaking"]
@@ -394,9 +394,12 @@ function displayCategoriesSorted(sortType){
     sortLabels(labelsArray, sortType)
     
     for(var i in labelsArray){
-        var labelObj = labelsArray[i]        
-        var newLabelDiv = createCategoryLabelDiv(labelObj)
-        labelHierarchyDiv.append(newLabelDiv)        
+        var labelObj = labelsArray[i]   
+        var counts = labelObj["itemsUsedBy"].length   
+        if(counts > 0){    
+            var newLabelDiv = createCategoryLabelDiv(labelObj)
+            labelHierarchyDiv.append(newLabelDiv)    
+        }        
     }
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
@@ -490,7 +493,22 @@ function createCategoryLabelDiv(labelObj){
         }
         var numItemsInSession = itemsInSession.length
         counts = "<span class='numSessionsDisplay'>"+numItemsInSession+"</span> / "+counts
+    }else{
+        var itemsWithPlusOne = []
+        var itemsCompleted = completion["completedItemIds"]
+        var members = labelObj["itemsUsedBy"]
+        for(var itemIdIndex in members){
+            //figure out if this item has plus one
+        
+            var memberItemId = members[itemIdIndex]
+            if( arrayContains(itemsCompleted, memberItemId) ){
+                itemsWithPlusOne.push(memberItemId)
+            }
+        }
+        var numItemsWithPlusOne = itemsWithPlusOne.length
+        counts = "<span class='numSessionsDisplay'>"+numItemsWithPlusOne+"</span> / "+counts        
     }
+    
     var labelSpan = $("<span class='clickable'>")
     labelSpan.html(label + " ("+counts+") ")
     /*
