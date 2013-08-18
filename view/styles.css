@@ -29,13 +29,18 @@ body {
 }
 
 #username {
-  white-spcae: nowrap;
+  white-space: nowrap;
 }
 
 label{
 	color:white; 
 }
  
+input[type="radio"] {
+  margin-top: -5px;
+  margin-right: 5px;
+}
+
 .item{
     padding:5px;
     margin: 5px;
