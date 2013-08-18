@@ -238,29 +238,31 @@ handleAddLabelToItem = function(addLabelToItem){
 	var time = addLabelToItem["time"]
 	var itemId = addLabelToItem["itemId"]
 	var labelText = addLabelToItem["labelText"]
-	var itemReference = allData["items"][itemId]
-	//does the label already exist in allData?
-	//if not, create a new label object
-	if( !(labelText in allData["labelList"])){
-		addLabelToLabelList(labelText, user, time)
-	}
-	
-	//attach a reference to that label object	
-	var labelRef = {
-		"label": labelText,
-		"checked": true,
-		"likes" : [],
-		"dislikes" : [],
-		"lastTimeUpdated" : time
-	}
-	itemReference["labels"][labelText] = (labelRef)
-	
-	//update the labelList to say that this label is on this item
-	updateLabelListItemCounts(labelText, itemId, time)
-	
-	//updateActionableFeedback()
-	//updateHierarchy()
-	itemReference["lastUpdateTime"] = time
+    if( itemId in allData["items"] ){
+        var itemReference = allData["items"][itemId]
+        //does the label already exist in allData?
+        //if not, create a new label object
+        if( !(labelText in allData["labelList"])){
+            addLabelToLabelList(labelText, user, time)
+        }
+        
+        //attach a reference to that label object	
+        var labelRef = {
+            "label": labelText,
+            "checked": true,
+            "likes" : [],
+            "dislikes" : [],
+            "lastTimeUpdated" : time
+        }
+        itemReference["labels"][labelText] = (labelRef)
+        
+        //update the labelList to say that this label is on this item
+        updateLabelListItemCounts(labelText, itemId, time)
+        
+        //updateActionableFeedback()
+        //updateHierarchy()
+        itemReference["lastUpdateTime"] = time
+    }
 }
 
 function addLabelToLabelList(labelText, user, time){
@@ -310,24 +312,26 @@ handleRemoveLabelFromItem = function(removeLabelFromItem){
 	var itemId = removeLabelFromItem["itemId"]
 	var labelText = removeLabelFromItem["labelText"]	
 	
-	var itemReference = allData["items"][itemId]
-	//remove label from the item
-	
-	var itemReferenceLabels = itemReference["labels"]
-	if(itemReferenceLabels.hasOwnProperty(labelText) ){
-		delete itemReferenceLabels[labelText]
-	}else{
-		console.log("ERROR 1 - function handleRemoveLabelFromItem, handleUpdatesFromClient.js")
-	}
-	
-	//remove item reference in allData["labelList"]
-	var listOfItemsWithThisLabel = allData["labelList"][labelText]["itemsUsedBy"]
-	var indexOfItem = listOfItemsWithThisLabel.indexOf(itemId)
-	listOfItemsWithThisLabel.splice(indexOfItem, 1) 
-	
-	//updateActionableFeedback()
-	//updateHierarchy()
-	itemReference["lastUpdateTime"] = time
+    if( itemId in allData["items"] ){
+        var itemReference = allData["items"][itemId]
+        //remove label from the item
+        
+        var itemReferenceLabels = itemReference["labels"]
+        if(itemReferenceLabels.hasOwnProperty(labelText) ){
+            delete itemReferenceLabels[labelText]
+        }else{
+            console.log("ERROR 1 - function handleRemoveLabelFromItem, handleUpdatesFromClient.js")
+        }
+        
+        //remove item reference in allData["labelList"]
+        var listOfItemsWithThisLabel = allData["labelList"][labelText]["itemsUsedBy"]
+        var indexOfItem = listOfItemsWithThisLabel.indexOf(itemId)
+        listOfItemsWithThisLabel.splice(indexOfItem, 1) 
+        
+        //updateActionableFeedback()
+        //updateHierarchy()
+        itemReference["lastUpdateTime"] = time
+    }
 }
 
 /////////////////////////////////////
@@ -353,27 +357,29 @@ handleToggleLabelFromItem = function(toggleLabelFromItem){
 	var labelText = toggleLabelFromItem["labelText"]	
 	var checked = toggleLabelFromItem["checked"]
 	
-	var itemReference = allData["items"][itemId]
-	
-	//update item labels
-	itemReference["labels"][labelText]["lastUpdateTime"] = time
-	itemReference["lastUpdateTime"] = time
-	itemReference["labels"][labelText]["checked"] = checked
-	
-	//update itemsUsedBy
-    if(labelText in allData["labelList"]){
-        var itemsUsedBy = allData["labelList"][labelText]["itemsUsedBy"]
-        if(checked && itemsUsedBy.indexOf(itemId) == -1){
-            itemsUsedBy.push(itemId)
+    if( itemId in allData["items"] ){
+        var itemReference = allData["items"][itemId]
+        
+        //update item labels
+        itemReference["labels"][labelText]["lastUpdateTime"] = time
+        itemReference["lastUpdateTime"] = time
+        itemReference["labels"][labelText]["checked"] = checked
+        
+        //update itemsUsedBy
+        if(labelText in allData["labelList"]){
+            var itemsUsedBy = allData["labelList"][labelText]["itemsUsedBy"]
+            if(checked && itemsUsedBy.indexOf(itemId) == -1){
+                itemsUsedBy.push(itemId)
+            }
+            if(!checked && itemsUsedBy.indexOf(itemId) > -1){
+                itemsUsedBy.splice(itemsUsedBy.indexOf(itemId), 1)
+            }
+        }else{
+            console.log("ERROR - handleUpdatesFromClient, handleToggleLabelFromItem - 1")
         }
-        if(!checked && itemsUsedBy.indexOf(itemId) > -1){
-            itemsUsedBy.splice(itemsUsedBy.indexOf(itemId), 1)
-        }
-	}else{
-        console.log("ERROR - handleUpdatesFromClient, handleToggleLabelFromItem - 1")
+        //updateActionableFeedback()
+        //updateHierarchy()
     }
-	//updateActionableFeedback()
-	//updateHierarchy()
 	
 }
 
@@ -395,11 +401,12 @@ handleSessionUpdate = function(markSessionOnItem){
 	var itemId = markSessionOnItem["itemId"]
 	var sessionLabel = markSessionOnItem["sessionLabel"]	
 	
-    
-	var itemReference = allData["items"][itemId]
-    itemReference["lastUpdateTime"] = time
-    
-	itemReference["session"] = sessionLabel
+    if( itemId in allData["items"] ){
+        var itemReference = allData["items"][itemId]
+        itemReference["lastUpdateTime"] = time
+        
+        itemReference["session"] = sessionLabel
+    }
 }
 
 
@@ -423,26 +430,28 @@ handleToggleLabelLiked = function(toggleLabelLiked){
 	var labelText = toggleLabelLiked["labelText"]	
 	var liked = toggleLabelLiked["liked"]	
 	
-	var itemReference = allData["items"][itemId]
-    itemReference["lastUpdateTime"] = time
+    if( itemId in allData["items"] ){
+        var itemReference = allData["items"][itemId]
+        itemReference["lastUpdateTime"] = time
 
-	var usersLiking = itemReference["labels"][labelText]["likes"]
-    //console.log("usersLiking was")
-    //console.log(usersLiking)
-	
-	// first remove all occurrences of the user from the list
-	var i
-	while ((i = usersLiking.indexOf(user)) != -1) {
-		usersLiking.splice(i,1)
-	}
+        var usersLiking = itemReference["labels"][labelText]["likes"]
+        //console.log("usersLiking was")
+        //console.log(usersLiking)
+        
+        // first remove all occurrences of the user from the list
+        var i
+        while ((i = usersLiking.indexOf(user)) != -1) {
+            usersLiking.splice(i,1)
+        }
 
-	// then add back if looking liking move (Act 1 Scene 3)
-	if (liked) {
-		usersLiking.push(user)
-	}
+        // then add back if looking liking move (Act 1 Scene 3)
+        if (liked) {
+            usersLiking.push(user)
+        }
 
-    //console.log("usersLiking is now")
-    //console.log(usersLiking)
+        //console.log("usersLiking is now")
+        //console.log(usersLiking)
+    }
 }
 
 
