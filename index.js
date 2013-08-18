@@ -71,6 +71,9 @@ app.get('/log', function(request, response){
 	response.send(log)
 });
 
+//app.use(express.directory("view/refs"));
+//app.use(express.static("view/refs"));
+
 app.get('/styles.css', function(request, response){
 	response.sendfile('view/styles.css')
 });
