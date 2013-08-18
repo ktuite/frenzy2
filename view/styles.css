@@ -307,16 +307,6 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     font-size: 20px;
 }
 
-.categoryClickable{
-    cursor: pointer;
-    color: blue;
-}
-
-.sessionClickable{
-    cursor: pointer;
-    color: red;
-}
-
 
 .overlay{
     width: 100%;
@@ -349,15 +339,24 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     float: right;
 }
 
+/*
 .systemLabel{
     color: blue;
 }
 .nonSystemLabel{
     color: blue;
 }
+*/
+
+.singletonLabel{
+    color: red;
+}
+.nonSingletonLabel{
+    color: blue;
+}
 
 .sessionLabel{
-    color: red;
+    color: rgb(0, 133, 16);
 }   
 
 #hashtagSummaryContainer{
@@ -422,18 +421,18 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
   vertical-align: top;
 }
 
+.clickable {
+  cursor: pointer;
 
-.clickable-pencil-icon {
+}
+
+.pencil-icon {
   padding: 0px;
   width: 10px;
   height: 10px;
   background-image: url("pencil.png");
   background-size: 100% 100%;
   display: inline-block;
-}
-
-.clickable-pencil-icon:hover {
-  cursor: pointer;
 }
 
 

@@ -323,12 +323,19 @@ function makeInteractiveLabelUI(labelObj, itemId){
 	
     var labelSpan = $('<span>')
     
+    /*
 	if(creator == "system"){
 		labelSpan.addClass("systemLabel")//("color", "blue")
 	}else{
         labelSpan.addClass("nonSystemLabel")
     }
-    
+    */
+    if (labelListObj["itemsUsedBy"].length <= 1) {
+        labelSpan.addClass("singletonLabel")
+    } else {
+        labelSpan.addClass("nonSingletonLabel")        
+    }
+
 
     labelSpan.html(labelText+" ("+numItems+")")
     row.append($('<td class="categoriesDivCategoryLabel">').append(labelSpan))

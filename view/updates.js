@@ -6,7 +6,7 @@ function handleUpdates(result){
     }
 	*/
     //console.log("result")
-	//console.log(result)
+	console.log(result)
     
     var type = result["type"]
     
@@ -342,7 +342,7 @@ function sortSessions(sessionsArray, sortType){
 function createSessionDiv(label, counts){
     var div = $("<div>")
 
-    var span = $("<span class='sessionClickable'>")
+    var span = $("<span class='sessionLabel clickable'>")
     span.text(label + " ("+counts+") ")
 	div.append(span)
 
@@ -491,12 +491,19 @@ function createCategoryLabelDiv(labelObj){
         var numItemsInSession = itemsInSession.length
         counts = "<span class='numSessionsDisplay'>"+numItemsInSession+"</span> / "+counts
     }
-    var labelSpan = $("<span class='categoryClickable'>")
+    var labelSpan = $("<span class='clickable'>")
     labelSpan.html(label + " ("+counts+") ")
+    /*
     if(creator == "system"){
         labelSpan.addClass("systemLabel")
     }else{
         labelSpan.addClass("nonSystemLabel")
+    }
+    */
+    if (labelObj["itemsUsedBy"].length <= 1) {
+        labelSpan.addClass("singletonLabel")
+    } else {
+        labelSpan.addClass("nonSingletonLabel")        
     }
 
     div.append(labelSpan)
@@ -525,7 +532,7 @@ function makeRenameButton(kindOfName, // must be either "session" or "label"
         "session": { uiName: "session", queryType: "renameSession" },
     };
 
-    var renameButton = $('<span class="clickable-pencil-icon"></span>')
+    var renameButton = $('<span class="pencil-icon clickable"></span>')
 
     renameButton.click(function() {
         var newName = window.prompt("Rename this " + variants[kindOfName].uiName + ":", oldName)
