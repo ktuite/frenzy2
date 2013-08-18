@@ -528,19 +528,29 @@ function makeRenameButton(kindOfName, // must be either "session" or "label"
                           oldName // name of session or label that will be renamed by the button
                           ) {
     var variants = {
-        "label": { uiName: "category", queryType: "renameLabel" },
-        "session": { uiName: "session", queryType: "renameSession" },
+        "label": { uiName: "category", queryType: "renameLabel", getExistingNames: function() { return labelList } },
+        "session": { uiName: "session", queryType: "renameSession", getExistingNames: function() { return sessions } },
     };
 
     var renameButton = $('<span class="pencil-icon clickable"></span>')
 
     renameButton.click(function() {
-        var newName = window.prompt("Rename this " + variants[kindOfName].uiName + ":", oldName)
-        if (!newName   // null return value means user cancelled
-            || !(newName.trim()) // blank names are a bad idea
-            || oldName == newName) {
-            return;  // change nothing
+        promptForName = function() {
+            var newName = window.prompt("Rename this " + variants[kindOfName].uiName + ":", oldName)
+            if (!newName   // null return value means user cancelled
+                || !(newName.trim()) // blank names are a bad idea
+                || oldName == newName) {
+                return;  // change nothing
+            }
+
+            if (newName in variants[kindOfName].getExistingNames()) {
+                window.alert(oldName + " is already the name of another " + variants[kindOfName].uiName);
+                return promptForName(); // try again
+            }
+            return newName;
         }
+
+        var newName = promptForName();
 
         console.log("renaming " + oldName + " to " + newName)
 
