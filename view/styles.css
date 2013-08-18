@@ -28,6 +28,10 @@ body {
   padding-left: 5px;
 }
 
+#username {
+  white-spcae: nowrap;
+}
+
 label{
 	color:white; 
 }
@@ -194,7 +198,10 @@ label{
 	padding: 5px;
 	font-size:medium;
 	font-style: bold;
-    border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;    
 }
 
 
