@@ -180,6 +180,7 @@ allData = clone(allDataOriginal)
 allData["deprecatedItems"] = {}
 allData["sessionMaking"] = true
 allData["categories"] = {}
+allData["sessionIds"] = {}
 
 function updateAllDataForAcceptedPapers(listOfAcceptedPapers){    
     allData["acceptedPapers"] = listOfAcceptedPapers

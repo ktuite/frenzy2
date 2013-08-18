@@ -458,3 +458,8 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
  .selectedSessionFilter{
     font-weight: bold;
  }
+
+ .hyperbarButton{
+    width: 76px;
+    height: 44px;
+ }

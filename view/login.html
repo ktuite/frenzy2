@@ -58,20 +58,27 @@
         })
     }
     function login(){
-        var email = $("#email").val().trim()
-        if(email != ""){
-            ajax("signIn", {"email": email}, function(result){ 
-                var res = JSON.parse(result)
-                if(res["success"] == "yes"){
-                    console.log("login success")
-                    //go to /home.html
-                    window.location = "../home.html"
-                }else{
-                    console.log("login failed")
-                    //do nothing?
-                }
-            })
-        }
+        var consentCheckbox = $("#consentCheckbox")
+        if (consentCheckbox.is(':checked')) {
+            var email = $("#email").val().trim()
+            if(email != ""){
+                ajax("signIn", {"email": email}, function(result){ 
+                    var res = JSON.parse(result)
+                    if(res["success"] == "yes"){
+                        console.log("login success")
+                        //go to /home.html
+                        window.location = "../home.html"
+                    }else{
+                        console.log("login failed")
+                        //do nothing?
+                    }
+                })
+            }
+        } else {
+            alert("Please check the box indicating your consent to participate if you would like to continue.")
+        } 
+    
+        
     }
     
     function checkLogin(){
@@ -131,11 +138,28 @@
             <div class="span12" >
                  <div class="row">
                         <div class="span5 box" >
-                            <span class="title"> Categorize Movies </span> <br>
+                            <span class="title"> Categorize Accepted Papers </span> <br>
+                            <p>
+                            After the PC meeting, the chairs will have to put all the accepted papers into sessions.
+                            Having good sessions is essential to the conference experience.  
+                            Papers that are related should be grouped together as much as possible.
+                            </p>
+                            <p>
+                            Session making is hard and you can help by adding meta-data to all the accepted papers.
+                            </p>
+                            <p>
+                            <b>Goal1:</b> Every category must have at least 2 papers in it. (No singleton categories)
+                            </p>
+                            <p>
+                            <b>Goal2:</b> Every paper must be in at least one category with "session making potential"
+                            </p>
                             
                         </div>
                         <div class="span5 box" >
                             <span class="title"> Log in </span> <br>
+                            Data you contribute may be analysed and used as a part of a study<br>
+                            Check here to agree to participate:<br>
+                            <input type="checkbox" name="consent" value="Yes" id="consentCheckbox">I consent to participating<br>
                             email: <input type="text" id="email"></input>  <input type="button" class="btn" id= "loginButton" value="log in"></input>
                             
                         </div>
