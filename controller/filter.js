@@ -22,16 +22,13 @@ getFeedItemsAndOrder = function(query){
     */
     if(queryType == "session"){
 		var label = query["label"]
-		if (label in allData["sessions"]) {
-            itemIds = allData["sessions"][label]["members"]
-        }
+        var sessionObj = lookupDespiteRenaming(allData["sessions"], label, renamedSessionCache)
+        itemIds = sessionObj ? sessionObj["members"] : []
 	}
     //if(queryType == "text"){
     if("text" in query){
         var text = query["text"]
         itemIds = getAllItemIdsWithTextT(text)
-        console.log("text query: " + text)
-        console.log(itemIds.length)
 	}
 	if(queryType == "completed"){
 		itemIds = allData["completion"]["completedItemIds"]
@@ -48,17 +45,17 @@ getFeedItemsAndOrder = function(query){
             var checked = query["checked"]
             
             var label0 =labelsToFilter[0]      
-            var labelObj = allData["labelList"][label0]
+            //var labelObj = allData["labelList"][label0]
             // label might have been renamed or deleted, so return empty list if so
-            var itemIdsForThisLabel = labelObj ? labelObj["itemsUsedBy"] : []
+            var itemIdsForThisLabel = getAllItemIdsWithLabel(label0)
             //itemIds = labelObj["itemsUsedBy"]
             itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
             
             for(var i = 1; i<labelsToFilter.length; i++){
                 
                 var thisLabel = labelsToFilter[i]
-                var thisLabelObj = allData["labelList"][thisLabel]
-                var itemIdsForThisLabel = thisLabelObj ? thisLabelObj["itemsUsedBy"] : []
+                //var thisLabelObj = allData["labelList"][thisLabel]
+                var itemIdsForThisLabel = getAllItemIdsWithLabel(thisLabel)
                 itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
                 
             }
@@ -186,6 +183,15 @@ getAllItemIdsWithTextT = function(text){
 		return x["id"]
 	})
     return itemIdsContainingText
+}
+
+getAllItemIdsWithLabel = function(label){
+    var labelObj = lookupDespiteRenaming(allData["labelList"], label, renamedLabelCache)
+    if (!labelObj) {
+        return []
+    } else {
+        return labelObj["itemsUsedBy"]
+    }
 }
 
 function escapeRegExp(str) {

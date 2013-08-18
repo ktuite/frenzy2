@@ -143,6 +143,7 @@ var checkpoint = require('./controller/checkpoint.js');
 var testingFramework = require('./testing/urlTestingRequest.js');
 var handleUpdatesFromClient = require('./controller/handleUpdatesFromClient.js');
 var calculateCompletedItems = require('./controller/calculateCompletedItems.js');
+var renameCache = require('./controller/renameCache.js');
 var hierarchyHelpers = require('./controller/createHierarchy.js');
 var sessionsHelpers = require('./controller/sessions.js');
 var tfidfHelpers = require('./controller/tfidf.js');
