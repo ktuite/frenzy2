@@ -277,28 +277,27 @@ function takeDownSpinner(){
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <div class="containerLeft">
+<!--           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button> -->
           
           
-          <div class="nav-collapse collapse">
-           
+          <!-- <div class="nav-collapse collapse row"> -->
+           <div class="row">
             
-            <ul class="nav">
+            <ul class="span4" id="topnav-left">
                 <li class="active">
                     <p class="navbar-text" id="username"></p> 
-                    
-                    
                 </li>
             </ul>
             
-            <form class="navbar-form pull-left" id="navBarForm">
-                <input type="button" class="btn" id="showAllCategories" value="Show all"></input>
-                    <input class="span2" type="text" placeholder="search" id="search">
+            <form class="navbar-form pull-left span8" id="navBarForm">
+                <input type="button" class="btn" id="showAllCategories" value="Show all papers"></input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class="span3" type="text" placeholder="search" id="search">
                     <input type="button" class="btn" id="sortSubmit" value= "Search" />
                     
                 <!--

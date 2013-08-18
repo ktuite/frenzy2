@@ -17,9 +17,9 @@ function updateHyperBar(queryResultObj){
     
     var table = $("<table>")
     var tr = $("<tr valign='top'>")
-    var td1 = $("<td width='260px'>")
-    var td2 = $("<td width='400px'>")
-    var td3 = $("<td width='100px'>")
+    var td1 = $("<td width='410px'>")
+    var td2 = $("<td width='200px'>")
+    var td3 = $("<td width='150px'>")
     table.append(tr)
     tr.append(td1)
     tr.append(td2)
@@ -95,8 +95,8 @@ function updateHyperBar(queryResultObj){
 }
 
 function setUpAbstractHideShow(){
-    var expandAbstractionButton = $("<button class='hyperbarButton'>")
-    expandAbstractionButton.html("Expand<br>Abstracts")
+    var expandAbstractionButton = $("<button class='btn hyperbarButton'/>")
+    expandAbstractionButton.html("Expand Abstracts")
     expandAbstractionButton.click(function(){
         $(".item").each(function(t){
             var itemId = $(this).attr("id")            
@@ -106,8 +106,8 @@ function setUpAbstractHideShow(){
         })
     })
     
-    var collapseAbstractionButton = $("<button class='hyperbarButton'>")
-    collapseAbstractionButton.html("Collapse<br>Abstracts")
+    var collapseAbstractionButton = $("<button class='btn hyperbarButton'/>")
+    collapseAbstractionButton.html("Collapse Abstracts")
     collapseAbstractionButton.click(function(){
         $(".item").each(function(t){
             var itemId = $(this).attr("id")            
@@ -120,7 +120,8 @@ function setUpAbstractHideShow(){
 }
 
 function createRefreshButton(){
-    var refreshButton = $("<input type='button' value='refresh' class='hyperbarButton'>")
+    var refreshButton = $("<button class='btn hyperbarButton'/>")
+    refreshButton.html("Refresh")
     refreshButton.click(function(){
         getAllData("synchronous")
     })
