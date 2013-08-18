@@ -32,7 +32,7 @@ function updateHyperBar(queryResultObj){
     }
     
     //session membership filter
-    if(sessionMaking){
+    if(sessionMaking && queryType != "session"){
     
         var sessionFilterOption = "all"
         
@@ -325,7 +325,10 @@ function createHyperbarOverlappingCategoryList(overlappingLabels, alreadyFiltere
             
             wrap = function(divPrime, labelPrime){
                 divPrime.click(function(){
-                    var filteredLabels = clone(query["labels"])
+                    var filteredLabels = []
+                    if("labels" in query){
+                        filteredLabels = clone(query["labels"])
+                    }
                     filteredLabels.push(labelPrime)
                     
                     query["labels"] = filteredLabels
