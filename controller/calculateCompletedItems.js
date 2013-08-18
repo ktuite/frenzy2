@@ -20,7 +20,7 @@ calculateCompletedItems = function(){
     if (allData["sessionMaking"]) {
         // goal for session-making Frenzy: a completed paper has a session 
         isComplete = function(item) {
-            console.log(item["session"])
+            //console.log(item["session"])
             if (item["session"] && item["session"] != "none") {
                 return true
             } else {
