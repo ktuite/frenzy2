@@ -15,17 +15,31 @@ calculateCompletedItems = function(){
         return utils.arrayContains(allData["acceptedPapers"], x["id"])
     })
     */
-    var isComplete = function(item){
-        var allLabels = allData["labelList"]
-        var labelsOnThisItem = item["labels"]
-        for( var label in labelsOnThisItem ){
-            if (labelsOnThisItem[label]["likes"].length > 0 // somebody voted for this label
-                && allLabels[label]["itemsUsedBy"].length > 1 // and the label isn't a singleton
-                ) {
+
+    var isComplete; // defined next
+    if (allData["sessionMaking"]) {
+        // goal for session-making Frenzy: a completed paper has a session 
+        isComplete = function(item) {
+            if (item["session"]) {
                 return true
+            } else {
+                return false
             }
         }
-        return false // couldn't find a label with session-making potential
+    } else {
+        // goal for paper-tagging Frenzy: a completed paper has at least one non-singletone category with a +1 vote 
+        isComplete = function(item){
+            var allLabels = allData["labelList"]
+            var labelsOnThisItem = item["labels"]
+            for( var label in labelsOnThisItem ){
+                if (labelsOnThisItem[label]["likes"].length > 0 // somebody voted for this label
+                    && allLabels[label]["itemsUsedBy"].length > 1 // and the label isn't a singleton
+                    ) {
+                    return true
+                }
+            }
+            return false // couldn't find a label with session-making potential
+        }
     }
 
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, isComplete)

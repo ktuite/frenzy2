@@ -13,23 +13,14 @@ function handleUpdatedCompletion(completion){
 var goalAchievedTime = -1
 
 function goalSetup(){
-    $("#goalDescription").html("Every paper needs to have at least one category with a vote for session-making potential")
+	var goalDescription
+	if (sessionMaking) {
+		goalDescription = "Every paper needs to be in a session."
+	} else {
+	    goalDescription = "Every paper needs to have at least one category with a vote for session-making potential (and with at least 2 papers in the category)."
+	}
+	$("#goalDescription").html(goalDescription)
 }
-/*
-                <div class="row">
-                    <div class="span4" >
-                       <div id ="goalSummaryContainer" class="summaryContainer">
-                            
-                            <b>Goal:</b><br>
-                            <div id="goalDescription">
-                           
-                            </div>
-                            <div id="goalFeedback">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-*/
 
 function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds){
     $("#goalFeedback").empty()
