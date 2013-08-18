@@ -14,12 +14,18 @@ body {
 
 #container{
     background: rgba(105, 105, 105, 0.5);   
-    margin-left: 40px;
 }
 
 .containerLeft{
+    margin-left: 40px;
+}
 
-    
+#topnav-left{
+  margin-bottom: 0;
+}
+
+#username, #navBarForm{
+  padding-left: 5px;
 }
 
 label{
@@ -394,7 +400,14 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
 .likeButton:active, .likeButton.active, .likeButton:hover, .likeButton:focus {
   color: #FFFFFF;
   background-color: #058600; 
+  /* avoid half-filled background-color and animation */
+  background-position: 0px -30px;
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: color 0 ease-in;
+  transition: none;
 }
+
 .likeButton.zero, .likeButton.disabled, .likeButton[disabled] {
   color: #000000;
   background-color: #FFFFFF;
@@ -460,8 +473,8 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
  }
 
  .hyperbarButton{
-    width: 76px;
-    height: 44px;
+    width: 150px;
+    /*height: 44px;*/
  }
  
  .replyList{
