@@ -199,7 +199,8 @@ function setUpTextSearch(){
         if(searchText != ""){
             query = {
                 "type" : "text",
-                "text" : searchText,        
+                "text" : searchText,   
+                
                 "sortOrder" : "creationTime"
             }
             getAllData("synchronous")
@@ -213,7 +214,8 @@ function setUpTextSearch(){
             var searchText = $("#search").val()
             query = {
                 "type" : "text",
-                "text" : searchText,        
+                "text" : searchText, 
+                "labels" : [],    
                 "sortOrder" : "creationTime"
             }
             getAllData("synchronous") 

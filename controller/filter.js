@@ -5,40 +5,28 @@ getFeedItemsAndOrder = function(query){
 	var queryType = query["type"]
 	var itemIds = []
     
-
+    //by default put everything on the queue
+    for( var itemId in allData["items"]){
+			itemIds.push(itemId)
+    }
     
 	//////////////////////////////
 	// SEARCH 
 	//////////////////////////////
+    /*
 	if(queryType == "all"){
 		for( var itemId in allData["items"]){
 			itemIds.push(itemId)
 		}
 	}
-	if(queryType == "label"){
-		var label = query["label"]
-        var labelsToFilter = query["labels"]        
-		var checked = query["checked"]
-        
-        var label0 =labelsToFilter[0]      
-		var itemIds = getAllItemIdsWithLabel(label0)
-        
-        for(var i = 1; i<labelsToFilter.length; i++){
-            
-            var thisLabel = labelsToFilter[i]
-            var thisLabelObj = allData["labelList"][thisLabel]
-            var itemIdsForThisLabel = getAllItemIdsWithLabel(thisLabel)
-            itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
-            
-        }
-	}
-
-	if(queryType == "session"){
+    */
+    if(queryType == "session"){
 		var label = query["label"]
         var sessionObj = lookupDespiteRenaming(allData["sessions"], label, renamedSessionCache)
         itemIds = sessionObj ? sessionObj["members"] : []
 	}
-    if(queryType == "text"){
+    //if(queryType == "text"){
+    if("text" in query){
         var text = query["text"]
         itemIds = getAllItemIdsWithTextT(text)
 	}
@@ -48,6 +36,35 @@ getFeedItemsAndOrder = function(query){
 	if(queryType == "incompleted"){
 		itemIds = allData["completion"]["incompletedItemIds"]
 	}
+    
+	//if(queryType == "label"){
+    if("labels" in query){
+		var label = query["label"]
+        var labelsToFilter = query["labels"]  
+        if(labelsToFilter.length > 0){
+            var checked = query["checked"]
+            
+            var label0 =labelsToFilter[0]      
+            //var labelObj = allData["labelList"][label0]
+            // label might have been renamed or deleted, so return empty list if so
+            var itemIdsForThisLabel = getAllItemIdsWithLabel(label0)
+            //itemIds = labelObj["itemsUsedBy"]
+            itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
+            
+            for(var i = 1; i<labelsToFilter.length; i++){
+                
+                var thisLabel = labelsToFilter[i]
+                //var thisLabelObj = allData["labelList"][thisLabel]
+                var itemIdsForThisLabel = getAllItemIdsWithLabel(thisLabel)
+                itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
+                
+            }
+        }
+        console.log("labels in query: " + labelsToFilter.length)
+        console.log(itemIds.length)
+	}
+
+    console.log(" ")
 
     //////////////////////////////
 	// Session Filter 
@@ -59,7 +76,7 @@ getFeedItemsAndOrder = function(query){
         if("sessionFilter" in query){
             sessionFilter = query["sessionFilter"]
         }
-        console.log("session filter: "+sessionFilter)
+        
         var numAll = itemIds.length 
         var numWithoutSession = 0
         var numWithSession = 0
@@ -85,14 +102,11 @@ getFeedItemsAndOrder = function(query){
         
         
         if(sessionFilter == "withSessions"){
-            console.log("with sessionss")
             itemIds = displayedItemsInSession
         }
         if(sessionFilter == "withoutSessions"){
-            console.log("withOUT sessionss")
             itemIds = displayedItemsNotInSession
         }  
-        console.log("foo")
                        
         numWithoutSession = displayedItemsNotInSession.length
         numWithSession = displayedItemsInSession.length

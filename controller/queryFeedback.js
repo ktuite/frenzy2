@@ -81,12 +81,13 @@ initializeQueryFeedbackObj = function(query, itemIdOrder){
         queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
         
     }
-    /*
+    
     if(queryType == "incompleted"){
         //WORK HERE
-        console.log("error - not implemented: queryFeedback for completed")
+        //console.log("error - not implemented: queryFeedback for completed")
+        queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
     }
-    */
+    
     return queryFeedbackObject
 }
 

@@ -32,7 +32,7 @@ function updateHyperBar(queryResultObj){
     }
     
     //session membership filter
-    if(sessionMaking){
+    if(sessionMaking && queryType != "session"){
     
         var sessionFilterOption = "all"
         
@@ -152,22 +152,25 @@ function createNumResultsDiv(num){
         numResultsText = numResultsText + " in all items"
     }
     
-    if(queryType == "label"){
+    //if(queryType == "label"){
+    if("labels" in query){
         var label = query["label"]
         var labels = query["labels"]
-        var labelsDisplayText = "'"+labels[0]+"'"
-        for(var i = 1; i< labels.length; i++){
-            labelsDisplayText = labelsDisplayText+ " and <br> '"+labels[i]+"'"
+        if( labels.length > 0){
+            var labelsDisplayText = "'"+labels[0]+"'"
+            for(var i = 1; i< labels.length; i++){
+                labelsDisplayText = labelsDisplayText+ " and <br> '"+labels[i]+"'"
+            }
+            numResultsText = numResultsText + " in "+labelsDisplayText
         }
-        numResultsText = numResultsText + " in "+labelsDisplayText
     }
     if(queryType == "session"){
         var label = query["label"]
         numResultsText = numResultsText + " in '"+label+"'"
     } 
-    if(queryType == "text"){
+    if("text" in query){
         var text = query["text"]
-        numResultsText = numResultsText + " containing '"+text+"'"
+        numResultsText = numResultsText + "<br> containing text '"+text+"'"
     }     
     
     if(queryType == "completed"){
@@ -322,16 +325,21 @@ function createHyperbarOverlappingCategoryList(overlappingLabels, alreadyFiltere
             
             wrap = function(divPrime, labelPrime){
                 divPrime.click(function(){
-                    var filteredLabels = clone(query["labels"])
+                    var filteredLabels = []
+                    if("labels" in query){
+                        filteredLabels = clone(query["labels"])
+                    }
                     filteredLabels.push(labelPrime)
-                    console.log(filteredLabels)
                     
+                    query["labels"] = filteredLabels
+                    /*
                     query = {
                         "type" : "label",
                         "label" : labelPrime,
                         "labels" : filteredLabels,
                         "sortOrder" : "mostItems"
                     }
+                    */
                     getAllData("synchronous")
                 })
             }
