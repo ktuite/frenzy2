@@ -105,6 +105,10 @@ app.get('/bootstrap-responsive.css', function(request, response){
     response.sendfile('view/refs/bootstrap/css/bootstrap-responsive.min.css')
 });
 
+app.get('/images/ui-bg_flat_75_ffffff_40x100.png', function(request, response){
+    response.sendfile('view/refs/jquery/jquery-ui-1.10.3/themes/base/images/ui-bg_flat_75_ffffff_40x100.png')
+});
+
 app.get('/spring.jpg', function(request, response){
     response.sendfile('view/spring.jpg')
 });
@@ -276,7 +280,10 @@ function removePaper(itemId){
 
 }
 
-//updateAllDataForAcceptedPapers(acceptedPapers)
+var accepted98 = [
+"cscw100","cscw147","cscw210","cscw223","cscw240","cscw244","cscw248","cscw277","cscw285","cscw295","cscw299","cscw305","cscw348","cscw355","cscw358","cscw387","cscw389","cscw390","cscw395","cscw411","cscw432","cscw471","cscw499","cscw517","cscw530","cscw550","cscw558","cscw566","cscw576","cscw579","cscw609","cscw624","cscw647","cscw668","tochi100","cscw204","cscw317","cscw252","cscw588","cscw130","cscw221","cscw227","cscw234","cscw356","cscw391","cscw241","cscw440","cscw482","cscw526","cscw527","cscw542","cscw559","cscw584","cscw590","cscw608","cscw290","cscw625","cscw602","cscw648","cscw145","cscw178","cscw188","cscw209","cscw243","cscw293","cscw315","cscw254","cscw354","cscw399","cscw253","cscw413","cscw431","cscw228","cscw493","cscw492","cscw369","cscw191","cscw310","cscw494","cscw599","cscw637","cscw663","cscw108","cscw161","cscw222","cscw274","cscw302","cscw211","cscw339","cscw443","cscw119","cscw487","cscw486","cscw597","cscw622","cscw233","cscw409","cscw535"
+]
+updateAllDataForAcceptedPapers(accepted98)
 updateActionableFeedback()
 
 /////////////////////////////////
