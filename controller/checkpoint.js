@@ -1,5 +1,6 @@
-app.get('/checkpoint', function(){ 
+app.get('/checkpoint', function(request, response){ 
 	checkpoint()
+    response.send("checkpointed")
 });  
 
 app.get(/^\/restore\/(\d+)$/, function(request, response) {
@@ -38,7 +39,7 @@ app.get(/^\/restore\/(\d+)$/, function(request, response) {
 
 var checkpoint = function(){
 	writeToFile(allData);
-	console.log("checkpointed")
+	
 }
 
 var writeToFile = function (json){
