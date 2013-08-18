@@ -558,7 +558,7 @@ function makeRenameButton(kindOfName, // must be either "session" or "label"
             if (!newName   // null return value means user cancelled
                 || !(newName.trim()) // blank names are a bad idea
                 || oldName == newName) {
-                return;  // change nothing
+                return undefined;  // change nothing
             }
 
             if (newName in variants[kindOfName].getExistingNames()) {
@@ -569,7 +569,8 @@ function makeRenameButton(kindOfName, // must be either "session" or "label"
         }
 
         var newName = promptForName();
-
+        if (!newName) return
+            
         console.log("renaming " + oldName + " to " + newName)
 
         var myUpdate = {"type": variants[kindOfName].queryType,
