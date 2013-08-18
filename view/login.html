@@ -44,19 +44,15 @@
 
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" >
     <script type = "text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>  
-
+    <script type = "text/javascript" src="utils.js"></script>
     <script type="text/javascript">
 
     function ajax(command, message, callbackFunction) {    
+        message["time"] = getTime()
         $.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
     }
 
-    function testSignIn(){
-        ajax("signIn", {"user": getUsername()}, function(result){ 
-            var res = JSON.parse(result)
-            username = res["user"]
-        })
-    }
+   
     function login(){
         var consentCheckbox = $("#consentCheckbox")
         if (consentCheckbox.is(':checked')) {

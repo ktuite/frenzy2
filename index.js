@@ -67,6 +67,10 @@ app.get('/', function(request, response){
 	response.send(allData)
 });
 
+app.get('/log', function(request, response){
+	response.send(log)
+});
+
 app.get('/styles.css', function(request, response){
 	response.sendfile('view/styles.css')
 });
@@ -182,6 +186,7 @@ allData["sessionMaking"] = true
 allData["categories"] = {}
 allData["sessionIds"] = {}
 
+var log = []
 function updateAllDataForAcceptedPapers(listOfAcceptedPapers){    
     allData["acceptedPapers"] = listOfAcceptedPapers
     var removedItems = []
@@ -284,6 +289,11 @@ app.get('/login.html', function(request, response){
 app.post('/login.html', function(request, response){
     var command = request.body["command"]
 	var args = JSON.parse(request.body["args"])
+    log.push({
+        "page": "login",
+        "command": command,
+        "args": args
+    })
     
     if( command == "checkLogin"){
         res = {"hasEmail": "no"}
@@ -323,9 +333,10 @@ app.post('/home.html', function(request, response){
 	var command = request.body["command"]
 	var args = JSON.parse(request.body["args"])
 	
+    
     if( command == "checkLogin"){
         res = {"hasEmail": "no"}
-
+        
         if (request.session.logged){
             console.log('Welcome back: '+request.session.id)
             //check if there is already an email for this session id
@@ -345,8 +356,13 @@ app.post('/home.html', function(request, response){
 		var query = message["query"]
         var type = message["type"]
 		
-		if(update){
-			update["user"] = request.session.user
+		if(update || type == "synchronous"){
+			//update["user"] = request.session.user
+            log.push({
+                "page": "home",
+                "command": command,
+                "args": args
+            })
 		}
 		
 		var timeSinceLastUpdate = request.session.timeSinceLastUpdate //message["timeSinceLastUpdate"]
@@ -362,6 +378,12 @@ app.post('/home.html', function(request, response){
 		response.send(JSON.stringify(getServerData))
         
 	}else if(command == "signIn"){
+        log.push({
+            "page": "home",
+            "command": command,
+            "args": args
+        })
+    
 		var user = args["user"]
         request.session.user = user
         console.log("signed in as user " + user)
@@ -369,13 +391,6 @@ app.post('/home.html', function(request, response){
 		
 		response.send(JSON.stringify(rtn))
 	}
-	/*
-	else if(command == "filter"){
-		var memberItemIds = JSON.parse(request.body["args"])
-		var memberItemObjs = getMemberItemObjsForIds(memberItemIds)
-		response.send(JSON.stringify(memberItemObjs))
-	}
-	*/
 });
 
 app.post('/acceptedPapers.html', function(request, response){

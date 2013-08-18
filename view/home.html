@@ -65,14 +65,16 @@ var itemsInQueryIveChanged = []
 <link href="/styles.css" rel="stylesheet">
 
 <script type="text/javascript">
-var username = false
 
-function ajax(command, message, callbackFunction) {    
+
+function ajax(command, message, callbackFunction) {   
+    message["user"] = username
+    message["time"] = getTime()
 	$.post(document.location.href, { "command" : command, args : JSON.stringify(message) }, callbackFunction)
 }
 
 function getUsername(){
-	return getTime()
+	return username
 }
 
 function checkLogin(){
@@ -81,7 +83,9 @@ function checkLogin(){
         var hasEmail = res["hasEmail"]
         if(hasEmail == "yes"){
             var email = res["email"]
+            username = email
             setUsername(email)
+            console.log("signed in as: "+username)
         }else{
             //do nothing
             window.location = "../login.html"
@@ -89,7 +93,8 @@ function checkLogin(){
     })
 }
 
-function setUsername(username){
+function setUsername(email){
+    //username = email
     $("#username").text("Welcome, "+username)
 }
 
@@ -122,10 +127,9 @@ function resizeHierarchy(){
 $(document).ready(function(){
     checkLogin()    
     goalSetup()
-	testSignIn()
+	//testSignIn()
 	setDefaultQuery()
     setUpTextSearch()
-    //setUpAbstractHideShow()
    
 	getAllData("synchronous")
     setInterval(function(){ getAllData("asynchronous") },5000);

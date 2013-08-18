@@ -139,7 +139,6 @@ function createSortOptions(querySortOrder){
             radioButton.click(function(){
                 
                 var sortOrder = sortOptionStrings[sortIndex]["sortType"]
-                console.log("sort order: "+sortOrder)
                
                 query["sortOrder"] = sortOrder
                 getAllData("synchronous")
