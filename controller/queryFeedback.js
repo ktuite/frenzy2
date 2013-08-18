@@ -63,7 +63,7 @@ initializeQueryFeedbackObj = function(query, itemIdOrder){
     if(queryType == "session"){
         //WORK HERE
         queryFeedbackObject["labelFeedback"] = initializeLabelFeedbackForLabel(label, itemIdOrder)
-        console.log("error - not implemented: queryFeedback for session")
+        //console.log("error - not implemented: queryFeedback for session")
     }
     if(queryType == "text"){
         //WORK HERE

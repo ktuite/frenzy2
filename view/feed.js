@@ -142,22 +142,24 @@ function createItemDiv(itemObj){
 // LABELS
 /////////////////////////
 function createAddSessionDiv(div, itemObj){
-    div.empty()
-	var session = itemObj["session"]
-    var itemId = itemObj["id"]
+    if(sessionMaking){
+        div.empty()
+        var session = itemObj["session"]
+        var itemId = itemObj["id"]
 
-    //var div = $('<div>')
-    if(session == "none"){
-        var initialText = ""
-        createWithoutSession(div, itemId, initialText)
+        //var div = $('<div>')
+        if(session == "none"){
+            var initialText = ""
+            createWithoutSession(div, itemId, initialText)
+        }
+        else{
+            createWithSession(div, itemId, session)
+        }
+        var lineBreakDiv = $('<div>')
+        var lineBreak = " <br> "
+        $(lineBreakDiv).html(lineBreak)
+        div.append(lineBreakDiv)
     }
-    else{
-        createWithSession(div, itemId, session)
-    }
-    var lineBreakDiv = $('<div>')
-    var lineBreak = " <br> "
-    $(lineBreakDiv).html(lineBreak)
-    div.append(lineBreakDiv)
     //return div
 }
 function createWithoutSession(div, itemId, initialText){
@@ -334,6 +336,12 @@ function makeInteractiveLabelUI(labelObj, itemId){
         labelSpan.addClass("singletonLabel")
     } else {
         labelSpan.addClass("nonSingletonLabel")        
+    }
+    
+    if (labelChecked) {
+        labelSpan.addClass("labelChecked")
+    } else {
+        labelSpan.addClass("labelUnchecked")        
     }
 
 

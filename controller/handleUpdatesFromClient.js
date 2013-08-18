@@ -238,7 +238,6 @@ handleAddLabelToItem = function(addLabelToItem){
 	var time = addLabelToItem["time"]
 	var itemId = addLabelToItem["itemId"]
 	var labelText = addLabelToItem["labelText"]
-	console.log(addLabelToItem)
 	var itemReference = allData["items"][itemId]
 	//does the label already exist in allData?
 	//if not, create a new label object
