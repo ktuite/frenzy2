@@ -14,14 +14,27 @@ function updateHyperBar(queryResultObj){
     var numResultsDiv = createNumResultsDiv(numResults)
     searchFeedbackContainer.append(numResultsDiv)
     
+    var buttonDiv = $("<div id='hyperbarButtonDiv'>")
+    searchFeedbackContainer.append(buttonDiv)
     //Refresh button
     var refreshButton = createRefreshButton()    
-    searchFeedbackContainer.append(refreshButton)
+    buttonDiv.append(refreshButton)
+    buttonDiv.append("<br>")
+    
+    //expand, collapse
+    var abstractButtons = setUpAbstractHideShow()
+    var expandAbstractionButton = abstractButtons[0]
+    var collapseAbstractionButton = abstractButtons[1]
+    buttonDiv.append(expandAbstractionButton)
+    buttonDiv.append("<br>")
+    buttonDiv.append(collapseAbstractionButton)
+    
     
     //Sort options
-    var sortOptions = createSortOptions(querySortOrder)
-    searchFeedbackContainer.append(sortOptions)    
-    
+    if( !sessionMaking){
+        var sortOptions = createSortOptions(querySortOrder)
+        searchFeedbackContainer.append(sortOptions)    
+    }
     //label filter 
     if( "labelFeedback" in queryFeedbackObj){
         var labelFeedback = queryFeedbackObj["labelFeedback"]
@@ -53,6 +66,32 @@ function updateHyperBar(queryResultObj){
     $("#resultsUnderlay").height(searchFeedbackHeight + 20)
     
     
+}
+
+function setUpAbstractHideShow(){
+    var expandAbstractionButton = $("<button>")
+    expandAbstractionButton.html("Expand<br>Abstracts")
+    expandAbstractionButton.click(function(){
+        $(".item").each(function(t){
+            var itemId = $(this).attr("id")            
+            $("#short-abstract-"+itemId).hide()
+            $("#full-abstract-"+itemId).show()
+            
+        })
+    })
+    
+    var collapseAbstractionButton = $("<button>")
+    collapseAbstractionButton.html("Expand<br>Abstracts")
+    collapseAbstractionButton.click(function(){
+        $(".item").each(function(t){
+            var itemId = $(this).attr("id")            
+            $("#short-abstract-"+itemId).show()
+            $("#full-abstract-"+itemId).hide()
+            
+        })    
+    })
+    console.log("expandAbstractionButton")
+    return [expandAbstractionButton, collapseAbstractionButton]
 }
 
 function createRefreshButton(){
@@ -129,9 +168,9 @@ function createNumResultsDiv(num){
     //N items (with sessions/ without sessions) in 
     //(all times OR in categories list, in session, containing text)
     var numResultsDiv = $("<div class='numResults'>")
-    var numResultsText = num+" Items"
+    var numResultsText = num+" papers"
     if(num == 1){
-        numResultsText = num+" Item"
+        numResultsText = num+" paper"
     }
     var queryType = query["type"]
     
@@ -149,7 +188,7 @@ function createNumResultsDiv(num){
     }
     
     if(queryType == "all"){
-        numResultsText = numResultsText + " in all items"
+        numResultsText = numResultsText + " in entire collection"
     }
     
     //if(queryType == "label"){
@@ -200,9 +239,9 @@ function createSessionFilter(defaultFilter){
         
     
     
-    var allItemsText = "All Items ("+members.length+")"
-    var allItemsNeedingSessions = "Only items needing sessions ("+numWithoutSession+")"
-    var allItemsHavingSessions = "Only items in sessions ("+numWithSession+")"
+    var allItemsText = "All papers ("+members.length+")"
+    var allItemsNeedingSessions = "Papers needing sessions ("+numWithoutSession+")"
+    var allItemsHavingSessions = "Papers in sessions ("+numWithSession+")"
     
     
     div.append("Showing: <br>")
@@ -217,16 +256,24 @@ function createSessionFilter(defaultFilter){
     for(var index in sessionFilterOptions){
         var sessionFilterString = sessionFilterOptions[index]["name"]
         var sessionFilterType = sessionFilterOptions[index]["filter"]
+        var sessionFilterStringSpan = "<span>"+sessionFilterString+"</span><br>"
          
         var sessionFilterRadio = $("<input type='radio'  name='sessionFilter' value='"+sessionFilterType+"'>")
         
         if(sessionFilterType == defaultFilter){
             sessionFilterRadio.prop("checked", true)
+            sessionFilterStringSpan = "<span class='selectedSessionFilter'>"+sessionFilterString+"</span><br>"
         }
         
         wrap = function(sessionFilterRadioPrime, sessionFilterTypePrime){
             sessionFilterRadioPrime.click(function(){
                 query["sessionFilter"] = sessionFilterTypePrime
+                /*
+                $(".sessionFilterText").each(function(){
+                    $(this).removeClass("selectedFilter")
+                })
+                $('#'+sessionFilterTypePrime).addClass("selectedFilter")
+                */
                 getAllData("synchronous")
 
             })
@@ -234,7 +281,7 @@ function createSessionFilter(defaultFilter){
         wrap(sessionFilterRadio, sessionFilterType)
         
         div.append(sessionFilterRadio)
-        div.append(sessionFilterString+"<br>")
+        div.append(sessionFilterStringSpan)
     }
     
     return div

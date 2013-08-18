@@ -59,12 +59,8 @@ getFeedItemsAndOrder = function(query){
                 itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
                 
             }
-        }
-        console.log("labels in query: " + labelsToFilter.length)
-        console.log(itemIds.length)
+        }        
 	}
-
-    console.log(" ")
 
     //////////////////////////////
 	// Session Filter 

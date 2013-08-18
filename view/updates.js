@@ -6,7 +6,7 @@ function handleUpdates(result){
     }
 	*/
     //console.log("result")
-	console.log(result)
+	//console.log(result)
     
     var type = result["type"]
     

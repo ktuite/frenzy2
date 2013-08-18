@@ -448,6 +448,13 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
  }
  
  .numSessionsDisplay{
-    color: red;
+    color: rgb(0, 133, 16);
  }
  
+ #hyperbarButtonDiv{
+    float: right;
+ }
+ 
+ .selectedSessionFilter{
+    font-weight: bold;
+ }

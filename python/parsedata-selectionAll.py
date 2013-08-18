@@ -132,36 +132,18 @@ for line in lines[1:] :
         title = line[2]
         authorList = line[8]
         
-        
         authorAndAffiliationList = []
         startingIndex = 9
         
-        #print authorList
-        
         numAuthors = len(authorList.split(","))
-        #print numAuthors
         for i in range(numAuthors):
             index = i*9 +startingIndex
-            #print "index", index
-            
             givenName = line[index]
-            #print "givenName", givenName
-            
-            middleInitial = line[index+1]
-            #print "middleInitial", middleInitial
-            
+            middleInitial = line[index+1]            
             familyName = line[index+2]
-            #print "familyName", familyName
-            #email
-            #aff1 = line[index+4]
-            #print "aff1", aff1
-            
             aff2 = line[index+5]
-            #print "aff2", aff2
             authorText = givenName+" "+familyName+", "+ aff2
-            #print "author text: ",authorText
             authorAndAffiliationList.append(authorText)
-            
         
         #print "authorList",authorList
         keywords =  line[99]
@@ -174,23 +156,7 @@ for line in lines[1:] :
         splitKeywords = map( lambda x: x.strip() , keywords.split(";"))        
         newItem = createItem(id, itemHtml, itemContent, counter, splitKeywords)
         counter += 1	
-
-        '''
-        only use the items if they have a keyword in the list
-        
-        containsAGoodLabel = False
-        for keyword in splitKeywords:
-            print keyword
-            if keyword in goodLabels:
-                containsAGoodLabel = True
-                if keyword in allKeywords:
-                    if id not in allKeywords[keyword]:
-                        allKeywords[keyword].append(id)
-                else:
-                    allKeywords[keyword] = [id]
-        if containsAGoodLabel:    
-            allData["items"][id] = newItem  
-        '''   
+ 
         
         allData["items"][id] = newItem
         #print allData["items"][id]
@@ -200,6 +166,20 @@ for line in lines[1:] :
             else:
                 allKeywords[s] = [id]            
 
+id = "tochi100"
+title = "Peer and Self Assessment in Massive Online Classes"
+authorList = "" 
+abstract = "Peer and self assessment offer an opportunity to scale assessment and learning to global classrooms. This paper reports our experiences with two iterations of the first large online class to use peer and self assessment. In this class, peer grades correlated highly with staff-assigned grade. The second iteration had 42.9% of students' grades within 5% of the staff grade, and 65.5% within 10%. On average, students assessed their work 7% higher than staff did. Students rated peers' work from their own country 3.6% higher. We found that giving students feedback about their grading bias increased subsequent accuracy. We introduce short, customizable feedback snippets that cover common issues with assignments, providing students more qualitative peer feedback. Finally, we introduce a data-driven approach that highlights high-variance rubric items---rubrics using parallel sentence structure, unambiguous wording and well-specified dimensions have lower variance. After revising rubrics, median grading error decreased from 12.4% to 9.9%."    
+authorAndAffiliationList = ["Chinmay Kulkarni, Stanford University"]           
+itemContent = createItemContent(id, title, authorList, abstract, authorAndAffiliationList)
+itemHtml = createHTML(id, title, authorList, abstract)
+
+
+splitKeywords = []     
+newItem = createItem(id, itemHtml, itemContent, counter, splitKeywords)
+counter += 1
+allData["items"][id] = newItem	                
+                
 #put all the keywords in the allData["labelList"]
 #initialize TFIDF
 for k in allKeywords:
@@ -223,45 +203,10 @@ for k in allKeywords:
     '''
 print "counter: ", counter
 
-
-    
-def findOutItemsIn10to30():
-    midsizeCategories = []
-    allLabels = []
-    for label in allKeywords:
-        
-        items = allKeywords[label]
-        numItems = len(items)
-        allLabels.append({"label":label, "numItems":numItems})
-        print numItems, label
-        if numItems >= 10 and numItems <= 30 :
-            midsizeCategories.append(label)
-        
-    pp.pprint(sorted(allLabels, key=lambda label: label["numItems"], reverse=True))
-    
-    itemsWith = []
-    itemsWithout = []
-    for itemId in allData["items"]:
-        #labels = itemObj["labels"]
-        labels = allData["items"][itemId]["labels"]
-        inWith = False
-        for label in labels:
-            #pp.pprint(label)
-            if label in midsizeCategories:
-                inWith = True
-        if inWith:
-            itemsWith.append(itemId)
-        else:
-            itemsWithout.append(itemId)
-
-    print "itemsWith: ", len(itemsWith)        
-    print "itemsWithout: ", len(itemsWithout)        
-#findOutItemsIn10to30()
-
     
 print "JSON parsed!"  
 # Save the JSON  
-f = open( '../testing/cscwDataAllcut1.js', 'w')  
+f = open( '../testing/cscwDataAllcut1withextra.js', 'w')  
 
 allData = json.dumps(allData, ensure_ascii=False) 
 f.write("allDataOriginal = "+allData)  

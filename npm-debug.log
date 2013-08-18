@@ -1,0 +1,738 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'madeye' ]
+2 info using npm@1.1.65
+3 info using node@v0.8.14
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose read json C:\Users\Lydia\AppData\Roaming\npm\package.json
+6 verbose read json C:\Users\Lydia\AppData\Roaming\npm\package.json
+7 verbose cache add [ 'madeye', null ]
+8 silly cache add name=undefined spec="madeye" args=["madeye",null]
+9 verbose parsed url { pathname: 'madeye', path: 'madeye', href: 'madeye' }
+10 silly lockFile aabdc0b5-madeye madeye
+11 verbose lock madeye C:\Users\Lydia\AppData\Roaming\npm-cache\aabdc0b5-madeye.lock
+12 silly lockFile aabdc0b5-madeye madeye
+13 verbose addNamed [ 'madeye', '' ]
+14 verbose addNamed [ null, '' ]
+15 silly lockFile 83ffe730-madeye madeye@
+16 verbose lock madeye@ C:\Users\Lydia\AppData\Roaming\npm-cache\83ffe730-madeye.lock
+17 silly addNameRange { name: 'madeye', range: '', hasData: false }
+18 verbose url raw madeye
+19 verbose url resolving [ 'https://registry.npmjs.org/', './madeye' ]
+20 verbose url resolved https://registry.npmjs.org/madeye
+21 info trying registry request attempt 1 at 20:27:27
+22 http GET https://registry.npmjs.org/madeye
+23 http 200 https://registry.npmjs.org/madeye
+24 silly registry.get cb [ 200,
+24 silly registry.get   { vary: 'Accept',
+24 silly registry.get     server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+24 silly registry.get     etag: '"8OHYI59SGHFF1Y1TF4V0GN22B"',
+24 silly registry.get     date: 'Sun, 18 Aug 2013 00:27:28 GMT',
+24 silly registry.get     'content-type': 'application/json',
+24 silly registry.get     'content-length': '40683' } ]
+25 silly addNameRange number 2 { name: 'madeye', range: '', hasData: true }
+26 silly addNameRange versions [ 'madeye',
+26 silly addNameRange   [ '0.0.1',
+26 silly addNameRange     '0.0.2',
+26 silly addNameRange     '0.0.3',
+26 silly addNameRange     '0.0.4',
+26 silly addNameRange     '0.0.5',
+26 silly addNameRange     '0.0.6',
+26 silly addNameRange     '0.0.7',
+26 silly addNameRange     '0.0.8',
+26 silly addNameRange     '0.0.9',
+26 silly addNameRange     '0.0.10',
+26 silly addNameRange     '0.0.11',
+26 silly addNameRange     '0.0.13',
+26 silly addNameRange     '0.0.14',
+26 silly addNameRange     '0.0.15',
+26 silly addNameRange     '0.0.16',
+26 silly addNameRange     '0.0.17',
+26 silly addNameRange     '0.0.18',
+26 silly addNameRange     '0.0.19',
+26 silly addNameRange     '0.0.20',
+26 silly addNameRange     '0.0.21',
+26 silly addNameRange     '0.0.23',
+26 silly addNameRange     '0.0.24',
+26 silly addNameRange     '0.0.25',
+26 silly addNameRange     '0.0.26',
+26 silly addNameRange     '0.1.0',
+26 silly addNameRange     '0.1.1',
+26 silly addNameRange     '0.1.2',
+26 silly addNameRange     '0.1.3',
+26 silly addNameRange     '0.1.4',
+26 silly addNameRange     '0.1.5',
+26 silly addNameRange     '0.1.6',
+26 silly addNameRange     '0.1.7' ] ]
+27 verbose addNamed [ 'madeye', '0.1.7' ]
+28 verbose addNamed [ '0.1.7', '0.1.7' ]
+29 silly lockFile 3dd99a71-madeye-0-1-7 madeye@0.1.7
+30 verbose lock madeye@0.1.7 C:\Users\Lydia\AppData\Roaming\npm-cache\3dd99a71-madeye-0-1-7.lock
+31 silly lockFile 0e3c742d-pmjs-org-madeye-madeye-0-1-7-tgz https://registry.npmjs.org/madeye/-/madeye-0.1.7.tgz
+32 verbose lock https://registry.npmjs.org/madeye/-/madeye-0.1.7.tgz C:\Users\Lydia\AppData\Roaming\npm-cache\0e3c742d-pmjs-org-madeye-madeye-0-1-7-tgz.lock
+33 verbose addRemoteTarball [ 'https://registry.npmjs.org/madeye/-/madeye-0.1.7.tgz',
+33 verbose addRemoteTarball   'b1d15436f08c70292e4c7d59796306beec4d29f9' ]
+34 info retry fetch attempt 1 at 20:27:29
+35 verbose fetch to= C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\tmp.tgz
+36 http GET https://registry.npmjs.org/madeye/-/madeye-0.1.7.tgz
+37 http 200 https://registry.npmjs.org/madeye/-/madeye-0.1.7.tgz
+38 silly shasum updated bytes 24738
+39 info shasum b1d15436f08c70292e4c7d59796306beec4d29f9
+39 info shasum C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\tmp.tgz
+40 verbose tar unpack C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\tmp.tgz
+41 silly lockFile 901b84cf-49117-0-5517817421350628-package C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\package
+42 verbose lock C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\package C:\Users\Lydia\AppData\Roaming\npm-cache\901b84cf-49117-0-5517817421350628-package.lock
+43 silly gunzTarPerm modes [ '755', '644' ]
+44 silly gunzTarPerm extractEntry package.json
+45 silly gunzTarPerm extractEntry .npmignore
+46 silly gunzTarPerm extractEntry README.md
+47 silly gunzTarPerm extractEntry madeye-common/package.json
+48 silly gunzTarPerm extractEntry madeye-common/.npmignore
+49 silly gunzTarPerm extractEntry madeye-common/README.md
+50 silly gunzTarPerm extractEntry madeye-common/package.js
+51 silly gunzTarPerm extractEntry madeye-common/common.js
+52 silly gunzTarPerm extractEntry madeye-common/postMeteor.js
+53 silly gunzTarPerm extractEntry madeye-common/preMeteor.js
+54 silly gunzTarPerm extractEntry madeye-common/tests/mock/MockSocket.coffee
+55 silly gunzTarPerm extractEntry madeye-common/tests/mock/mockResponse.coffee
+56 silly gunzTarPerm extractEntry madeye-common/tests/mock/MockIoSocket.coffee
+57 silly gunzTarPerm extractEntry madeye-common/tests/unit/crc32Test.coffee
+58 silly gunzTarPerm extractEntry madeye-common/bin/mochac
+59 silly gunzTarPerm extractEntry madeye-common/bin/init
+60 silly gunzTarPerm extractEntry madeye-common/bin/run_tests
+61 silly gunzTarPerm extractEntry madeye-common/src/crc32.js
+62 silly gunzTarPerm extractEntry madeye-common/src/cors.coffee
+63 silly gunzTarPerm extractEntry madeye-common/src/Settings.coffee
+64 silly gunzTarPerm extractEntry madeye-common/src/fileUtils.coffee
+65 silly gunzTarPerm extractEntry madeye-common/src/errors.coffee
+66 silly gunzTarPerm extractEntry madeye-common/src/messages.coffee
+67 silly gunzTarPerm extractEntry tests/mock/mockProjectFiles.coffee
+68 silly gunzTarPerm extractEntry tests/mock/mockHttpClient.coffee
+69 silly gunzTarPerm extractEntry tests/util/fileUtils.coffee
+70 silly gunzTarPerm extractEntry tests/unit/dementorTest.coffee
+71 silly gunzTarPerm extractEntry tests/unit/projectFilesTest.coffee
+72 silly gunzTarPerm extractEntry tests/unit/fileTreeTest.coffee
+73 silly gunzTarPerm extractEntry tests/unit/ignoreRulesTest.coffee
+74 silly gunzTarPerm extractEntry .gitmodules
+75 silly gunzTarPerm extractEntry npm-shrinkwrap.json
+76 silly gunzTarPerm extractEntry bin/madeye.js
+77 silly gunzTarPerm extractEntry bin/mochac
+78 silly gunzTarPerm extractEntry bin/releasePrep
+79 silly gunzTarPerm extractEntry bin/madeye
+80 silly gunzTarPerm extractEntry bin/init
+81 silly gunzTarPerm extractEntry bin/run_tests
+82 silly gunzTarPerm extractEntry app.coffee
+83 silly gunzTarPerm extractEntry src/httpClient.coffee
+84 silly gunzTarPerm extractEntry src/fileTree.coffee
+85 silly gunzTarPerm extractEntry src/projectFiles.coffee
+86 silly gunzTarPerm extractEntry src/ignoreRules.coffee
+87 silly gunzTarPerm extractEntry src/constants.coffee
+88 silly gunzTarPerm extractEntry src/dementor.coffee
+89 verbose read json C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\package\package.json
+90 silly lockFile 901b84cf-49117-0-5517817421350628-package C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\package
+91 verbose from cache C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\package\package.json
+92 verbose tar pack [ 'C:\\Users\\Lydia\\AppData\\Roaming\\npm-cache\\madeye\\0.1.7\\package.tgz',
+92 verbose tar pack   'C:\\Users\\Lydia\\AppData\\Local\\Temp\\npm-8688\\1376785649117-0.5517817421350628\\package' ]
+93 verbose tarball C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+94 verbose folder C:\Users\Lydia\AppData\Local\Temp\npm-8688\1376785649117-0.5517817421350628\package
+95 silly lockFile 6347d744-m-cache-madeye-0-1-7-package-tgz C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+96 verbose lock C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz C:\Users\Lydia\AppData\Roaming\npm-cache\6347d744-m-cache-madeye-0-1-7-package-tgz.lock
+97 silly lockFile 6347d744-m-cache-madeye-0-1-7-package-tgz C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+98 silly lockFile dd703b29-g-npm-cache-madeye-0-1-7-package C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package
+99 verbose lock C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package C:\Users\Lydia\AppData\Roaming\npm-cache\dd703b29-g-npm-cache-madeye-0-1-7-package.lock
+100 silly lockFile dd703b29-g-npm-cache-madeye-0-1-7-package C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package
+101 verbose tar unpack C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+102 silly lockFile dd703b29-g-npm-cache-madeye-0-1-7-package C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package
+103 verbose lock C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package C:\Users\Lydia\AppData\Roaming\npm-cache\dd703b29-g-npm-cache-madeye-0-1-7-package.lock
+104 silly gunzTarPerm modes [ '755', '644' ]
+105 silly gunzTarPerm extractEntry package.json
+106 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+107 silly gunzTarPerm extractEntry .npmignore
+108 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+109 silly gunzTarPerm extractEntry README.md
+110 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+111 silly gunzTarPerm extractEntry .gitmodules
+112 silly gunzTarPerm modified mode [ '.gitmodules', 438, 420 ]
+113 silly gunzTarPerm extractEntry app.coffee
+114 silly gunzTarPerm modified mode [ 'app.coffee', 438, 420 ]
+115 silly gunzTarPerm extractEntry bin/madeye.js
+116 silly gunzTarPerm modified mode [ 'bin/madeye.js', 438, 420 ]
+117 silly gunzTarPerm extractEntry bin/init
+118 silly gunzTarPerm modified mode [ 'bin/init', 438, 420 ]
+119 silly gunzTarPerm extractEntry bin/madeye
+120 silly gunzTarPerm modified mode [ 'bin/madeye', 438, 420 ]
+121 silly gunzTarPerm extractEntry bin/mochac
+122 silly gunzTarPerm modified mode [ 'bin/mochac', 438, 420 ]
+123 silly gunzTarPerm extractEntry bin/releasePrep
+124 silly gunzTarPerm modified mode [ 'bin/releasePrep', 438, 420 ]
+125 silly gunzTarPerm extractEntry bin/run_tests
+126 silly gunzTarPerm modified mode [ 'bin/run_tests', 438, 420 ]
+127 silly gunzTarPerm extractEntry madeye-common/package.json
+128 silly gunzTarPerm modified mode [ 'madeye-common/package.json', 438, 420 ]
+129 silly gunzTarPerm extractEntry madeye-common/.npmignore
+130 silly gunzTarPerm modified mode [ 'madeye-common/.npmignore', 438, 420 ]
+131 silly gunzTarPerm extractEntry madeye-common/README.md
+132 silly gunzTarPerm modified mode [ 'madeye-common/README.md', 438, 420 ]
+133 silly gunzTarPerm extractEntry madeye-common/common.js
+134 silly gunzTarPerm modified mode [ 'madeye-common/common.js', 438, 420 ]
+135 silly gunzTarPerm extractEntry madeye-common/package.js
+136 silly gunzTarPerm modified mode [ 'madeye-common/package.js', 438, 420 ]
+137 silly gunzTarPerm extractEntry madeye-common/postMeteor.js
+138 silly gunzTarPerm modified mode [ 'madeye-common/postMeteor.js', 438, 420 ]
+139 silly gunzTarPerm extractEntry madeye-common/preMeteor.js
+140 silly gunzTarPerm modified mode [ 'madeye-common/preMeteor.js', 438, 420 ]
+141 silly gunzTarPerm extractEntry madeye-common/bin/init
+142 silly gunzTarPerm modified mode [ 'madeye-common/bin/init', 438, 420 ]
+143 silly gunzTarPerm extractEntry madeye-common/bin/mochac
+144 silly gunzTarPerm modified mode [ 'madeye-common/bin/mochac', 438, 420 ]
+145 silly gunzTarPerm extractEntry madeye-common/bin/run_tests
+146 silly gunzTarPerm modified mode [ 'madeye-common/bin/run_tests', 438, 420 ]
+147 silly gunzTarPerm extractEntry madeye-common/src/crc32.js
+148 silly gunzTarPerm modified mode [ 'madeye-common/src/crc32.js', 438, 420 ]
+149 silly gunzTarPerm extractEntry madeye-common/src/cors.coffee
+150 silly gunzTarPerm modified mode [ 'madeye-common/src/cors.coffee', 438, 420 ]
+151 silly gunzTarPerm extractEntry madeye-common/src/errors.coffee
+152 silly gunzTarPerm modified mode [ 'madeye-common/src/errors.coffee', 438, 420 ]
+153 silly gunzTarPerm extractEntry madeye-common/src/fileUtils.coffee
+154 silly gunzTarPerm modified mode [ 'madeye-common/src/fileUtils.coffee', 438, 420 ]
+155 silly gunzTarPerm extractEntry madeye-common/src/messages.coffee
+156 silly gunzTarPerm modified mode [ 'madeye-common/src/messages.coffee', 438, 420 ]
+157 silly gunzTarPerm extractEntry madeye-common/src/Settings.coffee
+158 silly gunzTarPerm modified mode [ 'madeye-common/src/Settings.coffee', 438, 420 ]
+159 silly gunzTarPerm extractEntry madeye-common/tests/mock/MockIoSocket.coffee
+160 silly gunzTarPerm modified mode [ 'madeye-common/tests/mock/MockIoSocket.coffee', 438, 420 ]
+161 silly gunzTarPerm extractEntry madeye-common/tests/mock/mockResponse.coffee
+162 silly gunzTarPerm modified mode [ 'madeye-common/tests/mock/mockResponse.coffee', 438, 420 ]
+163 silly gunzTarPerm extractEntry madeye-common/tests/mock/MockSocket.coffee
+164 silly gunzTarPerm modified mode [ 'madeye-common/tests/mock/MockSocket.coffee', 438, 420 ]
+165 silly gunzTarPerm extractEntry madeye-common/tests/unit/crc32Test.coffee
+166 silly gunzTarPerm modified mode [ 'madeye-common/tests/unit/crc32Test.coffee', 438, 420 ]
+167 silly gunzTarPerm extractEntry npm-shrinkwrap.json
+168 silly gunzTarPerm modified mode [ 'npm-shrinkwrap.json', 438, 420 ]
+169 silly gunzTarPerm extractEntry src/constants.coffee
+170 silly gunzTarPerm modified mode [ 'src/constants.coffee', 438, 420 ]
+171 silly gunzTarPerm extractEntry src/dementor.coffee
+172 silly gunzTarPerm modified mode [ 'src/dementor.coffee', 438, 420 ]
+173 silly gunzTarPerm extractEntry src/fileTree.coffee
+174 silly gunzTarPerm modified mode [ 'src/fileTree.coffee', 438, 420 ]
+175 silly gunzTarPerm extractEntry src/httpClient.coffee
+176 silly gunzTarPerm modified mode [ 'src/httpClient.coffee', 438, 420 ]
+177 silly gunzTarPerm extractEntry src/ignoreRules.coffee
+178 silly gunzTarPerm modified mode [ 'src/ignoreRules.coffee', 438, 420 ]
+179 silly gunzTarPerm extractEntry src/projectFiles.coffee
+180 silly gunzTarPerm modified mode [ 'src/projectFiles.coffee', 438, 420 ]
+181 silly gunzTarPerm extractEntry tests/mock/mockHttpClient.coffee
+182 silly gunzTarPerm modified mode [ 'tests/mock/mockHttpClient.coffee', 438, 420 ]
+183 silly gunzTarPerm extractEntry tests/mock/mockProjectFiles.coffee
+184 silly gunzTarPerm modified mode [ 'tests/mock/mockProjectFiles.coffee', 438, 420 ]
+185 silly gunzTarPerm extractEntry tests/unit/dementorTest.coffee
+186 silly gunzTarPerm modified mode [ 'tests/unit/dementorTest.coffee', 438, 420 ]
+187 silly gunzTarPerm extractEntry tests/unit/fileTreeTest.coffee
+188 silly gunzTarPerm modified mode [ 'tests/unit/fileTreeTest.coffee', 438, 420 ]
+189 silly gunzTarPerm extractEntry tests/unit/ignoreRulesTest.coffee
+190 silly gunzTarPerm modified mode [ 'tests/unit/ignoreRulesTest.coffee', 438, 420 ]
+191 silly gunzTarPerm extractEntry tests/unit/projectFilesTest.coffee
+192 silly gunzTarPerm modified mode [ 'tests/unit/projectFilesTest.coffee', 438, 420 ]
+193 silly gunzTarPerm extractEntry tests/util/fileUtils.coffee
+194 silly gunzTarPerm modified mode [ 'tests/util/fileUtils.coffee', 438, 420 ]
+195 verbose read json C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package\package.json
+196 silly lockFile dd703b29-g-npm-cache-madeye-0-1-7-package C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package
+197 silly shasum updated bytes 24243
+198 info shasum e174ad6f14712db957caa2280964161d335ec97b
+198 info shasum C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+199 verbose from cache C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package\package.json
+200 verbose chmod C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz 644
+201 silly chown skipping for windows C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+202 silly lockFile 0e3c742d-pmjs-org-madeye-madeye-0-1-7-tgz https://registry.npmjs.org/madeye/-/madeye-0.1.7.tgz
+203 silly lockFile 3dd99a71-madeye-0-1-7 madeye@0.1.7
+204 silly lockFile 83ffe730-madeye madeye@
+205 silly resolved [ { name: 'madeye',
+205 silly resolved     bin: { madeye: 'bin/madeye' },
+205 silly resolved     version: '0.1.7',
+205 silly resolved     private: false,
+205 silly resolved     engines: { node: '>=0.8.21' },
+205 silly resolved     dependencies:
+205 silly resolved      { 'coffee-script': '1.6.3',
+205 silly resolved        underscore: '1.5.1',
+205 silly resolved        'node-uuid': '1.4.0',
+205 silly resolved        request: '2.22.0',
+205 silly resolved        commander: '1.3.0',
+205 silly resolved        'cli-color': '0.2.2',
+205 silly resolved        'socket.io-client': '0.9.16',
+205 silly resolved        async: '0.2.9',
+205 silly resolved        chokidar: '0.6.2',
+205 silly resolved        minimatch: '0.2.12',
+205 silly resolved        'underscore.string': '2.3.3' },
+205 silly resolved     devDependencies: { wrench: '~1.4.2', mocha: '~1.12.0', chai: '~1.6.0' },
+205 silly resolved     readme: 'MadEye\n======\n\nMadEye lets you share your coding projects with your friends.  Run it in the\nproject\'s directory, and then go to the madeye link.  Everyone can edit in \nreal-time, like Google Docs.  When they save, the file is saved back onto your\nlocal file system.\n\nYou can also use MadEye within Google Hangouts!  Just use the Hangout link,\nand you\'ll be coding together with live video chat.\n\nFor more information, see http://madeye.io/\n\n',
+205 silly resolved     readmeFilename: 'README.md',
+205 silly resolved     _id: 'madeye@0.1.7',
+205 silly resolved     description: 'MadEye ======',
+205 silly resolved     dist: { shasum: 'e174ad6f14712db957caa2280964161d335ec97b' },
+205 silly resolved     _from: 'madeye' } ]
+206 info install madeye@0.1.7 into C:\Users\Lydia\AppData\Roaming\npm
+207 info installOne madeye@0.1.7
+208 warn engine madeye@0.1.7: wanted: {"node":">=0.8.21"} (current: {"node":"v0.8.14","npm":"1.1.65"})
+209 verbose from cache C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package\package.json
+210 info C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye unbuild
+211 verbose read json C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye\package.json
+212 verbose tar unpack C:\Users\Lydia\AppData\Roaming\npm-cache\madeye\0.1.7\package.tgz
+213 silly lockFile edf3ec17--Roaming-npm-node-modules-madeye C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye
+214 verbose lock C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye C:\Users\Lydia\AppData\Roaming\npm-cache\edf3ec17--Roaming-npm-node-modules-madeye.lock
+215 silly gunzTarPerm modes [ '755', '644' ]
+216 silly gunzTarPerm extractEntry package.json
+217 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+218 silly gunzTarPerm extractEntry .npmignore
+219 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+220 silly gunzTarPerm extractEntry README.md
+221 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+222 silly gunzTarPerm extractEntry .gitmodules
+223 silly gunzTarPerm modified mode [ '.gitmodules', 438, 420 ]
+224 silly gunzTarPerm extractEntry app.coffee
+225 silly gunzTarPerm modified mode [ 'app.coffee', 438, 420 ]
+226 silly gunzTarPerm extractEntry bin/madeye.js
+227 silly gunzTarPerm modified mode [ 'bin/madeye.js', 438, 420 ]
+228 silly gunzTarPerm extractEntry bin/init
+229 silly gunzTarPerm modified mode [ 'bin/init', 438, 420 ]
+230 silly gunzTarPerm extractEntry bin/madeye
+231 silly gunzTarPerm modified mode [ 'bin/madeye', 438, 420 ]
+232 silly gunzTarPerm extractEntry bin/mochac
+233 silly gunzTarPerm modified mode [ 'bin/mochac', 438, 420 ]
+234 silly gunzTarPerm extractEntry bin/releasePrep
+235 silly gunzTarPerm modified mode [ 'bin/releasePrep', 438, 420 ]
+236 silly gunzTarPerm extractEntry bin/run_tests
+237 silly gunzTarPerm modified mode [ 'bin/run_tests', 438, 420 ]
+238 silly gunzTarPerm extractEntry madeye-common/package.json
+239 silly gunzTarPerm modified mode [ 'madeye-common/package.json', 438, 420 ]
+240 silly gunzTarPerm extractEntry madeye-common/.npmignore
+241 silly gunzTarPerm modified mode [ 'madeye-common/.npmignore', 438, 420 ]
+242 silly gunzTarPerm extractEntry madeye-common/README.md
+243 silly gunzTarPerm modified mode [ 'madeye-common/README.md', 438, 420 ]
+244 silly gunzTarPerm extractEntry madeye-common/common.js
+245 silly gunzTarPerm modified mode [ 'madeye-common/common.js', 438, 420 ]
+246 silly gunzTarPerm extractEntry madeye-common/package.js
+247 silly gunzTarPerm modified mode [ 'madeye-common/package.js', 438, 420 ]
+248 silly gunzTarPerm extractEntry madeye-common/postMeteor.js
+249 silly gunzTarPerm modified mode [ 'madeye-common/postMeteor.js', 438, 420 ]
+250 silly gunzTarPerm extractEntry madeye-common/preMeteor.js
+251 silly gunzTarPerm modified mode [ 'madeye-common/preMeteor.js', 438, 420 ]
+252 silly gunzTarPerm extractEntry madeye-common/bin/init
+253 silly gunzTarPerm modified mode [ 'madeye-common/bin/init', 438, 420 ]
+254 silly gunzTarPerm extractEntry madeye-common/bin/mochac
+255 silly gunzTarPerm modified mode [ 'madeye-common/bin/mochac', 438, 420 ]
+256 silly gunzTarPerm extractEntry madeye-common/bin/run_tests
+257 silly gunzTarPerm modified mode [ 'madeye-common/bin/run_tests', 438, 420 ]
+258 silly gunzTarPerm extractEntry madeye-common/src/crc32.js
+259 silly gunzTarPerm modified mode [ 'madeye-common/src/crc32.js', 438, 420 ]
+260 silly gunzTarPerm extractEntry madeye-common/src/cors.coffee
+261 silly gunzTarPerm modified mode [ 'madeye-common/src/cors.coffee', 438, 420 ]
+262 silly gunzTarPerm extractEntry madeye-common/src/errors.coffee
+263 silly gunzTarPerm modified mode [ 'madeye-common/src/errors.coffee', 438, 420 ]
+264 silly gunzTarPerm extractEntry madeye-common/src/fileUtils.coffee
+265 silly gunzTarPerm modified mode [ 'madeye-common/src/fileUtils.coffee', 438, 420 ]
+266 silly gunzTarPerm extractEntry madeye-common/src/messages.coffee
+267 silly gunzTarPerm modified mode [ 'madeye-common/src/messages.coffee', 438, 420 ]
+268 silly gunzTarPerm extractEntry madeye-common/src/Settings.coffee
+269 silly gunzTarPerm modified mode [ 'madeye-common/src/Settings.coffee', 438, 420 ]
+270 silly gunzTarPerm extractEntry madeye-common/tests/mock/MockIoSocket.coffee
+271 silly gunzTarPerm modified mode [ 'madeye-common/tests/mock/MockIoSocket.coffee', 438, 420 ]
+272 silly gunzTarPerm extractEntry madeye-common/tests/mock/mockResponse.coffee
+273 silly gunzTarPerm modified mode [ 'madeye-common/tests/mock/mockResponse.coffee', 438, 420 ]
+274 silly gunzTarPerm extractEntry madeye-common/tests/mock/MockSocket.coffee
+275 silly gunzTarPerm modified mode [ 'madeye-common/tests/mock/MockSocket.coffee', 438, 420 ]
+276 silly gunzTarPerm extractEntry madeye-common/tests/unit/crc32Test.coffee
+277 silly gunzTarPerm modified mode [ 'madeye-common/tests/unit/crc32Test.coffee', 438, 420 ]
+278 silly gunzTarPerm extractEntry npm-shrinkwrap.json
+279 silly gunzTarPerm modified mode [ 'npm-shrinkwrap.json', 438, 420 ]
+280 silly gunzTarPerm extractEntry src/constants.coffee
+281 silly gunzTarPerm modified mode [ 'src/constants.coffee', 438, 420 ]
+282 silly gunzTarPerm extractEntry src/dementor.coffee
+283 silly gunzTarPerm modified mode [ 'src/dementor.coffee', 438, 420 ]
+284 silly gunzTarPerm extractEntry src/fileTree.coffee
+285 silly gunzTarPerm modified mode [ 'src/fileTree.coffee', 438, 420 ]
+286 silly gunzTarPerm extractEntry src/httpClient.coffee
+287 silly gunzTarPerm modified mode [ 'src/httpClient.coffee', 438, 420 ]
+288 silly gunzTarPerm extractEntry src/ignoreRules.coffee
+289 silly gunzTarPerm modified mode [ 'src/ignoreRules.coffee', 438, 420 ]
+290 silly gunzTarPerm extractEntry src/projectFiles.coffee
+291 silly gunzTarPerm modified mode [ 'src/projectFiles.coffee', 438, 420 ]
+292 silly gunzTarPerm extractEntry tests/mock/mockHttpClient.coffee
+293 silly gunzTarPerm modified mode [ 'tests/mock/mockHttpClient.coffee', 438, 420 ]
+294 silly gunzTarPerm extractEntry tests/mock/mockProjectFiles.coffee
+295 silly gunzTarPerm modified mode [ 'tests/mock/mockProjectFiles.coffee', 438, 420 ]
+296 silly gunzTarPerm extractEntry tests/unit/dementorTest.coffee
+297 silly gunzTarPerm modified mode [ 'tests/unit/dementorTest.coffee', 438, 420 ]
+298 silly gunzTarPerm extractEntry tests/unit/fileTreeTest.coffee
+299 silly gunzTarPerm modified mode [ 'tests/unit/fileTreeTest.coffee', 438, 420 ]
+300 silly gunzTarPerm extractEntry tests/unit/ignoreRulesTest.coffee
+301 silly gunzTarPerm modified mode [ 'tests/unit/ignoreRulesTest.coffee', 438, 420 ]
+302 silly gunzTarPerm extractEntry tests/unit/projectFilesTest.coffee
+303 silly gunzTarPerm modified mode [ 'tests/unit/projectFilesTest.coffee', 438, 420 ]
+304 silly gunzTarPerm extractEntry tests/util/fileUtils.coffee
+305 silly gunzTarPerm modified mode [ 'tests/util/fileUtils.coffee', 438, 420 ]
+306 verbose read json C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye\package.json
+307 silly lockFile edf3ec17--Roaming-npm-node-modules-madeye C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye
+308 info preinstall madeye@0.1.7
+309 verbose from cache C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye\package.json
+310 info shrinkwrap file "C:\\Users\\Lydia\\AppData\\Roaming\\npm\\node_modules\\madeye\\npm-shrinkwrap.json"
+311 verbose readDependencies returned deps { 'coffee-script': 'coffee-script@1.6.3',
+311 verbose readDependencies returned deps   underscore: 'underscore@1.5.1',
+311 verbose readDependencies returned deps   'node-uuid': 'node-uuid@1.4.0',
+311 verbose readDependencies returned deps   request: 'request@2.22.0',
+311 verbose readDependencies returned deps   commander: 'commander@1.3.0',
+311 verbose readDependencies returned deps   'cli-color': 'cli-color@0.2.2',
+311 verbose readDependencies returned deps   'socket.io-client': 'socket.io-client@0.9.16',
+311 verbose readDependencies returned deps   async: 'async@0.2.9',
+311 verbose readDependencies returned deps   chokidar: 'chokidar@0.6.2',
+311 verbose readDependencies returned deps   minimatch: 'minimatch@0.2.12',
+311 verbose readDependencies returned deps   'underscore.string': 'underscore.string@2.3.3' }
+312 verbose from cache C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye\package.json
+313 verbose readDependencies: using existing wrap [ 'C:\\Users\\Lydia\\AppData\\Roaming\\npm\\node_modules\\madeye',
+313 verbose readDependencies: using existing wrap   { 'coffee-script': { version: '1.6.3', from: 'coffee-script@1.6.3' },
+313 verbose readDependencies: using existing wrap     underscore: { version: '1.5.1', from: 'underscore@1.5.1' },
+313 verbose readDependencies: using existing wrap     'node-uuid': { version: '1.4.0', from: 'node-uuid@1.4.0' },
+313 verbose readDependencies: using existing wrap     request:
+313 verbose readDependencies: using existing wrap      { version: '2.22.0',
+313 verbose readDependencies: using existing wrap        from: 'request@2.22.0',
+313 verbose readDependencies: using existing wrap        dependencies: [Object] },
+313 verbose readDependencies: using existing wrap     commander:
+313 verbose readDependencies: using existing wrap      { version: '1.3.0',
+313 verbose readDependencies: using existing wrap        from: 'commander@1.3.0',
+313 verbose readDependencies: using existing wrap        dependencies: [Object] },
+313 verbose readDependencies: using existing wrap     'cli-color':
+313 verbose readDependencies: using existing wrap      { version: '0.2.2',
+313 verbose readDependencies: using existing wrap        from: 'cli-color@0.2.2',
+313 verbose readDependencies: using existing wrap        dependencies: [Object] },
+313 verbose readDependencies: using existing wrap     'socket.io-client':
+313 verbose readDependencies: using existing wrap      { version: '0.9.16',
+313 verbose readDependencies: using existing wrap        from: 'socket.io-client@0.9.16',
+313 verbose readDependencies: using existing wrap        dependencies: [Object] },
+313 verbose readDependencies: using existing wrap     async: { version: '0.2.9', from: 'async@0.2.9' },
+313 verbose readDependencies: using existing wrap     chokidar: { version: '0.6.2', from: 'chokidar@0.6.2' },
+313 verbose readDependencies: using existing wrap     minimatch:
+313 verbose readDependencies: using existing wrap      { version: '0.2.12',
+313 verbose readDependencies: using existing wrap        from: 'minimatch@0.2.12',
+313 verbose readDependencies: using existing wrap        dependencies: [Object] },
+313 verbose readDependencies: using existing wrap     'underscore.string': { version: '2.3.3', from: 'underscore.string@2.3.3' } } ]
+314 verbose from wrap [ 'coffee-script',
+314 verbose from wrap   { version: '1.6.3', from: 'coffee-script@1.6.3' } ]
+315 verbose from wrap [ 'underscore', { version: '1.5.1', from: 'underscore@1.5.1' } ]
+316 verbose from wrap [ 'node-uuid', { version: '1.4.0', from: 'node-uuid@1.4.0' } ]
+317 verbose from wrap [ 'request',
+317 verbose from wrap   { version: '2.22.0',
+317 verbose from wrap     from: 'request@2.22.0',
+317 verbose from wrap     dependencies:
+317 verbose from wrap      { qs: [Object],
+317 verbose from wrap        'json-stringify-safe': [Object],
+317 verbose from wrap        'forever-agent': [Object],
+317 verbose from wrap        'tunnel-agent': [Object],
+317 verbose from wrap        'http-signature': [Object],
+317 verbose from wrap        hawk: [Object],
+317 verbose from wrap        'aws-sign': [Object],
+317 verbose from wrap        'oauth-sign': [Object],
+317 verbose from wrap        'cookie-jar': [Object],
+317 verbose from wrap        mime: [Object],
+317 verbose from wrap        'form-data': [Object] } } ]
+318 verbose from wrap [ 'commander',
+318 verbose from wrap   { version: '1.3.0',
+318 verbose from wrap     from: 'commander@1.3.0',
+318 verbose from wrap     dependencies: { keypress: [Object] } } ]
+319 verbose from wrap [ 'cli-color',
+319 verbose from wrap   { version: '0.2.2',
+319 verbose from wrap     from: 'cli-color@0.2.2',
+319 verbose from wrap     dependencies: { 'es5-ext': [Object], memoizee: [Object] } } ]
+320 verbose from wrap [ 'socket.io-client',
+320 verbose from wrap   { version: '0.9.16',
+320 verbose from wrap     from: 'socket.io-client@0.9.16',
+320 verbose from wrap     dependencies:
+320 verbose from wrap      { 'uglify-js': [Object],
+320 verbose from wrap        ws: [Object],
+320 verbose from wrap        xmlhttprequest: [Object],
+320 verbose from wrap        'active-x-obfuscator': [Object] } } ]
+321 verbose from wrap [ 'async', { version: '0.2.9', from: 'async@0.2.9' } ]
+322 verbose from wrap [ 'chokidar', { version: '0.6.2', from: 'chokidar@0.6.2' } ]
+323 verbose from wrap [ 'minimatch',
+323 verbose from wrap   { version: '0.2.12',
+323 verbose from wrap     from: 'minimatch@0.2.12',
+323 verbose from wrap     dependencies: { 'lru-cache': [Object], sigmund: [Object] } } ]
+324 verbose from wrap [ 'underscore.string',
+324 verbose from wrap   { version: '2.3.3', from: 'underscore.string@2.3.3' } ]
+325 verbose readDependencies returned deps { 'coffee-script': 'coffee-script@1.6.3',
+325 verbose readDependencies returned deps   underscore: 'underscore@1.5.1',
+325 verbose readDependencies returned deps   'node-uuid': 'node-uuid@1.4.0',
+325 verbose readDependencies returned deps   request: 'request@2.22.0',
+325 verbose readDependencies returned deps   commander: 'commander@1.3.0',
+325 verbose readDependencies returned deps   'cli-color': 'cli-color@0.2.2',
+325 verbose readDependencies returned deps   'socket.io-client': 'socket.io-client@0.9.16',
+325 verbose readDependencies returned deps   async: 'async@0.2.9',
+325 verbose readDependencies returned deps   chokidar: 'chokidar@0.6.2',
+325 verbose readDependencies returned deps   minimatch: 'minimatch@0.2.12',
+325 verbose readDependencies returned deps   'underscore.string': 'underscore.string@2.3.3' }
+326 verbose shrinkwrap resolving coffee-script@1.6.3 to coffee-script@coffee-script@1.6.3
+327 verbose cache add [ 'coffee-script@coffee-script@1.6.3', null ]
+328 silly cache add name=undefined spec="coffee-script@coffee-script@1.6.3" args=["coffee-script@coffee-script@1.6.3",null]
+329 verbose parsed url { pathname: 'coffee-script@coffee-script@1.6.3',
+329 verbose parsed url   path: 'coffee-script@coffee-script@1.6.3',
+329 verbose parsed url   href: 'coffee-script@coffee-script@1.6.3' }
+330 silly cache add name="coffee-script" spec="coffee-script@1.6.3" args=["coffee-script","coffee-script@1.6.3"]
+331 verbose parsed url { pathname: 'coffee-script@1.6.3',
+331 verbose parsed url   path: 'coffee-script@1.6.3',
+331 verbose parsed url   href: 'coffee-script@1.6.3' }
+332 verbose addNamed [ 'coffee-script', 'coffee-script@1.6.3' ]
+333 verbose addNamed [ null, null ]
+334 silly lockFile 5e8278b7-offee-script-coffee-script-1-6-3 coffee-script@coffee-script@1.6.3
+335 verbose lock coffee-script@coffee-script@1.6.3 C:\Users\Lydia\AppData\Roaming\npm-cache\5e8278b7-offee-script-coffee-script-1-6-3.lock
+336 verbose shrinkwrap resolving underscore@1.5.1 to underscore@underscore@1.5.1
+337 verbose cache add [ 'underscore@underscore@1.5.1', null ]
+338 silly cache add name=undefined spec="underscore@underscore@1.5.1" args=["underscore@underscore@1.5.1",null]
+339 verbose parsed url { pathname: 'underscore@underscore@1.5.1',
+339 verbose parsed url   path: 'underscore@underscore@1.5.1',
+339 verbose parsed url   href: 'underscore@underscore@1.5.1' }
+340 silly cache add name="underscore" spec="underscore@1.5.1" args=["underscore","underscore@1.5.1"]
+341 verbose parsed url { pathname: 'underscore@1.5.1',
+341 verbose parsed url   path: 'underscore@1.5.1',
+341 verbose parsed url   href: 'underscore@1.5.1' }
+342 verbose addNamed [ 'underscore', 'underscore@1.5.1' ]
+343 verbose addNamed [ null, null ]
+344 silly lockFile ae00ba64-underscore-underscore-1-5-1 underscore@underscore@1.5.1
+345 verbose lock underscore@underscore@1.5.1 C:\Users\Lydia\AppData\Roaming\npm-cache\ae00ba64-underscore-underscore-1-5-1.lock
+346 verbose shrinkwrap resolving node-uuid@1.4.0 to node-uuid@node-uuid@1.4.0
+347 verbose cache add [ 'node-uuid@node-uuid@1.4.0', null ]
+348 silly cache add name=undefined spec="node-uuid@node-uuid@1.4.0" args=["node-uuid@node-uuid@1.4.0",null]
+349 verbose parsed url { pathname: 'node-uuid@node-uuid@1.4.0',
+349 verbose parsed url   path: 'node-uuid@node-uuid@1.4.0',
+349 verbose parsed url   href: 'node-uuid@node-uuid@1.4.0' }
+350 silly cache add name="node-uuid" spec="node-uuid@1.4.0" args=["node-uuid","node-uuid@1.4.0"]
+351 verbose parsed url { pathname: 'node-uuid@1.4.0',
+351 verbose parsed url   path: 'node-uuid@1.4.0',
+351 verbose parsed url   href: 'node-uuid@1.4.0' }
+352 verbose addNamed [ 'node-uuid', 'node-uuid@1.4.0' ]
+353 verbose addNamed [ null, null ]
+354 silly lockFile 4ddd30a6-node-uuid-node-uuid-1-4-0 node-uuid@node-uuid@1.4.0
+355 verbose lock node-uuid@node-uuid@1.4.0 C:\Users\Lydia\AppData\Roaming\npm-cache\4ddd30a6-node-uuid-node-uuid-1-4-0.lock
+356 verbose shrinkwrap resolving request@2.22.0 to request@request@2.22.0
+357 verbose cache add [ 'request@request@2.22.0', null ]
+358 silly cache add name=undefined spec="request@request@2.22.0" args=["request@request@2.22.0",null]
+359 verbose parsed url { pathname: 'request@request@2.22.0',
+359 verbose parsed url   path: 'request@request@2.22.0',
+359 verbose parsed url   href: 'request@request@2.22.0' }
+360 silly cache add name="request" spec="request@2.22.0" args=["request","request@2.22.0"]
+361 verbose parsed url { pathname: 'request@2.22.0',
+361 verbose parsed url   path: 'request@2.22.0',
+361 verbose parsed url   href: 'request@2.22.0' }
+362 verbose addNamed [ 'request', 'request@2.22.0' ]
+363 verbose addNamed [ null, null ]
+364 silly lockFile 696d7e04-request-request-2-22-0 request@request@2.22.0
+365 verbose lock request@request@2.22.0 C:\Users\Lydia\AppData\Roaming\npm-cache\696d7e04-request-request-2-22-0.lock
+366 verbose shrinkwrap resolving commander@1.3.0 to commander@commander@1.3.0
+367 verbose cache add [ 'commander@commander@1.3.0', null ]
+368 silly cache add name=undefined spec="commander@commander@1.3.0" args=["commander@commander@1.3.0",null]
+369 verbose parsed url { pathname: 'commander@commander@1.3.0',
+369 verbose parsed url   path: 'commander@commander@1.3.0',
+369 verbose parsed url   href: 'commander@commander@1.3.0' }
+370 silly cache add name="commander" spec="commander@1.3.0" args=["commander","commander@1.3.0"]
+371 verbose parsed url { pathname: 'commander@1.3.0',
+371 verbose parsed url   path: 'commander@1.3.0',
+371 verbose parsed url   href: 'commander@1.3.0' }
+372 verbose addNamed [ 'commander', 'commander@1.3.0' ]
+373 verbose addNamed [ null, null ]
+374 silly lockFile 7e22d170-commander-commander-1-3-0 commander@commander@1.3.0
+375 verbose lock commander@commander@1.3.0 C:\Users\Lydia\AppData\Roaming\npm-cache\7e22d170-commander-commander-1-3-0.lock
+376 verbose shrinkwrap resolving cli-color@0.2.2 to cli-color@cli-color@0.2.2
+377 verbose cache add [ 'cli-color@cli-color@0.2.2', null ]
+378 silly cache add name=undefined spec="cli-color@cli-color@0.2.2" args=["cli-color@cli-color@0.2.2",null]
+379 verbose parsed url { pathname: 'cli-color@cli-color@0.2.2',
+379 verbose parsed url   path: 'cli-color@cli-color@0.2.2',
+379 verbose parsed url   href: 'cli-color@cli-color@0.2.2' }
+380 silly cache add name="cli-color" spec="cli-color@0.2.2" args=["cli-color","cli-color@0.2.2"]
+381 verbose parsed url { pathname: 'cli-color@0.2.2',
+381 verbose parsed url   path: 'cli-color@0.2.2',
+381 verbose parsed url   href: 'cli-color@0.2.2' }
+382 verbose addNamed [ 'cli-color', 'cli-color@0.2.2' ]
+383 verbose addNamed [ null, null ]
+384 silly lockFile b7d0f789-cli-color-cli-color-0-2-2 cli-color@cli-color@0.2.2
+385 verbose lock cli-color@cli-color@0.2.2 C:\Users\Lydia\AppData\Roaming\npm-cache\b7d0f789-cli-color-cli-color-0-2-2.lock
+386 verbose shrinkwrap resolving socket.io-client@0.9.16 to socket.io-client@socket.io-client@0.9.16
+387 verbose cache add [ 'socket.io-client@socket.io-client@0.9.16', null ]
+388 silly cache add name=undefined spec="socket.io-client@socket.io-client@0.9.16" args=["socket.io-client@socket.io-client@0.9.16",null]
+389 verbose parsed url { pathname: 'socket.io-client@socket.io-client@0.9.16',
+389 verbose parsed url   path: 'socket.io-client@socket.io-client@0.9.16',
+389 verbose parsed url   href: 'socket.io-client@socket.io-client@0.9.16' }
+390 silly cache add name="socket.io-client" spec="socket.io-client@0.9.16" args=["socket.io-client","socket.io-client@0.9.16"]
+391 verbose parsed url { pathname: 'socket.io-client@0.9.16',
+391 verbose parsed url   path: 'socket.io-client@0.9.16',
+391 verbose parsed url   href: 'socket.io-client@0.9.16' }
+392 verbose addNamed [ 'socket.io-client', 'socket.io-client@0.9.16' ]
+393 verbose addNamed [ null, null ]
+394 silly lockFile bf9b1dd8-o-client-socket-io-client-0-9-16 socket.io-client@socket.io-client@0.9.16
+395 verbose lock socket.io-client@socket.io-client@0.9.16 C:\Users\Lydia\AppData\Roaming\npm-cache\bf9b1dd8-o-client-socket-io-client-0-9-16.lock
+396 verbose shrinkwrap resolving async@0.2.9 to async@async@0.2.9
+397 verbose cache add [ 'async@async@0.2.9', null ]
+398 silly cache add name=undefined spec="async@async@0.2.9" args=["async@async@0.2.9",null]
+399 verbose parsed url { pathname: 'async@async@0.2.9',
+399 verbose parsed url   path: 'async@async@0.2.9',
+399 verbose parsed url   href: 'async@async@0.2.9' }
+400 silly cache add name="async" spec="async@0.2.9" args=["async","async@0.2.9"]
+401 verbose parsed url { pathname: 'async@0.2.9',
+401 verbose parsed url   path: 'async@0.2.9',
+401 verbose parsed url   href: 'async@0.2.9' }
+402 verbose addNamed [ 'async', 'async@0.2.9' ]
+403 verbose addNamed [ null, null ]
+404 silly lockFile 4ae1a00d-async-async-0-2-9 async@async@0.2.9
+405 verbose lock async@async@0.2.9 C:\Users\Lydia\AppData\Roaming\npm-cache\4ae1a00d-async-async-0-2-9.lock
+406 verbose shrinkwrap resolving chokidar@0.6.2 to chokidar@chokidar@0.6.2
+407 verbose cache add [ 'chokidar@chokidar@0.6.2', null ]
+408 silly cache add name=undefined spec="chokidar@chokidar@0.6.2" args=["chokidar@chokidar@0.6.2",null]
+409 verbose parsed url { pathname: 'chokidar@chokidar@0.6.2',
+409 verbose parsed url   path: 'chokidar@chokidar@0.6.2',
+409 verbose parsed url   href: 'chokidar@chokidar@0.6.2' }
+410 silly cache add name="chokidar" spec="chokidar@0.6.2" args=["chokidar","chokidar@0.6.2"]
+411 verbose parsed url { pathname: 'chokidar@0.6.2',
+411 verbose parsed url   path: 'chokidar@0.6.2',
+411 verbose parsed url   href: 'chokidar@0.6.2' }
+412 verbose addNamed [ 'chokidar', 'chokidar@0.6.2' ]
+413 verbose addNamed [ null, null ]
+414 silly lockFile 8b893a7f-chokidar-chokidar-0-6-2 chokidar@chokidar@0.6.2
+415 verbose lock chokidar@chokidar@0.6.2 C:\Users\Lydia\AppData\Roaming\npm-cache\8b893a7f-chokidar-chokidar-0-6-2.lock
+416 verbose shrinkwrap resolving minimatch@0.2.12 to minimatch@minimatch@0.2.12
+417 verbose cache add [ 'minimatch@minimatch@0.2.12', null ]
+418 silly cache add name=undefined spec="minimatch@minimatch@0.2.12" args=["minimatch@minimatch@0.2.12",null]
+419 verbose parsed url { pathname: 'minimatch@minimatch@0.2.12',
+419 verbose parsed url   path: 'minimatch@minimatch@0.2.12',
+419 verbose parsed url   href: 'minimatch@minimatch@0.2.12' }
+420 silly cache add name="minimatch" spec="minimatch@0.2.12" args=["minimatch","minimatch@0.2.12"]
+421 verbose parsed url { pathname: 'minimatch@0.2.12',
+421 verbose parsed url   path: 'minimatch@0.2.12',
+421 verbose parsed url   href: 'minimatch@0.2.12' }
+422 verbose addNamed [ 'minimatch', 'minimatch@0.2.12' ]
+423 verbose addNamed [ null, null ]
+424 silly lockFile 27167912-minimatch-minimatch-0-2-12 minimatch@minimatch@0.2.12
+425 verbose lock minimatch@minimatch@0.2.12 C:\Users\Lydia\AppData\Roaming\npm-cache\27167912-minimatch-minimatch-0-2-12.lock
+426 verbose shrinkwrap resolving underscore.string@2.3.3 to underscore.string@underscore.string@2.3.3
+427 verbose cache add [ 'underscore.string@underscore.string@2.3.3', null ]
+428 silly cache add name=undefined spec="underscore.string@underscore.string@2.3.3" args=["underscore.string@underscore.string@2.3.3",null]
+429 verbose parsed url { pathname: 'underscore.string@underscore.string@2.3.3',
+429 verbose parsed url   path: 'underscore.string@underscore.string@2.3.3',
+429 verbose parsed url   href: 'underscore.string@underscore.string@2.3.3' }
+430 silly cache add name="underscore.string" spec="underscore.string@2.3.3" args=["underscore.string","underscore.string@2.3.3"]
+431 verbose parsed url { pathname: 'underscore.string@2.3.3',
+431 verbose parsed url   path: 'underscore.string@2.3.3',
+431 verbose parsed url   href: 'underscore.string@2.3.3' }
+432 verbose addNamed [ 'underscore.string', 'underscore.string@2.3.3' ]
+433 verbose addNamed [ null, null ]
+434 silly lockFile 8fa13d9d-e-string-underscore-string-2-3-3 underscore.string@underscore.string@2.3.3
+435 verbose lock underscore.string@underscore.string@2.3.3 C:\Users\Lydia\AppData\Roaming\npm-cache\8fa13d9d-e-string-underscore-string-2-3-3.lock
+436 info addNameTag [ 'coffee-script', 'coffee-script@1.6.3' ]
+437 info addNameTag [ 'underscore', 'underscore@1.5.1' ]
+438 info addNameTag [ 'node-uuid', 'node-uuid@1.4.0' ]
+439 info addNameTag [ 'commander', 'commander@1.3.0' ]
+440 info addNameTag [ 'cli-color', 'cli-color@0.2.2' ]
+441 info addNameTag [ 'request', 'request@2.22.0' ]
+442 info addNameTag [ 'socket.io-client', 'socket.io-client@0.9.16' ]
+443 info addNameTag [ 'async', 'async@0.2.9' ]
+444 info addNameTag [ 'chokidar', 'chokidar@0.6.2' ]
+445 info addNameTag [ 'minimatch', 'minimatch@0.2.12' ]
+446 info addNameTag [ 'underscore.string', 'underscore.string@2.3.3' ]
+447 verbose url raw underscore
+448 verbose url resolving [ 'https://registry.npmjs.org/', './underscore' ]
+449 verbose url resolved https://registry.npmjs.org/underscore
+450 info trying registry request attempt 1 at 20:27:30
+451 http GET https://registry.npmjs.org/underscore
+452 verbose url raw node-uuid
+453 verbose url resolving [ 'https://registry.npmjs.org/', './node-uuid' ]
+454 verbose url resolved https://registry.npmjs.org/node-uuid
+455 info trying registry request attempt 1 at 20:27:30
+456 http GET https://registry.npmjs.org/node-uuid
+457 verbose url raw commander
+458 verbose url resolving [ 'https://registry.npmjs.org/', './commander' ]
+459 verbose url resolved https://registry.npmjs.org/commander
+460 info trying registry request attempt 1 at 20:27:30
+461 http GET https://registry.npmjs.org/commander
+462 verbose url raw request
+463 verbose url resolving [ 'https://registry.npmjs.org/', './request' ]
+464 verbose url resolved https://registry.npmjs.org/request
+465 info trying registry request attempt 1 at 20:27:30
+466 http GET https://registry.npmjs.org/request
+467 verbose url raw socket.io-client
+468 verbose url resolving [ 'https://registry.npmjs.org/', './socket.io-client' ]
+469 verbose url resolved https://registry.npmjs.org/socket.io-client
+470 info trying registry request attempt 1 at 20:27:30
+471 http GET https://registry.npmjs.org/socket.io-client
+472 verbose url raw cli-color
+473 verbose url resolving [ 'https://registry.npmjs.org/', './cli-color' ]
+474 verbose url resolved https://registry.npmjs.org/cli-color
+475 info trying registry request attempt 1 at 20:27:30
+476 http GET https://registry.npmjs.org/cli-color
+477 verbose url raw async
+478 verbose url resolving [ 'https://registry.npmjs.org/', './async' ]
+479 verbose url resolved https://registry.npmjs.org/async
+480 info trying registry request attempt 1 at 20:27:30
+481 http GET https://registry.npmjs.org/async
+482 verbose url raw chokidar
+483 verbose url resolving [ 'https://registry.npmjs.org/', './chokidar' ]
+484 verbose url resolved https://registry.npmjs.org/chokidar
+485 info trying registry request attempt 1 at 20:27:30
+486 http GET https://registry.npmjs.org/chokidar
+487 verbose url raw minimatch
+488 verbose url resolving [ 'https://registry.npmjs.org/', './minimatch' ]
+489 verbose url resolved https://registry.npmjs.org/minimatch
+490 info trying registry request attempt 1 at 20:27:30
+491 http GET https://registry.npmjs.org/minimatch
+492 verbose url raw underscore.string
+493 verbose url resolving [ 'https://registry.npmjs.org/', './underscore.string' ]
+494 verbose url resolved https://registry.npmjs.org/underscore.string
+495 info trying registry request attempt 1 at 20:27:30
+496 http GET https://registry.npmjs.org/underscore.string
+497 verbose url raw coffee-script
+498 verbose url resolving [ 'https://registry.npmjs.org/', './coffee-script' ]
+499 verbose url resolved https://registry.npmjs.org/coffee-script
+500 info trying registry request attempt 1 at 20:27:30
+501 verbose etag "ESZQCOM8YM1Y9HYG857TA69QC"
+502 http GET https://registry.npmjs.org/coffee-script
+503 http 200 https://registry.npmjs.org/node-uuid
+504 silly registry.get cb [ 200,
+504 silly registry.get   { vary: 'Accept',
+504 silly registry.get     server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+504 silly registry.get     etag: '"TC7FRLU9VYEAD6VHENCNWQHD"',
+504 silly registry.get     date: 'Sun, 18 Aug 2013 00:27:30 GMT',
+504 silly registry.get     'content-type': 'application/json',
+504 silly registry.get     'content-length': '29028' } ]
+505 http 200 https://registry.npmjs.org/underscore
+506 silly registry.get cb [ 200,
+506 silly registry.get   { vary: 'Accept',
+506 silly registry.get     server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+506 silly registry.get     etag: '"27LECG52TMHOVO9SGVT3ZMNHT"',
+506 silly registry.get     date: 'Sun, 18 Aug 2013 00:27:30 GMT',
+506 silly registry.get     'content-type': 'application/json',
+506 silly registry.get     'content-length': '41110' } ]
+507 silly lockFile 4ddd30a6-node-uuid-node-uuid-1-4-0 node-uuid@node-uuid@1.4.0
+508 verbose about to build C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye
+509 info C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye unbuild
+510 verbose from cache C:\Users\Lydia\AppData\Roaming\npm\node_modules\madeye\package.json
+511 info preuninstall madeye@0.1.7
+512 info uninstall madeye@0.1.7
+513 silly lockFile ae00ba64-underscore-underscore-1-5-1 underscore@underscore@1.5.1
+514 verbose true,C:\Users\Lydia\AppData\Roaming\npm\node_modules,C:\Users\Lydia\AppData\Roaming\npm\node_modules unbuild madeye@0.1.7
+515 verbose C:\Users\Lydia\AppData\Roaming\npm,[object Object] binRoot
+516 info postuninstall madeye@0.1.7
+517 error Error: No compatible version found: node-uuid@'node-uuid@1.4.0'
+517 error Valid install targets:
+517 error ["1.2.0","1.3.0","1.3.1","1.3.2","1.1.0","1.0.0","1.3.3","1.4.0","1.4.1"]
+517 error     at installTargetsError (C:\Program Files\nodejs\node_modules\npm\lib\cache.js:563:10)
+517 error     at C:\Program Files\nodejs\node_modules\npm\lib\cache.js:478:10
+517 error     at saved (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\get.js:138:7)
+517 error     at C:\Program Files\nodejs\node_modules\npm\node_modules\graceful-fs\graceful-fs.js:218:7
+517 error     at Object.oncomplete (fs.js:297:15)
+518 error If you need help, you may report this log at:
+518 error     <http://github.com/isaacs/npm/issues>
+518 error or email it to:
+518 error     <npm-@googlegroups.com>
+519 error System Windows_NT 6.1.7601
+520 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "madeye"
+521 error cwd C:\Users\Lydia\Documents\GitHub\frenzy2
+522 error node -v v0.8.14
+523 error npm -v 1.1.65
+524 verbose exit [ 1, true ]

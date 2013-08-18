@@ -159,7 +159,8 @@ function clone(a) {
 // Instatiate Database
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
-var instantiateData = require('./testing/cscwDataAllcut1.js');
+//var instantiateData = require('./testing/cscwDataAllcut1.js');
+var instantiateData = require('./testing/cscwDataAllcut1withextra.js');
 //var instantiateData = require('./testing/cscwData12labels.js');
 //var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');

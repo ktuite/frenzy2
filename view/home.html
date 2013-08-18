@@ -125,12 +125,12 @@ $(document).ready(function(){
 	testSignIn()
 	setDefaultQuery()
     setUpTextSearch()
-    setUpAbstractHideShow()
+    //setUpAbstractHideShow()
    
 	getAllData("synchronous")
     setInterval(function(){ getAllData("asynchronous") },5000);
 })
-
+/*
 function setUpAbstractHideShow(){
     $("#expandAll").click(function(){
         $(".item").each(function(t){
@@ -149,7 +149,7 @@ function setUpAbstractHideShow(){
         })    
     })
 }
-
+*/
 function testSignIn(){
 	ajax("signIn", {"user": getUsername()}, function(result){ 
 		var res = JSON.parse(result)
@@ -403,7 +403,7 @@ function takeDownSpinner(){
                         <div class="row">                
                             <div class="span8">
                                 <div id ="searchFeedbackDiv" >
-                            
+                                    
                                 </div>
                             </div>
                         </div>
