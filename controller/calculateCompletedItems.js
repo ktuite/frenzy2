@@ -15,23 +15,17 @@ calculateCompletedItems = function(){
         return utils.arrayContains(allData["acceptedPapers"], x["id"])
     })
     */
-    var isComplete = function(x){
-        var ans = false
-        var labelsDict = x["labels"]
-        for( var label in labelsDict ){
-            var labelObj = labelsDict[label]
-            var labelLikes = labelObj["likes"]
-            if (labelLikes.length >= 2) {
-                ans = true
+    var isComplete = function(item){
+        var allLabels = allData["labelList"]
+        var labelsOnThisItem = item["labels"]
+        for( var label in labelsOnThisItem ){
+            if (labelsOnThisItem[label]["likes"].length > 0 // somebody voted for this label
+                && allLabels[label]["itemsUsedBy"].length > 1 // and the label isn't a singleton
+                ) {
+                return true
             }
-            /* old goal: at least one non-user-created label
-            var labelObj = allData["labelList"][label]
-            var labelCreator = labelObj["creator"]
-            if (labelCreator != "system"){
-                ans = true
-            }*/
         }
-        return ans
+        return false // couldn't find a label with session-making potential
     }
 
 	var completedItemObj = utils.filterArray(arrayOfItemObjs, isComplete)

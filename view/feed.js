@@ -344,18 +344,20 @@ function makeInteractiveLabelUI(labelObj, itemId){
         } else {
             tooltipPrefix = "You and other people think"
         }
+        tooltipSuffix = "undo your vote."
     }
     else if (labelLikeCount == 0) {
         likeButton.addClass("zero")
         tooltipPrefix = "Nobody thinks"
+        tooltipSuffix = "vote for it."
     } else {
         tooltipPrefix = "Other people think"
+        tooltipSuffix = "vote for it too."
     }
-    likeButton.attr("title", tooltipPrefix + ' "' + labelText + '" would be a good session for this paper')
+    likeButton.attr("title", tooltipPrefix + ' "' + labelText + '" would be a good session for this paper. Click here to ' + tooltipSuffix)
 
-    // label the button with +N if N people have liked it, or just +1 if nobody has liked it yet
-    // (that's how Google+ does it, so why not)
-    likeButton.text('+' + Math.max(labelLikeCount, 1))
+    // label the button with +N if N people have liked it
+    likeButton.text('+' + labelLikeCount)
 
     likeButton.on('click', function() {
         var t = $(this)
