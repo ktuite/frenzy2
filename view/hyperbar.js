@@ -211,7 +211,6 @@ function createNumResultsDiv(num){
             
         }
     }else{
-        console.log(query)
         if("plusOneFilter" in query){
             var plusOneFilter = query["plusOneFilter"]
             if(plusOneFilter == "withPlusOne"){
@@ -278,7 +277,7 @@ function createPlusOneFilter(defaultFilter){
     
     
     var allItemsText = "All papers ("+numAll+")"
-    var allItemsNeedingPlusOne = "Papers needing +1 ("+numWithoutPlusOne+")"
+    var allItemsNeedingPlusOne = "Papers without +1 ("+numWithoutPlusOne+")"
     var allItemsHavingPlusOne = "Papers with +1 ("+numWithPlusOne+")"
     
     
