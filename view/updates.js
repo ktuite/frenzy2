@@ -1,4 +1,5 @@
 function handleUpdates(result){  
+  try{
 /*
     if("updatedItems" in result){
         var updatedItems = result["updatedItems"]
@@ -63,7 +64,9 @@ function handleUpdates(result){
     if(type == "asynchronous"){
         updateItemsInFeed()        
     }
-	
+  } catch(e) {
+    console.log(e)
+  }	
 }
 
 function makeAutocompleteListFromKeys(lst){
@@ -110,8 +113,7 @@ function updateItemsInFeed(){
         if(itemUpdateTime > lastUpdateTime){
             markItemAsUpdated(itemId)            
         }
-    }
-    
+    }    
     //go through the items on the screen and if any of them aren't updated, 
     //color it.
     var itemsInFeed = $(".item")

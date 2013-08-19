@@ -496,3 +496,8 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
  .labelUnchecked{
     color: grey;
  }
+
+input[id^="addCategoryTextbox"]{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+ }
