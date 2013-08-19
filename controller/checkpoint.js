@@ -86,6 +86,36 @@ var restoreData = function(timestamp){
 		});
 }
 
+app.get('/saveLog', function(request, response){ 
+	saveLog()
+    response.send("logSaved")
+});  
 
+var saveLog = function(){
+	writeLogToFile(log);
+	
+}
 
+app.get('/saveAndClearLog', function(request, response){ 
+	saveAndClearLog()
+    response.send("logSaved")
+});  
+
+var saveAndClearLog = function(){
+	writeLogToFile(log);
+	log= []
     
+}
+    
+var writeLogToFile = function (json){
+	var ret = "log = "+JSON.stringify(json)
+	var d = new Date();
+	var t = d.getTime()
+	fs.writeFile("./saved/log"+t+".js", ret, function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log("The file was saved!");
+		}
+	}); 
+}    

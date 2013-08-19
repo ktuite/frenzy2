@@ -348,40 +348,42 @@ function makeInteractiveLabelUI(labelObj, itemId){
     labelSpan.html(labelText+" ("+numItems+")")
     row.append($('<td class="categoriesDivCategoryLabel">').append(labelSpan))
 
-    // add like button
-    var likeButton = $('<button type="button" class="btn btn-primary likeButton" data-toggle="button"></button>')
+    // add like button, but only if the category is checked
+    if (labelChecked) {
+        var likeButton = $('<button type="button" class="btn btn-primary likeButton" data-toggle="button"></button>')
 
-    var tooltipPrefix = "";
-    if(labelLikedByMe){
-        likeButton.addClass('active')
-        if (labelLikeCount == 1) {
-            tooltipPrefix = "You think"
-        } else {
-            tooltipPrefix = "You and other people think"
+        var tooltipPrefix = "";
+        if(labelLikedByMe){
+            likeButton.addClass('active')
+            if (labelLikeCount == 1) {
+                tooltipPrefix = "You think"
+            } else {
+                tooltipPrefix = "You and other people think"
+            }
+            tooltipSuffix = "undo your vote."
         }
-        tooltipSuffix = "undo your vote."
+        else if (labelLikeCount == 0) {
+            likeButton.addClass("zero")
+            tooltipPrefix = "Nobody thinks"
+            tooltipSuffix = "vote for it."
+        } else {
+            tooltipPrefix = "Other people think"
+            tooltipSuffix = "vote for it too."
+        }
+        likeButton.attr("title", tooltipPrefix + ' "' + labelText + '" would be a good session for this paper. Click here to ' + tooltipSuffix)
+
+        // label the button with +N if N people have liked it
+        likeButton.text('+' + labelLikeCount)
+
+        likeButton.on('click', function() {
+            var t = $(this)
+            var nowLiked = !t.is(".active") 
+            toggleLabelLiked(labelText, itemId, nowLiked)
+        })
+
+        row.append($("<td>").append(likeButton))
     }
-    else if (labelLikeCount == 0) {
-        likeButton.addClass("zero")
-        tooltipPrefix = "Nobody thinks"
-        tooltipSuffix = "vote for it."
-    } else {
-        tooltipPrefix = "Other people think"
-        tooltipSuffix = "vote for it too."
-    }
-    likeButton.attr("title", tooltipPrefix + ' "' + labelText + '" would be a good session for this paper. Click here to ' + tooltipSuffix)
-
-    // label the button with +N if N people have liked it
-    likeButton.text('+' + labelLikeCount)
-
-    likeButton.on('click', function() {
-        var t = $(this)
-        var nowLiked = !t.is(".active") 
-        toggleLabelLiked(labelText, itemId, nowLiked)
-    })
-
-    row.append($("<td>").append(likeButton))
-
+    
     return row
 }
 
