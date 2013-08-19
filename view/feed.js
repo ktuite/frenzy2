@@ -165,7 +165,7 @@ function createAddSessionDiv(div, itemObj){
 function createWithoutSession(div, itemId, initialText){
     var sessionText = "Session: "
     $(div).html(sessionText)
-    var sessionNameTextbox = $('<input type="textbox" class="sessionTextbox" id="addSessionTextbox-'+itemId+'">')
+    var sessionNameTextbox = $('<input type="text" class="sessionTextbox" id="addSessionTextbox-'+itemId+'">')
     div.append(sessionNameTextbox)
     sessionNameTextbox.val(initialText)
     if(initialText != ""){
@@ -258,7 +258,7 @@ function addLabel(itemId){
     var div = $('<div>')
 
 	var uiwidgetDiv = $('<span class="ui-widget">')
-	var textbox = $('<input type="textbox" id="addCategoryTextbox-'+itemId+'" placeholder="add a category">')
+	var textbox = $('<input type="text" id="addCategoryTextbox-'+itemId+'" placeholder="add a category">')
 	textbox.autocomplete({
       source: autocompleteLabels
     });
@@ -274,7 +274,7 @@ function addLabel(itemId){
        }
     })
 	
-    var addButton = $('<button id="addButton">+</button>')
+    var addButton = $('<button id="addButton" class="btn">+</button>')
     addButton.click(function(){
         var textboxValue = textbox.val().trim()
         if(textboxValue != ""){

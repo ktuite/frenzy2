@@ -103,7 +103,7 @@ function updateItemsInFeed(){
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
-            markItemAsUpdated(itemId)            
+                markItemAsUpdated(itemId, i in itemsInQueryIveChanged)            
         }
     }
     for(var i in itemsInQueryIveChanged){  
@@ -111,7 +111,7 @@ function updateItemsInFeed(){
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
-            markItemAsUpdated(itemId)            
+            markItemAsUpdated(itemId, true)
         }
     }    
     //go through the items on the screen and if any of them aren't updated, 
@@ -153,12 +153,13 @@ function updateItemsInFeed(){
     })
 }
 
-function markItemAsUpdated(itemId){
+function markItemAsUpdated(itemId, myChange){
     var itemUI = $("#containerFor-"+itemId)
     var currentHeight = itemUI.height() 
     
-    itemUI.height(currentHeight)
-    itemUI.css('overflowY', 'auto');
+    if (!myChange)
+        itemUI.height(currentHeight)
+    itemUI.css('overflowY', 'auto')
     var itemObj = items[itemId]
     
     var sessionUIDiv = $("#sessionUI-"+itemId)
