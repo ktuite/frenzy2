@@ -35,7 +35,7 @@ function printAcceptedPapers(paperIds){
     }
     $("#gregorianTextArea").val(newTextListOfPaperIds)
     */
-    $("#gregorianTextArea").val(paperIds)
+    $("#gregorianTextArea").val(paperIds.join("\n"))
 }
 
 function getAndDisplayAcceptedPapers(){
@@ -67,7 +67,8 @@ $(document).ready(function(){
     
     $("#editButton").click(function(){
         var allPapersInTextArea = $("#gregorianTextArea").val()
-        var arr = allPapersInTextArea.split(",");
+        var arr = allPapersInTextArea.split(/[,\s]+/);
+        if (arr.length > 0 && !arr[arr.length-1]) arr.splice(arr.length-1,1)
         ajax("editAcceptedPapers", {"papers": arr}, function(result){
             var res = JSON.parse(result)
             var acceptedPapers = res["acceptedPapers"]
