@@ -210,6 +210,19 @@ function createNumResultsDiv(num){
             }
             
         }
+    }else{
+        console.log(query)
+        if("plusOneFilter" in query){
+            var plusOneFilter = query["plusOneFilter"]
+            if(plusOneFilter == "withPlusOne"){
+                numResultsText = numResultsText + " with +1 "
+            }
+            if(plusOneFilter == "withoutPlusOne"){
+                numResultsText = numResultsText + " <i>without</i> +1 "
+            }
+            
+        }    
+    
     }
     
     if(queryType == "all"){
