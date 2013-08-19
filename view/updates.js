@@ -1,5 +1,5 @@
 function handleUpdates(result){  
-  try{
+  //try{
 /*
     if("updatedItems" in result){
         var updatedItems = result["updatedItems"]
@@ -64,9 +64,11 @@ function handleUpdates(result){
     if(type == "asynchronous"){
         updateItemsInFeed()        
     }
+   /* 
   } catch(e) {
-    console.log(e)
+    console.log(e.stack)
   }	
+  */
 }
 
 function makeAutocompleteListFromKeys(lst){

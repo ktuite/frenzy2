@@ -93,8 +93,7 @@ getFeedItemsAndOrder = function(query){
             }else{
                 displayedItemsWithPlusOne.push(memberItemId)
             }
-        }
-        
+        }        
         
         if(plusOneFilter == "withPlusOne"){
             itemIds = displayedItemsWithPlusOne
@@ -111,7 +110,98 @@ getFeedItemsAndOrder = function(query){
             "numWithPlusOne": numWithPlusOne
         }        
     }
-   
+
+    /*
+    if(allData["sessionMaking"]){
+    //if("sessionFilter" in query){
+        
+        var sessionFilter = "all"
+        if("sessionFilter" in query){
+            sessionFilter = query["sessionFilter"]
+        }
+        
+        var displayedItemsInSession = []
+        var displayedItemsNotInSession = []
+        
+        if(sessionFilter == "all"){
+            //do nothing
+        }else{
+            var allItemsNotInSessions = []
+            if("none" in allData["sessions"]){
+                var allItemsNotInSessions = allData["sessions"]["none"]["members"]
+            }
+            
+                
+            for(var itemIdIndex in itemIds){
+                var memberItemId = itemIds[itemIdIndex]
+                if( utils.arrayContains(allItemsNotInSessions, memberItemId) ){
+                    displayedItemsNotInSession.push(memberItemId)
+                }else{
+                    displayedItemsInSession.push(memberItemId)
+                }
+            }
+            //console.log(displayedItemsInSession)
+            //console.log(displayedItemsNotInSession)
+            
+            if(sessionFilter == "withSessions"){
+                itemIds = displayedItemsInSession
+            }
+            if(sessionFilter == "withoutSessions"){
+                itemIds = displayedItemsNotInSession
+            }  
+        }  
+
+        query["sessionFilterData"]={
+            "numAll": numAll,
+            "numWithoutSession": displayedItemsNotInSession.length,
+            "numWithSession": displayedItemsInSession.length
+        }         
+    }
+    */
+    if(allData["sessionMaking"]){
+    //if("sessionFilter" in query){
+        
+        var sessionFilter = "all"
+        if("sessionFilter" in query){
+            sessionFilter = query["sessionFilter"]
+        }
+        var numWithoutSession = 0
+        var numWithSession = 0
+        
+        var allItemsNotInSessions = []
+        if("none" in allData["sessions"]){
+            allItemsNotInSessions = allData["sessions"]["none"]["members"]
+        }
+        var displayedItemsInSession = []
+        var displayedItemsNotInSession = []
+             
+
+        for(var itemIdIndex in itemIds){
+            var memberItemId = itemIds[itemIdIndex]
+            if( utils.arrayContains(allItemsNotInSessions, memberItemId) ){
+                displayedItemsNotInSession.push(memberItemId)
+            }else{
+                displayedItemsInSession.push(memberItemId)
+             }
+
+        }
+        
+        if(sessionFilter == "withSessions"){
+            itemIds = displayedItemsInSession
+        }
+        if(sessionFilter == "withoutSessions"){
+            itemIds = displayedItemsNotInSession
+        }  
+                       
+        numWithoutSession = displayedItemsNotInSession.length
+        numWithSession = displayedItemsInSession.length
+        query["sessionFilterData"]={
+            "numAll": numWithoutSession+numWithSession,
+            "numWithoutSession": numWithoutSession,
+            "numWithSession": numWithSession
+         }        
+     }    
+    
 	//////////////////////////////
 	// SORT 
 	//////////////////////////////
