@@ -409,7 +409,7 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
     opacity: .5
  }
 
-.likeButton:active, .likeButton.active, .likeButton:hover, .likeButton:focus {
+.likeButton:active, .likeButton.active, .likeButton.nonzero, .likeButton:hover, .likeButton:focus {
   color: #FFFFFF;
   background-color: #058600; 
   /* avoid half-filled background-color and animation */
@@ -495,4 +495,9 @@ Styles for the goals/requiresment (each item needs at least one hashtag)
  
  .labelUnchecked{
     color: grey;
+ }
+
+input[id^="addCategoryTextbox"]{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
  }

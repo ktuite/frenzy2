@@ -258,7 +258,7 @@ function addLabel(itemId){
     var div = $('<div>')
 
 	var uiwidgetDiv = $('<span class="ui-widget">')
-	var textbox = $('<input type="textbox" id="addCategoryTextbox-'+itemId+'">')
+	var textbox = $('<input type="textbox" id="addCategoryTextbox-'+itemId+'" placeholder="add a category">')
 	textbox.autocomplete({
       source: autocompleteLabels
     });
@@ -357,8 +357,10 @@ function makeInteractiveLabelUI(labelObj, itemId){
             likeButton.addClass('active')
             if (labelLikeCount == 1) {
                 tooltipPrefix = "You think"
+                likeButton.text('You')
             } else {
                 tooltipPrefix = "You and other people think"
+                likeButton.text('You+' + (labelLikeCount-1))
             }
             tooltipSuffix = "undo your vote."
         }
@@ -366,15 +368,16 @@ function makeInteractiveLabelUI(labelObj, itemId){
             likeButton.addClass("zero")
             tooltipPrefix = "Nobody thinks"
             tooltipSuffix = "vote for it."
+            likeButton.text("+0")
         } else {
+            likeButton.addClass("nonzero")
             tooltipPrefix = "Other people think"
             tooltipSuffix = "vote for it too."
+            likeButton.text('+' + labelLikeCount)
         }
         likeButton.attr("title", tooltipPrefix + ' "' + labelText + '" would be a good session for this paper. Click here to ' + tooltipSuffix)
 
         // label the button with +N if N people have liked it
-        likeButton.text('+' + labelLikeCount)
-
         likeButton.on('click', function() {
             var t = $(this)
             var nowLiked = !t.is(".active") 
@@ -383,7 +386,7 @@ function makeInteractiveLabelUI(labelObj, itemId){
 
         row.append($("<td>").append(likeButton))
     }
-    
+
     return row
 }
 
