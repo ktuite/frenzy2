@@ -258,7 +258,7 @@ function addLabel(itemId){
     var div = $('<div>')
 
 	var uiwidgetDiv = $('<span class="ui-widget">')
-	var textbox = $('<input type="textbox" id="addCategoryTextbox-'+itemId+'">')
+	var textbox = $('<input type="textbox" id="addCategoryTextbox-'+itemId+'" placeholder="add a category">')
 	textbox.autocomplete({
       source: autocompleteLabels
     });
