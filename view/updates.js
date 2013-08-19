@@ -104,6 +104,7 @@ function updateItemsInFeed(){
     //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
     //have been updated is.
     //if it was recently, then go to that individual UI elt and color it yellow.
+    console.log(itemsInQueryIveChanged)
     for(var i in itemIdOrder){        
         var itemId = itemIdOrder[i]
         var itemObj = items[itemId]
@@ -112,15 +113,15 @@ function updateItemsInFeed(){
                 markItemAsUpdated(itemId, arrayContains(itemsInQueryIveChanged, itemId))            
         }
     }
-    // for(var i in itemsInQueryIveChanged){  
-    //     var itemId = itemsInQueryIveChanged[i]
-    //     var itemObj = items[itemId]
-    //     var itemUpdateTime = itemObj["lastUpdateTime"]
-    //     if(itemUpdateTime > lastUpdateTime){
-    //         console.log("test2", "mine")
-    //         markItemAsUpdated(itemId, true)
-    //     }
-    // }    
+    for(var i in itemsInQueryIveChanged){  
+        var itemId = itemsInQueryIveChanged[i]
+        var itemObj = items[itemId]
+        var itemUpdateTime = itemObj["lastUpdateTime"]
+        if(itemUpdateTime > lastUpdateTime){
+            console.log("test2", "mine")
+            markItemAsUpdated(itemId, true)
+        }
+    }    
 
     // DELETED ITEMS
     //go through the items on the screen and if any of them aren't updated, 

@@ -479,6 +479,9 @@ update = {
 }
 */
 function toggleLabelLiked(labelText, itemId, liked) {
+
+    itemsInQueryIveChanged.push(itemId)
+    
     var myUpdate = {"type": "toggleLabelLiked", 
                 "time" : getTime(), 
                 "itemId" : itemId, 
