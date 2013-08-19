@@ -109,7 +109,6 @@ function updateItemsInFeed(){
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
-                console.log("test1", arrayContains(itemsInQueryIveChanged, itemId))
                 markItemAsUpdated(itemId, arrayContains(itemsInQueryIveChanged, itemId))            
         }
     }
