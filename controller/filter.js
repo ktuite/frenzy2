@@ -196,6 +196,14 @@ function escapeRegExp(str) {
 
 doesItemContainText = function(itemObject, text){
     var text = escapeRegExp(text.toLowerCase())
+    //console.log(itemObject)
+    itemObject = itemObject["content"]
+    var displayId = itemObject["id"] .toLowerCase()
+    var title = itemObject["title"].toLowerCase()
+    var authorList = itemObject["authorList"]
+    var fullAbstract = itemObject["fullAbstract"].toLowerCase()      
+    
+    /*
     var itemReplies = itemObject["replies"]
     for(var i in itemReplies){
         var itemReply = itemReplies[i]
@@ -205,9 +213,22 @@ doesItemContainText = function(itemObject, text){
         }        
     }
     var itemHtml = itemObject["html"].toLowerCase()
-    if(itemHtml.search(text)> -1){
+    */
+    if(displayId.search(text)> -1){
         return true
     }  
+    if(title.search(text)> -1){
+        return true
+    }    
+    if(fullAbstract.search(text)> -1){
+        return true
+    }  
+    for(var i in authorList){
+        var authorNameAndAffiliation = authorList[i].toLowerCase()
+        if(authorNameAndAffiliation.search(text)> -1){
+            return true
+        }
+    }
     return false
 }
 
