@@ -15,9 +15,11 @@ var goalAchievedTime = -1
 function goalSetup(){
 	var goalDescription
 	if (sessionMaking) {
-		goalDescription = "Every paper needs to be in a session."
+		goalDescription = "<b>Goal:</b><br>Every paper needs to be in a session."
 	} else {
-	    goalDescription = "Every paper needs to have at least one category with a vote for session-making potential (and with at least 2 papers in the category)."
+	    // goalDescription = "Every paper needs to have at least one category with a vote for session-making potential (and with at least 2 papers in the category)."
+	    goalDescription = "<b>Goal1:</b>  Every category must have at least 2 papers in it. (No singleton categories)<br/>" +
+						"<b>Goal2:</b>  Every paper needs to be in least one category with +1 for session-making potential."
 	}
 	$("#goalDescription").html(goalDescription)
 }
