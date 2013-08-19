@@ -264,7 +264,7 @@ function createPlusOneFilter(defaultFilter){
         
     
     
-    var allItemsText = "All papers ("+members.length+")"
+    var allItemsText = "All papers ("+numAll+")"
     var allItemsNeedingPlusOne = "Papers needing +1 ("+numWithoutPlusOne+")"
     var allItemsHavingPlusOne = "Papers with +1 ("+numWithPlusOne+")"
     
@@ -317,13 +317,14 @@ function createSessionFilter(defaultFilter){
     var members = itemIdOrder
     var allItemsNotInSessions = sessions["none"]["members"]
     
+    console.log(query)
     var numAll = query["sessionFilterData"]["numAll"]
     var numWithoutSession = query["sessionFilterData"]["numWithoutSession"]
     var numWithSession = query["sessionFilterData"]["numWithSession"]
         
     
     
-    var allItemsText = "All papers ("+members.length+")"
+    var allItemsText = "All papers ("+numAll+")"
     var allItemsNeedingSessions = "Papers needing sessions ("+numWithoutSession+")"
     var allItemsHavingSessions = "Papers in sessions ("+numWithSession+")"
     

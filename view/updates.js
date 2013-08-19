@@ -1,5 +1,7 @@
 function handleUpdates(result){  
-  try{
+
+    try{
+
 /*
     if("updatedItems" in result){
         var updatedItems = result["updatedItems"]
@@ -62,11 +64,14 @@ function handleUpdates(result){
         updateHyperBar(queryResultObj)
     }
     if(type == "asynchronous"){
-        updateItemsInFeed()        
+        updateItemsInFeed()
+        updateHyperBar(queryResultObj)     
     }
+
   } catch(e) {
-    console.log(e)
+    console.log(e.stack)
   }	
+
 }
 
 function makeAutocompleteListFromKeys(lst){
@@ -95,6 +100,7 @@ function makeAutocompleteListFromKeys(lst){
 //////////////////////////////////////////
 
 function updateItemsInFeed(){
+    // CHANGED ITEMS
     //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
     //have been updated is.
     //if it was recently, then go to that individual UI elt and color it yellow.
@@ -114,12 +120,18 @@ function updateItemsInFeed(){
             markItemAsUpdated(itemId, true)
         }
     }    
+
+    // DELETED ITEMS
     //go through the items on the screen and if any of them aren't updated, 
     //color it.
     var itemsInFeed = $(".item")
+    var itemIdsNotFoundInFeed = itemIdOrder.slice(0) // copy the itemIdOrder array, because we're going to delete items from it as we see them on the scren
     $(".item").each(function(t){
         var itemId = $(this).attr("id")
-        
+
+        var p = itemIdsNotFoundInFeed.indexOf(itemId)
+        if (p > -1) itemIdsNotFoundInFeed.splice(p, 1)
+
         if( !arrayContains(itemIdOrder, itemId) && !arrayContains(itemsInQueryIveChanged, itemId)){
             var container = $("#containerFor-"+itemId)
             if( ! $("#overlayFor-"+itemId).length){
@@ -151,6 +163,14 @@ function updateItemsInFeed(){
             }
         }
     })
+    
+    // ADDED ITEMS
+    // finally, look for items that aren't on the screen yet, and add them to the end of the feed
+    //console.log("now we would add items " + itemIdsNotFoundInFeed)
+    for (var i in itemIdsNotFoundInFeed) {
+        var itemId = itemIdsNotFoundInFeed[i]
+        appendItemToFeed(itemId)
+    }
 }
 
 function markItemAsUpdated(itemId, myChange){
@@ -196,38 +216,39 @@ function displayFeed(itemIds){
     //resultsUnderlay.height(200)
 	$("#feed").append(resultsUnderlay)
     
-    var isQueryTypeText = (query["type"] == "text")
-    
     for( var i in itemIds){
 		var itemId = itemIds[i]
-        
-		var itemObj = items[itemId]
-		var newItemDiv = createItemAndReplyDiv(itemObj)     
-        $("#feed").append(newItemDiv)
-        if(isQueryTypeText){
-            $("#full-abstract-"+itemId).show()
-            $("#short-abstract-"+itemId).hide()
-        }else{
-            $("#full-abstract-"+itemId).hide()
-        }
-        wrap = function(id){
-            $("#more-abstract-"+id).click(function(){
-                $("#short-abstract-"+id).hide()
-                $("#full-abstract-"+id).show()
-            })
-            $("#less-abstract-"+id).click(function(){
-                $("#short-abstract-"+id).show()
-                $("#full-abstract-"+id).hide()
-            })
-        }
-        wrap(itemId)
+        appendItemToFeed(itemId)
     }
 
 	//from the query type, get which items to show.
 	//get the order to display them in
 }
 
-
+function appendItemToFeed(itemId) {
+    var isQueryTypeText = (query["type"] == "text")
+    
+    var itemObj = items[itemId]
+    var newItemDiv = createItemAndReplyDiv(itemObj)     
+    $("#feed").append(newItemDiv)
+    if(isQueryTypeText){
+        $("#full-abstract-"+itemId).show()
+        $("#short-abstract-"+itemId).hide()
+    }else{
+        $("#full-abstract-"+itemId).hide()
+    }
+    wrap = function(id){
+        $("#more-abstract-"+id).click(function(){
+            $("#short-abstract-"+id).hide()
+            $("#full-abstract-"+id).show()
+        })
+        $("#less-abstract-"+id).click(function(){
+            $("#short-abstract-"+id).show()
+            $("#full-abstract-"+id).hide()
+        })
+    }
+    wrap(itemId)
+}
 
 function createNumResultsDiv(num){
     var numResultsDiv = $("<div class='numResults'>")
