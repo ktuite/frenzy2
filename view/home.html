@@ -248,6 +248,7 @@ function pushAndPullUpdates(myUpdate, typeOfRequest){
         putUpSpinner()
     }
     
+    if (myUpdate) myUpdate["user"] = username
     var message = {"update": myUpdate, "query": query, "type": type}   
     ajax("update", message, function(result){ 
         try {
