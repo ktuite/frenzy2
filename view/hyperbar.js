@@ -210,6 +210,18 @@ function createNumResultsDiv(num){
             }
             
         }
+    }else{
+        if("plusOneFilter" in query){
+            var plusOneFilter = query["plusOneFilter"]
+            if(plusOneFilter == "withPlusOne"){
+                numResultsText = numResultsText + " with +1 "
+            }
+            if(plusOneFilter == "withoutPlusOne"){
+                numResultsText = numResultsText + " <i>without</i> +1 "
+            }
+            
+        }    
+    
     }
     
     if(queryType == "all"){
@@ -265,7 +277,7 @@ function createPlusOneFilter(defaultFilter){
     
     
     var allItemsText = "All papers ("+numAll+")"
-    var allItemsNeedingPlusOne = "Papers needing +1 ("+numWithoutPlusOne+")"
+    var allItemsNeedingPlusOne = "Papers without +1 ("+numWithoutPlusOne+")"
     var allItemsHavingPlusOne = "Papers with +1 ("+numWithPlusOne+")"
     
     
