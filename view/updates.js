@@ -109,17 +109,19 @@ function updateItemsInFeed(){
         var itemObj = items[itemId]
         var itemUpdateTime = itemObj["lastUpdateTime"]
         if(itemUpdateTime > lastUpdateTime){
-                markItemAsUpdated(itemId, i in itemsInQueryIveChanged)            
+                console.log("test1", arrayContains(itemsInQueryIveChanged, itemId))
+                markItemAsUpdated(itemId, arrayContains(itemsInQueryIveChanged, itemId))            
         }
     }
-    for(var i in itemsInQueryIveChanged){  
-        var itemId = itemsInQueryIveChanged[i]
-        var itemObj = items[itemId]
-        var itemUpdateTime = itemObj["lastUpdateTime"]
-        if(itemUpdateTime > lastUpdateTime){
-            markItemAsUpdated(itemId, true)
-        }
-    }    
+    // for(var i in itemsInQueryIveChanged){  
+    //     var itemId = itemsInQueryIveChanged[i]
+    //     var itemObj = items[itemId]
+    //     var itemUpdateTime = itemObj["lastUpdateTime"]
+    //     if(itemUpdateTime > lastUpdateTime){
+    //         console.log("test2", "mine")
+    //         markItemAsUpdated(itemId, true)
+    //     }
+    // }    
 
     // DELETED ITEMS
     //go through the items on the screen and if any of them aren't updated, 
@@ -176,7 +178,7 @@ function updateItemsInFeed(){
 function markItemAsUpdated(itemId, myChange){
     var itemUI = $("#containerFor-"+itemId)
     var currentHeight = itemUI.height() 
-    
+    console.log(itemId, myChange)
     if (!myChange)
         itemUI.height(currentHeight)
     itemUI.css('overflowY', 'auto')
