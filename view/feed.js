@@ -383,8 +383,8 @@ function makeInteractiveLabelUI(labelObj, itemId){
     
     row.append($('<td class="categoriesDivCategoryLabel">').append(labelSpan))
 
-    // add like button, but only if the category is checked
-    if (labelChecked) {
+    // add like button, but only if the category is checked and not a singleton
+    if (labelChecked && numItems > 1) {
         var likeButton = $('<button type="button" class="btn btn-primary likeButton" data-toggle="button"></button>')
 
         var tooltipPrefix = "";

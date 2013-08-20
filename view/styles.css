@@ -518,3 +518,7 @@ input[id^="addCategoryTextbox"]{
     cursor: pointer;
     text-decoration: underline;
 }
+
+.categoriesDiv tr {
+    height: 30px;
+}
