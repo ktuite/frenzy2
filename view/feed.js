@@ -362,8 +362,24 @@ function makeInteractiveLabelUI(labelObj, itemId){
         labelSpan.addClass("labelUnchecked")        
     }
 
-
-    labelSpan.html(labelText+" ("+numItems+")")
+    var numItemsSpan = $("<span class='numItemsClickable'>")
+    numItemsSpan.html("("+numItems+")")
+    
+    //labelSpan.html(labelText+" ("+numItems+")")
+    labelSpan.append(labelText)
+    labelSpan.append(numItemsSpan)
+    
+    numItemsSpan.click(function(){
+        query = {
+            "type" : "label",
+            "label" : labelText,
+            "checked" : true,            
+            "labels" : [labelText],
+            "sortOrder" : sessionMaking ? "mostLikesForLabels" : "creationTime"
+        }
+        getAllData("synchronous")
+    })    
+    
     row.append($('<td class="categoriesDivCategoryLabel">').append(labelSpan))
 
     // add like button, but only if the category is checked

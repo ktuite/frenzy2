@@ -419,6 +419,7 @@ function handleUpdatedCategory(labelList){
 function displayCategoriesSorted(sortType){
     var labelHierarchyDiv = $("<div>")
     var labelsArray = dictToArray(labelList)
+    
     sortLabels(labelsArray, sortType)
     
     var closedCategories = []

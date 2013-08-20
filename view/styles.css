@@ -514,6 +514,7 @@ input[id^="addCategoryTextbox"]{
     margin-top: -10px;
 }
 
-#changeButton {
-    margin-left: 5px;
+.numItemsClickable{
+    cursor: pointer;
+    text-decoration: underline;
 }
