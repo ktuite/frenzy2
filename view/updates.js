@@ -323,9 +323,11 @@ function displaySessionsSorted(sortType){
     for(var i in sessionsArray){
         var sessionObj = sessionsArray[i]
         var label = sessionObj["label"]
-        var counts = sessionObj["numMembers"]
-        var newLabelDiv = createSessionDiv(label, counts)
-        sessionsDiv.append(newLabelDiv)        
+        if(label != "none"){
+            var counts = sessionObj["numMembers"]
+            var newLabelDiv = createSessionDiv(label, counts)
+            sessionsDiv.append(newLabelDiv) 
+        }        
     }
 	$("#sessionSummary").empty()
     $("#sessionSummary").append(sessionsDiv)
