@@ -429,9 +429,9 @@ function displayCategoriesSorted(sortType){
         var labelObj = labelsArray[i]   
         var counts = labelObj["itemsUsedBy"].length   
         if(counts > 0){    
-            var creationOfCategoryLabelDiv = createCategoryLabelDiv(labelObj)
-            var newLabelDiv = creationOfCategoryLabelDiv["div"]
-            var numItemsInSession = creationOfCategoryLabelDiv["numItemsInSession"]
+            var newLabelDiv = createCategoryLabelDiv(labelObj)
+            //var newLabelDiv = creationOfCategoryLabelDiv["div"]
+            //var numItemsInSession = creationOfCategoryLabelDiv["numItemsInSession"]
             labelHierarchyDiv.append(newLabelDiv) 
             /*
             if(numItemsInSession == counts){
@@ -578,7 +578,7 @@ function createCategoryLabelDiv(labelObj){
     */
     
             
-    if(numItemsNotInSession == 0){
+    if(sessionMaking && numItemsNotInSession == 0){
         labelSpan.addClass("completedCategory")
         //createCategoryLabelDiv.removeClass("numSessionsDisplay")
     }
@@ -604,7 +604,8 @@ function createCategoryLabelDiv(labelObj){
 
     div.append(makeRenameButton("label", label))	
 	
-    return {"div":div, "numItemsInSession":numItemsInSession}
+    //return {"div":div, "numItemsInSession":numItemsInSession}
+    return div
 }
 
 function makeRenameButton(kindOfName, // must be either "session" or "label"
