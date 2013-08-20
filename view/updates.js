@@ -424,17 +424,19 @@ function displayCategoriesSorted(sortType){
         var labelObj = labelsArray[i]   
         var counts = labelObj["itemsUsedBy"].length   
         if(counts > 0){    
-            var creationOfCategoryLabelDiv = createCategoryLabelDiv(labelObj, false)
+            var creationOfCategoryLabelDiv = createCategoryLabelDiv(labelObj)
             var newLabelDiv = creationOfCategoryLabelDiv["div"]
             var numItemsInSession = creationOfCategoryLabelDiv["numItemsInSession"]
+            labelHierarchyDiv.append(newLabelDiv) 
+            /*
             if(numItemsInSession == counts){
                 closedCategories.push(labelObj)
             }else{
                 labelHierarchyDiv.append(newLabelDiv)   
-            }            
+            } */           
         }        
     }
-    
+    /*
     for(var i in closedCategories){
         var labelObj = closedCategories[i]   
         var counts = labelObj["itemsUsedBy"].length  
@@ -446,6 +448,7 @@ function displayCategoriesSorted(sortType){
                         
                 
     }
+    */
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
 }
@@ -519,13 +522,13 @@ function sortLabels(labelsArray, sortType){
     }
 }
 
-function createCategoryLabelDiv(labelObj, grey){
+function createCategoryLabelDiv(labelObj){
     var label = labelObj["label"]
     var counts = labelObj["itemsUsedBy"].length
     var creator = labelObj["creator"]
     var div = $("<div>")
     
-    var numItemsInSession = 0
+    var numItemsNotInSession = 0
     if(sessionMaking){
         var itemsInSession = []
         var itemsInNoSession = sessions["none"]["members"]
@@ -537,11 +540,12 @@ function createCategoryLabelDiv(labelObj, grey){
             }
         }
         numItemsInSession = itemsInSession.length
-        var greySpan = ""
-        if(grey){
-            greySpan = "completedCategory"
+        numItemsNotInSession = counts - numItemsInSession
+        if( numItemsNotInSession> 0){
+            counts = "<span class='numSessionsDisplay'>"+numItemsNotInSession+"</span> / "+counts
+        }else{
+            counts = "<span class=''>"+numItemsNotInSession+"</span> / "+counts
         }
-        counts = "<span class='numSessionsDisplay "+greySpan+"'>"+numItemsInSession+"</span> / "+counts
     }else{
         var itemsWithPlusOne = []
         var itemsCompleted = completion["completedItemIds"]
@@ -569,9 +573,10 @@ function createCategoryLabelDiv(labelObj, grey){
     */
     
             
-        if(grey){
-            labelSpan.addClass("completedCategory")
-        }
+    if(numItemsNotInSession == 0){
+        labelSpan.addClass("completedCategory")
+        //createCategoryLabelDiv.removeClass("numSessionsDisplay")
+    }
     
     if (labelObj["itemsUsedBy"].length <= 1) {
         labelSpan.addClass("singletonLabel")
