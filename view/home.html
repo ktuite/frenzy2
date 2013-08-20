@@ -41,7 +41,7 @@ var labelList = []
 var autocompleteLabels = []
 var autocompleteSessions = []
 var lastUpdateTime = 0
-var sessionMaking = false
+var sessionMaking = true
 var sessions = []
 //var hierarchy = []
 var completion = {}
@@ -130,30 +130,15 @@ $(document).ready(function(){
 	//testSignIn()
 	setDefaultQuery()
     setUpTextSearch()
+    if(sessionMaking){
+        $("#sessionSort").val("az")
+        //$('#cbCategory').val(cat);
+    }
    
 	getAllData("synchronous")
     setInterval(function(){ getAllData("asynchronous") },5000);
 })
-/*
-function setUpAbstractHideShow(){
-    $("#expandAll").click(function(){
-        $(".item").each(function(t){
-            var itemId = $(this).attr("id")            
-            $("#short-abstract-"+itemId).hide()
-            $("#full-abstract-"+itemId).show()
-            
-        })
-    })
-    $("#collapseAll").click(function(){
-        $(".item").each(function(t){
-            var itemId = $(this).attr("id")            
-            $("#short-abstract-"+itemId).show()
-            $("#full-abstract-"+itemId).hide()
-            
-        })    
-    })
-}
-*/
+
 function testSignIn(){
 	ajax("signIn", {"user": getUsername()}, function(result){ 
 		var res = JSON.parse(result)
