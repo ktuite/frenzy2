@@ -509,3 +509,7 @@ input[id^="addCategoryTextbox"]{
 .completedCategory{
     color: grey;
 }
+
+#removeButton{
+    margin-top: -10px;
+}

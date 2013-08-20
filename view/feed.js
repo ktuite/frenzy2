@@ -179,7 +179,7 @@ function createWithoutSession(div, itemId, initialText){
     
     var addButtonText ="add"
     if(initialText != ""){
-        addButtonText ="update"
+        addButtonText ="ok"
     }
     var addButton = $('<button id="addButton">'+addButtonText+'</button>')
     addButton.click(function(){
@@ -200,15 +200,16 @@ function createWithoutSession(div, itemId, initialText){
         
     })
     
-    var removeButton = $('<button id="removeButton">remove</button>')
+    var removeButton = $('<button id="removeButton"><img src="redX.png" style="height:15px; width:10px"></button>')
     removeButton.click(function(){
         updateSession(itemId, "none")
     })
     
-    if(initialText != ""){
+
+    div.append(addButton)
+        if(initialText != ""){
         div.append(removeButton)
     }
-    div.append(addButton)
 }
 function createWithSession(div, itemId, session){
 
