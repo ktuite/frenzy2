@@ -189,7 +189,7 @@ var instantiateData = require('./testing/cscwDataAllcut1withextra.js');
 
 allData = clone(allDataOriginal)
 allData["deprecatedItems"] = {}
-allData["sessionMaking"] = true //true
+allData["sessionMaking"] = true
 allData["categories"] = {}
 allData["sessionIds"] = {}
 

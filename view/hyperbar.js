@@ -253,9 +253,14 @@ function createNumResultsDiv(num){
 		numResultsText = numResultsText + " completed"
 	}
 	if(queryType == "incompleted"){
-        var status = " need work" 
-        if(num == 1){
-            status = " needs work" 
+        var status
+        if (sessionMaking) {
+            status = " needing sessions"
+        } else {
+            var status = " need work" 
+            if(num == 1){
+                status = " needs work" 
+            }
         }
 		numResultsText = numResultsText + status
 	}
