@@ -575,7 +575,7 @@ function createCategoryLabelDiv(labelObj){
     */
     
             
-    if(numItemsNotInSession == 0){
+    if(sessionMaking && numItemsNotInSession == 0){
         labelSpan.addClass("completedCategory")
         //createCategoryLabelDiv.removeClass("numSessionsDisplay")
     }
