@@ -120,6 +120,10 @@ app.get('/pencil.png', function(request, response){
     response.sendfile('view/pencil.png')
 });
 
+app.get('/redX.png', function(request, response){
+    response.sendfile('view/redX.png')
+});
+
 ////
 
 app.get('/updates.js', function(request, response){
