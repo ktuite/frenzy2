@@ -505,3 +505,7 @@ input[id^="addCategoryTextbox"]{
 #addButton {
   margin-top: -10px;
 }
+
+.completedCategory{
+    color: grey;
+}

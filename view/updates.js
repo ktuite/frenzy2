@@ -11,62 +11,62 @@ function handleUpdates(result){
     //console.log("result")
 	//console.log(result)
     
-    var type = result["type"]
-    
-	if("allItems" in result){
-		items = result["allItems"]
-	}
-	if("sessions" in result){
-		sessions = result["sessions"]		
-		handleUpdatedSessions(sessions)
-	}
-    if("completion" in result){
-		completion = result["completion"]
-		handleUpdatedCompletion(completion)
-	}
-	if("labelList" in result){
-		labelList = result["labelList"]
-		handleUpdatedCategory(labelList)
-        //createCategoryList()
-	}
-
-	
-	if("itemIdOrder" in result){
-		itemIdOrder = result["itemIdOrder"]
-	}
-	if("queryResultObj" in result){
-        queryResultObj = result["queryResultObj"]
-        query = queryResultObj["query"]		
-	}
-	/*
-    if("hierarchy" in result){
-        var hierarchy = result["hierarchy"]
-        handleUpdatedHierarchy(hierarchy)
-    }
-	*/
-
-    
-    if("sessionMaking" in result){
-		sessionMaking = result["sessionMaking"]
-        if(!sessionMaking){
-            $("#sessionMakingRow").hide()
-        }else{
-            $("#sessionMakingRow").show()
+        var type = result["type"]
+        
+        if("allItems" in result){
+            items = result["allItems"]
         }
-	}
-    
-    //depending on the query type, either redisplay the all the Feed
-    //or just update some items with yellow backgrounds.
+        if("sessions" in result){
+            sessions = result["sessions"]		
+            handleUpdatedSessions(sessions)
+        }
+        if("completion" in result){
+            completion = result["completion"]
+            handleUpdatedCompletion(completion)
+        }
+        if("labelList" in result){
+            labelList = result["labelList"]
+            handleUpdatedCategory(labelList)
+            //createCategoryList()
+        }
 
-    if(type == "synchronous"){
-        itemsInQueryIveChanged = [] //reset this state variable.
-        displayFeed(itemIdOrder)
-        updateHyperBar(queryResultObj)
-    }
-    if(type == "asynchronous"){
-        updateItemsInFeed()
-        updateHyperBar(queryResultObj)     
-    }
+        
+        if("itemIdOrder" in result){
+            itemIdOrder = result["itemIdOrder"]
+        }
+        if("queryResultObj" in result){
+            queryResultObj = result["queryResultObj"]
+            query = queryResultObj["query"]		
+        }
+        /*
+        if("hierarchy" in result){
+            var hierarchy = result["hierarchy"]
+            handleUpdatedHierarchy(hierarchy)
+        }
+        */
+
+        
+        if("sessionMaking" in result){
+            sessionMaking = result["sessionMaking"]
+            if(!sessionMaking){
+                $("#sessionMakingRow").hide()
+            }else{
+                $("#sessionMakingRow").show()
+            }
+        }
+        
+        //depending on the query type, either redisplay the all the Feed
+        //or just update some items with yellow backgrounds.
+
+        if(type == "synchronous"){
+            itemsInQueryIveChanged = [] //reset this state variable.
+            displayFeed(itemIdOrder)
+            updateHyperBar(queryResultObj)
+        }
+        if(type == "asynchronous"){
+            updateItemsInFeed()
+            updateHyperBar(queryResultObj)     
+        }
 
   } catch(e) {
     console.log(e.stack)
@@ -419,13 +419,32 @@ function displayCategoriesSorted(sortType){
     var labelsArray = dictToArray(labelList)
     sortLabels(labelsArray, sortType)
     
+    var closedCategories = []
     for(var i in labelsArray){
         var labelObj = labelsArray[i]   
         var counts = labelObj["itemsUsedBy"].length   
         if(counts > 0){    
-            var newLabelDiv = createCategoryLabelDiv(labelObj)
-            labelHierarchyDiv.append(newLabelDiv)    
+            var creationOfCategoryLabelDiv = createCategoryLabelDiv(labelObj, false)
+            var newLabelDiv = creationOfCategoryLabelDiv["div"]
+            var numItemsInSession = creationOfCategoryLabelDiv["numItemsInSession"]
+            if(numItemsInSession == counts){
+                closedCategories.push(labelObj)
+            }else{
+                labelHierarchyDiv.append(newLabelDiv)   
+            }            
         }        
+    }
+    
+    for(var i in closedCategories){
+        var labelObj = closedCategories[i]   
+        var counts = labelObj["itemsUsedBy"].length  
+        
+        var creationOfCategoryLabelDiv = createCategoryLabelDiv(labelObj, true)
+        var newLabelDiv = creationOfCategoryLabelDiv["div"]
+        
+        labelHierarchyDiv.append(newLabelDiv)   
+                        
+                
     }
 	$("#labelHierarchy").empty()
     $("#labelHierarchy").append(labelHierarchyDiv)
@@ -500,13 +519,13 @@ function sortLabels(labelsArray, sortType){
     }
 }
 
-function createCategoryLabelDiv(labelObj){
+function createCategoryLabelDiv(labelObj, grey){
     var label = labelObj["label"]
     var counts = labelObj["itemsUsedBy"].length
     var creator = labelObj["creator"]
     var div = $("<div>")
     
-    
+    var numItemsInSession = 0
     if(sessionMaking){
         var itemsInSession = []
         var itemsInNoSession = sessions["none"]["members"]
@@ -517,8 +536,12 @@ function createCategoryLabelDiv(labelObj){
                 itemsInSession.push(memberItemId)
             }
         }
-        var numItemsInSession = itemsInSession.length
-        counts = "<span class='numSessionsDisplay'>"+numItemsInSession+"</span> / "+counts
+        numItemsInSession = itemsInSession.length
+        var greySpan = ""
+        if(grey){
+            greySpan = "completedCategory"
+        }
+        counts = "<span class='numSessionsDisplay "+greySpan+"'>"+numItemsInSession+"</span> / "+counts
     }else{
         var itemsWithPlusOne = []
         var itemsCompleted = completion["completedItemIds"]
@@ -544,6 +567,12 @@ function createCategoryLabelDiv(labelObj){
         labelSpan.addClass("nonSystemLabel")
     }
     */
+    
+            
+        if(grey){
+            labelSpan.addClass("completedCategory")
+        }
+    
     if (labelObj["itemsUsedBy"].length <= 1) {
         labelSpan.addClass("singletonLabel")
     } else {
@@ -565,7 +594,7 @@ function createCategoryLabelDiv(labelObj){
 
     div.append(makeRenameButton("label", label))	
 	
-    return div
+    return {"div":div, "numItemsInSession":numItemsInSession}
 }
 
 function makeRenameButton(kindOfName, // must be either "session" or "label"

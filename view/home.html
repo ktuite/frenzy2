@@ -41,7 +41,7 @@ var labelList = []
 var autocompleteLabels = []
 var autocompleteSessions = []
 var lastUpdateTime = 0
-var sessionMaking = false
+var sessionMaking = true
 var sessions = []
 //var hierarchy = []
 var completion = {}
@@ -132,7 +132,7 @@ $(document).ready(function(){
     setUpTextSearch()
    
 	getAllData("synchronous")
-    setInterval(function(){ getAllData("asynchronous") },5000);
+    //setInterval(function(){ getAllData("asynchronous") },5000);
 })
 /*
 function setUpAbstractHideShow(){
