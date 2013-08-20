@@ -231,7 +231,7 @@ function createWithSession(div, itemId, session){
     var sessionText = "In Session: <span class='sessionLabel'>" + session+ "</span>"
     $(div).html(sessionText)
 
-    var changeButton = $('<button id="changeButton">edit</button>')
+    var changeButton = $('<button class="changeButton">edit</button>')
     changeButton.click(function(){
         createWithoutSession(div, itemId, session)
     })

@@ -79,9 +79,7 @@ function makeAutocompleteListFromKeys(lst){
 
 	for(var i in lst){
         // only put session in the autocomplete list if it's nonempty, and not the default session "none"
-        if (i != "none" && lst[i].numMembers > 0) {
-    		allLabels.push(i)
-        }
+		allLabels.push(i)
 	}
     
     allLabels.sort(function(a, b){
@@ -310,7 +308,9 @@ function handleUpdatedHierarchy(hierarchy){
 // sessions
 //////////////////////////////////////////
 function handleUpdatedSessions(sessionObjs){
-    autocompleteSessions = makeAutocompleteListFromKeys(sessions)
+    autocompleteSessions = filterArray(makeAutocompleteListFromKeys(sessionObjs), function(sessionName) {
+        return sessionName != "none" && sessionObjs[sessionName].numMembers > 0
+    })
 
     var sortType = $('#sessionSort').val()
     displaySessionsSorted(sortType)

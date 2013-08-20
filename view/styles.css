@@ -522,3 +522,7 @@ input[id^="addCategoryTextbox"]{
 .categoriesDiv tr {
     height: 30px;
 }
+
+.changeButton {
+    margin-left: 5px;
+}
