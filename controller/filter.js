@@ -206,6 +206,7 @@ getFeedItemsAndOrder = function(query){
 	// SORT 
 	//////////////////////////////
 	var sortOrder = query["sortOrder"]
+    //console.log("sort order is " + sortOrder)
 	if(sortOrder == "creationTime"){
 		itemIds = sortItemIdsByCreationTime(itemIds)
         //console.log("creationTime")
@@ -218,6 +219,9 @@ getFeedItemsAndOrder = function(query){
 		itemIds = sortItemIdsByLeastRecentlyUpdated(itemIds)
         //console.log("leastActive")
 	}
+    if (sortOrder == "mostLikesForLabels") {
+        itemIds = sortItemIdsByMostLikesForLabels(itemIds, query["labels"])        
+    }
 	return itemIds
 }
 
@@ -338,6 +342,27 @@ sortItemIdsByCreationTime = function(itemIds){
 	var itemReferences = allData["items"]
 	itemIds.sort(function(a,b){return itemReferences[b]["creationTime"] - itemReferences[a]["creationTime"]});
 	return itemIds
+}
+
+// sort in decreasing order by the total number of likes each item has for the given labels
+// for example, if labels=["A","B"] and an item is labeled with A,B,C,D with 3 likes for A, 2 likes for B, and 1 like for C, then its
+// value for sorting is 3(A)+2(B) = 5.
+sortItemIdsByMostLikesForLabels = function(itemIds, labels) {
+    var itemReferences = allData["items"]
+    itemIds.sort(function(a,b) { return totalLikesForLabels(itemReferences[b], labels) - totalLikesForLabels(itemReferences[a], labels)})
+    return itemIds
+}
+
+totalLikesForLabels = function(item, labels) {
+    var count = 0
+    for (var i in labels) {
+        var label = labels[i]
+        var labelObj = item["labels"][label]
+        if (labelObj) {
+            count += labelObj["likes"].length
+        }
+    }
+    return count
 }
 
 getAllItemObjectsUpdatedSinceTimeT = function(t){
