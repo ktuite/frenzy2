@@ -78,7 +78,10 @@ function makeAutocompleteListFromKeys(lst){
 	var allLabels = []
 
 	for(var i in lst){
-		allLabels.push(i)
+        // only put session in the autocomplete list if it's nonempty, and not the default session "none"
+        if (i != "none" && lst[i].numMembers > 0) {
+    		allLabels.push(i)
+        }
 	}
     
     allLabels.sort(function(a, b){
