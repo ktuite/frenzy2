@@ -25,8 +25,10 @@ function goalSetup(){
 }
 
 function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemIds){
+	var buttonPhrase = sessionMaking ? { complete: "Complete", needWork: "Unsessioned"} : { complete: "Complete", needWork: "Need Work"}
+
     $("#goalFeedback").empty()
-    var happyButton = $("<input type='button' class='btn' id='matchingRequirmentsButton' value='"+numCompletedItemIds+" Complete'> ")
+    var happyButton = $("<input type='button' class='btn' id='matchingRequirmentsButton' value='"+numCompletedItemIds+" " + buttonPhrase.complete + "'> ")
 	happyButton.click(function(){
         //ajax("logFeedbackClicks", {"uiElt":"complete", "notes":numCompletedItemIds}, function(returnData) {})
         query = {
@@ -39,7 +41,7 @@ function displayLabelCompletionProgress(numCompletedItemIds, numIncompletedItemI
     $("#goalFeedback").append(happyButton)
 	
     // UNsatisfied Constraints
-	var sadButton = $("<input type='button' class='btn' id='nonMatchingRequirmentsButton' value='"+numIncompletedItemIds+" Need work'> ")
+	var sadButton = $("<input type='button' class='btn' id='nonMatchingRequirmentsButton' value='"+numIncompletedItemIds+" " + buttonPhrase.needWork + "'> ")
 	sadButton.click(function(){
 		//ajax("logFeedbackClicks", {"uiElt":"incomplete", "notes":numIncompletedItemIds}, function(returnData) {})
         query = {
