@@ -162,6 +162,21 @@ function createAddSessionDiv(div, itemObj){
     }
     //return div
 }
+/*
+    textbox.autocomplete({
+      source: autocompleteLabels,
+      select: function(event, ui) {
+        textbox.val(ui.item.value)
+        submitTextbox()
+        event.stopPropagation()
+        event.preventDefault()
+      }
+    });
+    textbox.keypress(function(event){
+        if( event.which == 13 ) submitTextbox()     
+    })
+
+*/
 function createWithoutSession(div, itemId, initialText){
     var sessionText = "Session: "
     $(div).html(sessionText)
@@ -173,8 +188,21 @@ function createWithoutSession(div, itemId, initialText){
         console.log(sessionNameTextbox[0])
         sessionNameTextbox[0].select()
     }
+    function submitTextbox() {
+        var textboxValue = sessionNameTextbox.val().trim()
+        if(textboxValue!= ""){
+            var sessionLabel = textboxValue
+            updateSession(itemId, sessionLabel)
+        }
+    }
     sessionNameTextbox.autocomplete({
-        source: autocompleteSessions
+        source: autocompleteSessions,
+        select: function(event, ui) {
+            sessionNameTextbox.val(ui.item.value)
+            submitTextbox()
+            event.stopPropagation()
+            event.preventDefault()
+        }
     });
     
     var addButtonText ="add"
@@ -182,22 +210,9 @@ function createWithoutSession(div, itemId, initialText){
         addButtonText ="update"
     }
     var addButton = $('<button id="addButton">'+addButtonText+'</button>')
-    addButton.click(function(){
-        var textboxValue = sessionNameTextbox.val().trim()
-        if(textboxValue!= ""){
-            var sessionLabel = textboxValue
-            updateSession(itemId, sessionLabel)
-        }
-    })
+    addButton.click(submitTextbox)
     sessionNameTextbox.keypress(function(event){
-        if( event.which == 13 ) {
-            var textboxValue = sessionNameTextbox.val().trim()
-            if(textboxValue!=""){
-                var sessionLabel = textboxValue
-                updateSession(itemId, sessionLabel)
-            }    
-       }
-        
+        if( event.which == 13 ) submitTextbox()
     })
     
     var removeButton = $('<button id="removeButton">remove</button>')
@@ -259,28 +274,30 @@ function addLabel(itemId){
 
 	var uiwidgetDiv = $('<span class="ui-widget">')
 	var textbox = $('<input type="text" id="addCategoryTextbox-'+itemId+'" placeholder="add a category">')
-	textbox.autocomplete({
-      source: autocompleteLabels
-    });
-	uiwidgetDiv.append(textbox)
-	div.append(uiwidgetDiv)
-    
-    textbox.keypress(function(event){
-        if( event.which == 13 ) {        
-            var textboxValue = textbox.val().trim()
-                if(textboxValue != ""){
-                updateNewLabel(textboxValue,itemId)
-            }
-       }
-    })
-	
-    var addButton = $('<button id="addButton" class="btn">+</button>')
-    addButton.click(function(){
+    function submitTextbox() {
         var textboxValue = textbox.val().trim()
         if(textboxValue != ""){
             updateNewLabel(textboxValue,itemId)
         }
+    }
+	textbox.autocomplete({
+      source: autocompleteLabels,
+      select: function(event, ui) {
+        textbox.val(ui.item.value)
+        submitTextbox()
+        event.stopPropagation()
+        event.preventDefault()
+      }
+    });
+    textbox.keypress(function(event){
+        if( event.which == 13 ) submitTextbox()     
     })
+	uiwidgetDiv.append(textbox)
+	div.append(uiwidgetDiv)
+    
+	
+    var addButton = $('<button id="addButton" class="btn">+</button>')
+    addButton.click(submitTextbox)
     div.append(addButton)
     return div
 }
