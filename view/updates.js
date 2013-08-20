@@ -594,7 +594,7 @@ function createCategoryLabelDiv(labelObj){
             "label" : label,
             "checked" : true,            
             "labels" : [label],
-            "sortOrder" : "creationTime"
+            "sortOrder" : sessionMaking ? "mostLikesForLabels" : "creationTime"
         }
         getAllData("synchronous")
     })
