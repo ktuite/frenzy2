@@ -363,11 +363,12 @@ function makeInteractiveLabelUI(labelObj, itemId){
     }
 
     var numItemsSpan = $("<span class='numItemsClickable'>")
-    numItemsSpan.html("("+numItems+")")
+    numItemsSpan.html(numItems)
     
     //labelSpan.html(labelText+" ("+numItems+")")
-    labelSpan.append(labelText)
+    labelSpan.append(labelText+" (")
     labelSpan.append(numItemsSpan)
+    labelSpan.append(")")
     
     numItemsSpan.click(function(){
         query = {

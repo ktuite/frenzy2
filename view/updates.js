@@ -107,7 +107,6 @@ function updateItemsInFeed(){
     //for all the items being displayed in this query, go find them in the list of items, and see when the last time they 
     //have been updated is.
     //if it was recently, then go to that individual UI elt and color it yellow.
-    console.log(itemsInQueryIveChanged)
     for(var i in itemIdOrder){        
         var itemId = itemIdOrder[i]
         var itemObj = items[itemId]
