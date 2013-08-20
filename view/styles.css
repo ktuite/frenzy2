@@ -513,3 +513,7 @@ input[id^="addCategoryTextbox"]{
 #removeButton{
     margin-top: -10px;
 }
+
+#changeButton {
+    margin-left: 5px;
+}
