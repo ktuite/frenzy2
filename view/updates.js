@@ -536,7 +536,8 @@ function createCategoryLabelDiv(labelObj){
     var numItemsNotInSession = 0
     if(sessionMaking){
         var itemsInSession = []
-        var itemsInNoSession = sessions["none"]["members"]
+        var itemsInNoSession = []
+	if ("none" in sessions) itemsInNoSession = sessions["none"]["members"]
         var members = labelObj["itemsUsedBy"]
         for(var itemIdIndex in members){
             var memberItemId = members[itemIdIndex]

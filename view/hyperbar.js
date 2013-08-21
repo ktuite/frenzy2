@@ -332,7 +332,8 @@ function createPlusOneFilter(defaultFilter){
 function createSessionFilter(defaultFilter){
     var div = $("<div id='sessionFilter' width='260px'>")
     var members = itemIdOrder
-    var allItemsNotInSessions = sessions["none"]["members"]
+    var allItemsNotInSessions = []
+    if ("none" in sessions) allItemsNotInSessions = sessions["none"]["members"]
     
     console.log(query)
     var numAll = query["sessionFilterData"]["numAll"]
