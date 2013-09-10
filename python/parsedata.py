@@ -108,7 +108,7 @@ allLabels = {}
 counter = 0
 
 for item in kathleensData:
-    id = item["id"]
+    id = "face"+str(item["id"])
     url = item["img"]
     labels = item["labels"]
     labelList = map(lambda x: x["label"], labels)

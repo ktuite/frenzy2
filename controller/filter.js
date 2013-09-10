@@ -9,7 +9,8 @@ getFeedItemsAndOrder = function(query){
     for( var itemId in allData["items"]){
 			itemIds.push(itemId)
     }
-    
+    console.log("itemIds")
+    console.log(itemIds)
 	//////////////////////////////
 	// SEARCH 
 	//////////////////////////////
@@ -39,6 +40,7 @@ getFeedItemsAndOrder = function(query){
     
 	//if(queryType == "label"){
     if("labels" in query){
+        console.log(query)
 		var label = query["label"]
         var labelsToFilter = query["labels"]  
         if(labelsToFilter.length > 0){
@@ -48,9 +50,10 @@ getFeedItemsAndOrder = function(query){
             //var labelObj = allData["labelList"][label0]
             // label might have been renamed or deleted, so return empty list if so
             var itemIdsForThisLabel = getAllItemIdsWithLabel(label0)
+            console.log(itemIdsForThisLabel)
             //itemIds = labelObj["itemsUsedBy"]
             itemIds = utils.arrayIntersection(itemIds, itemIdsForThisLabel)
-            
+            console.log(itemIds)
             for(var i = 1; i<labelsToFilter.length; i++){
                 
                 var thisLabel = labelsToFilter[i]
