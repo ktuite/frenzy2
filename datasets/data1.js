@@ -1,79 +1,10 @@
-{
-"items" : {
-	"item0": {
-        "creationTime": 0, 
-        "html": "<b>Gesture Output: Eyes-Free Output: Using a Force Feedback Touch Surface</b><br><br>", 
-        "id": "item0", 
-        "creator": "frenzy",
-        "lastUpdatedTime": 0,
-        "replies": ["reply0", "reply1"],
-        "selectableHashtags": [{
-            "hashtag":"blue", 
-            "selected": "true",
-            "attentionLevel": "high"
-            "likes" : [{}]
-            }
-        ]        
-    }, 
-    "item1": {
-        "creationTime": 1, 
-        "html": "<b>iMuscle: Mobile Force-Feedback based on Electrical Muscle Stimulation</b><br><br>", 
-        "id": "item1", 
-        "creator": "frenzy",
-        "lastUpdatedTime": 0,
-        "replies": [],
-        "selectableHashtags": []
-    }
-},
-"replies" : {
-    "reply0" : {
-        "creationTime" : 2,
-        "text": "asdf",
-        "creator" : "user1",
-        "likes" : [{"username": "user2", "time": 3 }]
-        "item": "item0",
-        "parent": "item0"
-    }
-    "reply1" : {
-        "creationTime" : 3,
-        "text": "asdf2",
-        "creator" : "user2",
-        "likes" : []
-        "item": "item0",
-        "parent": "reply0"
-    }    
-},
-"hashtagHierarchy": [],
-"completionFeedback": {}, //{"complete":0, "incomplete":0}
+allDataOriginal = {"completion": {}, "hierarchyLastUpdated": -1, "users": {}, "chat": [], "labelList": {"Surprise": {"itemsUsedBy": [12894], "creator": "system", "creationTime": 0, "user": "facedata", "label": "Surprise"}, "neutral": {"itemsUsedBy": [1950], "creator": "system", "creationTime": 0, "user": "facedata", "label": "neutral"}, "Happiness": {"itemsUsedBy": [12894, 1364], "creator": "system", "creationTime": 0, "user": "facedata", "label": "Happiness"}}, "hierarchy": {}, 
+"items": 
+{"1364": {"content": {"url": "http://www.facefrontier.com/images/1364", "id": 1364}, "session": "none", "replyCounter": 0, "lastUpdateTime": 0, "replies": [], "labels": {"Happiness": {"dislikes": [], "checked": true, "likes": [], "lastUpdateTime": 123456789, "label": "Happiness"}}, "creationTime": 1, "id": 1364}, 
 
-"users": {
-	"user1":{
-		"id":"user1",
-		"counter":0,
-        "creationTime": 0
-	}
-	"user2":{
-		"id":"user2",
-		"counter":0,
-        "creationTime": 0
-	}    
-},
-"chat" : [
-	{	"user":"user1",
-		"comment":"Hello World!",
-		"time":0
-	},
-    {	"user":"user2",
-		"comment":"meow",
-		"time":1
-	}
-],
-"currentLocations" : [
-	{	"user":"user1",
-		"location":"item0"
-	},
-	{	"user":"user2",
-		"location":"item1"
-	}     
-]
-}
+"1950": {"content": {"url": "http://www.facefrontier.com/images/1950", "id": 1950}, "session": "none", "replyCounter": 0, "lastUpdateTime": 0, "replies": [], "labels": {"neutral": {"dislikes": [], "checked": true, "likes": [], "lastUpdateTime": 123456789, "label": "neutral"}}, "creationTime": 2, "id": 1950}, 
+
+"12894": {"content": {"url": "http://www.facefrontier.com/images/12894", "id": 12894}, "session": "none", "replyCounter": 0, "lastUpdateTime": 0, "replies": [], "labels": {"Surprise": {"dislikes": [], "checked": true, "likes": [], "lastUpdateTime": 123456789, "label": "Surprise"}, "Happiness": {"dislikes": [], "checked": true, "likes": [], "lastUpdateTime": 123456789, "label": "Happiness"}}, "creationTime": 0, "id": 12894}}, 
+
+
+"completionLastUpdated": -1, "history": {"locations": [], "events": []}}

@@ -45,39 +45,13 @@ function createItemAndReplyDivInternals(itemObj){
 
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-  //return str
 }
 
 function createItemHTML(itemContent, searchQuery){
     var id = itemContent["id"] 
-    var displayId = itemContent["id"] 
-    var title = itemContent["title"]
-    var authorList = itemContent["authorList"]
-    var shortAbstract = itemContent["shortAbstract"] 
-    var fullAbstract = itemContent["fullAbstract"]    
+    var url = itemContent["url"] 
 
-    if(searchQuery){
-        var re = new RegExp(escapeRegExp(searchQuery), "gi"); 
-        displayId = displayId.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-        
-        title = title.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-        
-        for(var i in authorList){
-            var author = authorList[i]
-            authorList[i] = author.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-        }
-        shortAbstract = shortAbstract.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-        fullAbstract = fullAbstract.replace(re ,"<span style='color:red; font-style: bold;'>\$&</span>");
-                
-    }
-    
-    var authorListHTML = ""
-    for (var i in authorList){
-        var author = authorList[i]
-        authorListHTML = authorListHTML + author + "<br>"
-    }
-    return ""+displayId+"<br><b>"+title+"</b><br><span id='authors"+id+"'>"+authorListHTML+"</span><br> <span id='short-abstract-"+id+"'> <b>Abstract: </b>"+shortAbstract+"...<span id='more-abstract-"+id+"' class='more-abstract'>(more)</span></span>   <span id='full-abstract-"+id+"' > <b>Abstract: </b>"+fullAbstract+"<span id='less-abstract-"+id+"' class='less-abstract'>(less)</span></span>"
-
+    return "face#"+id+"<br><br><img src='"+url+"' />"
 }
 
 function createItemDiv(itemObj){

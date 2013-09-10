@@ -55,7 +55,7 @@ var writeToFile = function (json){
 	}); 
 }
 
-var restoreData = function(timestamp){
+restoreData = function(timestamp){
 	fs.readFile("./datasets/data"+timestamp+".js", function(err, restoredData) {
 			if(err) {
 				console.log(err);
