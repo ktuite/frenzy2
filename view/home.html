@@ -172,11 +172,11 @@ function setDefaultQuery(){
     
     if(sessionMaking){
         var key1 = "mostSessionNeeded"
-        var value1 = "most papers needing sessions"
+        var value1 = "most faces needing sessions"
         $('#categoriesSort').append($("<option></option>").attr("value",key1).text(value1));
         
         var key2 = "leastSessionNeeded"
-        var value2 = "least papers needing sessions"
+        var value2 = "least faces needing sessions"
         $('#categoriesSort').append($("<option></option>").attr("value",key2).text(value2));        
     
     }
@@ -281,7 +281,7 @@ function takeDownSpinner(){
             </ul>
             
             <form class="navbar-form pull-left span8" id="navBarForm">
-                <input type="button" class="btn" id="showAllCategories" value="Show all papers"></input>
+                <input type="button" class="btn" id="showAllCategories" value="Show all faces"></input>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                     <input class="span3" type="text" placeholder="search titles, authors, abstracts" id="search">
                     <input type="button" class="btn" id="sortSubmit" value= "Search" />
@@ -341,8 +341,8 @@ function takeDownSpinner(){
                        <div id ="sessionSummaryContainer" class="summaryContainer">     
 							<b>Sessions</b> sort by: 
                                 <select id="sessionSort">
-                                      <option value="mostItems">most papers</option>
-                                      <option value="leastItems">least papers</option>
+                                      <option value="mostItems">most faces</option>
+                                      <option value="leastItems">least faces</option>
                                       <option value="az">a-z</option>
                                       <option value="za">z-a</option>
                                 </select>
@@ -361,8 +361,8 @@ function takeDownSpinner(){
                             <b>Categories:</b>
                              sort by:
                                 <select id="categoriesSort">
-                                    <option value="mostItems">most papers</option>
-                                    <option value="leastItems">least papers</option>
+                                    <option value="mostItems">most faces</option>
+                                    <option value="leastItems">least faces</option>
                                     <option value="az">a-z</option>
                                     <option value="za">z-a</option>
                                 </select>

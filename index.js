@@ -177,7 +177,7 @@ function clone(a) {
 ////////////////////////
 //var instantiateData = require('./testing/cscwData.js');
 //var instantiateData = require('./testing/cscwDataAllcut1.js');
-var instantiateData = require('./datasets/facedata1.js');
+var instantiateData = require('./datasets/faceData1.js');
 //var instantiateData = require('./testing/cscwData12labels.js');
 //var instantiateData = require('./testing/cscwData12labelsAuthors.js');
 //var instantiateData = require('./testing/cscwDataSubset.js');
